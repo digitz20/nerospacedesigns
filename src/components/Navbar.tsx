@@ -45,11 +45,14 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 hover:text-warm-beige ${
+                className={`group relative text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 hover:text-warm-beige ${
                   isScrolled ? "text-primary-cream/90" : "text-primary-cream/90"
                 }`}
               >
-                {link.label}
+                <span className="relative">
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-warm-beige transition-all duration-300 group-hover:w-full" />
+                </span>
               </Link>
             ))}
           </div>

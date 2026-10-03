@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Lightbox from "@/components/Lightbox";
 
 const images = [
   "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
@@ -10,6 +12,8 @@ const images = [
 ];
 
 export default function ProjectGallery() {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   return (
     <section className="py-24 md:py-32 bg-primary-cream">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
@@ -17,15 +21,16 @@ export default function ProjectGallery() {
           {images.map((src, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ clipPath: "inset(100% 0 0 0)" }}
+              whileInView={{ clipPath: "inset(0)" }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`overflow-hidden ${
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className={`overflow-hidden cursor-pointer ${
                 i === 0 ? "col-span-2 row-span-2" : ""
               } ${i === 1 ? "col-span-1 row-span-1" : ""} ${
                 i === 2 ? "col-span-1 row-span-2" : ""
               } ${i === 3 ? "col-span-1 row-span-1" : ""}`}
+              onClick={() => setLightboxIndex(i)}
             >
               <img
                 src={src}
@@ -37,6 +42,15 @@ export default function ProjectGallery() {
           ))}
         </div>
       </div>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={images}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNavigate={setLightboxIndex}
+        />
+      )}
     </section>
   );
 }

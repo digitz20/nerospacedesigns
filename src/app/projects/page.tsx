@@ -30,6 +30,7 @@ export default function ProjectsPage() {
                 aspectRatio={project.aspectRatio}
                 slug={project.slug}
                 index={index}
+                secondaryImage={project.images[1]}
               />
             ))}
           </div>

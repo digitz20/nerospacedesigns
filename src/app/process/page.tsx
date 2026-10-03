@@ -1,8 +1,15 @@
+"use client";
+
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
+import { motion } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 import { processSteps } from "@/lib/data";
 
 export default function ProcessPage() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 800], [0, 100]);
+
   return (
     <div>
       <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-primary-cream">
@@ -26,10 +33,11 @@ export default function ProcessPage() {
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="aspect-[4/5] overflow-hidden">
-              <img
+              <motion.img
                 src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80"
                 alt="Design process"
                 className="w-full h-full object-cover"
+                style={{ y }}
               />
             </div>
             <div>

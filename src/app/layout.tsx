@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/data";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -76,7 +77,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-body">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <Providers>
+          <main className="flex-1">{children}</main>
+        </Providers>
         <Footer />
       </body>
     </html>

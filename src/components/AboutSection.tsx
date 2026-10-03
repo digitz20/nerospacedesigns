@@ -1,9 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
-export default function AboutSection() {
+interface AboutSectionProps {}
+
+export default function AboutSection({}: AboutSectionProps) {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 800], [0, 100]);
+
   return (
     <section className="py-24 md:py-32 bg-primary-cream">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
@@ -46,10 +52,11 @@ export default function AboutSection() {
             className="relative"
           >
             <div className="aspect-[4/5] overflow-hidden">
-              <img
+              <motion.img
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
                 alt="Nerospace Designs studio"
                 className="w-full h-full object-cover"
+                style={{ y }}
                 loading="lazy"
               />
             </div>

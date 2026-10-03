@@ -10,6 +10,8 @@ import AboutSection from "@/components/AboutSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import Testimonial from "@/components/Testimonial";
 import CTASection from "@/components/CTASection";
+import StatsSection from "@/components/StatsSection";
+import Marquee from "@/components/Marquee";
 import { projects, services, processSteps, testimonials } from "@/lib/data";
 
 export default function Home() {
@@ -38,6 +40,7 @@ export default function Home() {
                 aspectRatio={project.aspectRatio}
                 slug={project.slug}
                 index={index}
+                secondaryImage={project.images[1]}
               />
             ))}
           </div>
@@ -55,6 +58,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StatsSection />
 
       <section className="py-24 md:py-32 bg-secondary-cream">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
@@ -143,6 +148,8 @@ export default function Home() {
       </section>
 
       <AboutSection />
+
+      <Marquee />
 
       <Testimonial
         quote={testimonials[0].quote}

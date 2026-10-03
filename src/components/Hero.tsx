@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useScroll, useTransform } from "framer-motion";
+import SplitText from "@/components/SplitText";
+import MagneticButton from "@/components/MagneticButton";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -15,13 +17,17 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 150]);
+
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-secondary-dark">
-        <img
+        <motion.img
           src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80"
           alt=""
           className="w-full h-full object-cover opacity-40"
+          style={{ y }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-secondary-dark/60 via-secondary-dark/40 to-secondary-dark/80" />
@@ -38,16 +44,20 @@ export default function Hero() {
           Interior Architecture Studio
         </motion.p>
 
-        <motion.h1
+        <motion.div
           custom={1}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-primary-cream leading-[0.9] tracking-tight mb-6 md:mb-8"
+          className="mb-6 md:mb-8"
         >
-          Spaces That Feel<br />
-          Like Home.
-        </motion.h1>
+          <SplitText
+            text="Spaces That Feel Like Home."
+            as="h1"
+            animateOnView={false}
+            className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-primary-cream leading-[0.9] tracking-tight"
+          />
+        </motion.div>
 
         <motion.p
           custom={2}
@@ -66,22 +76,26 @@ export default function Hero() {
           variants={fadeUp}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link
-            href="/projects"
-            className="group inline-flex items-center gap-3 bg-earthen-brown text-primary-cream px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-muted-taupe"
-          >
-            Explore Our Work
-            <ArrowRight
-              size={14}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-3 border border-primary-cream/30 text-primary-cream px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-primary-cream hover:bg-primary-cream/5"
-          >
-            Start A Project
-          </Link>
+          <MagneticButton>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-3 bg-earthen-brown text-primary-cream px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-muted-taupe"
+            >
+              Explore Our Work
+              <ArrowRight
+                size={14}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+          </MagneticButton>
+          <MagneticButton>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-3 border border-primary-cream/30 text-primary-cream px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-primary-cream hover:bg-primary-cream/5"
+            >
+              Start A Project
+            </Link>
+          </MagneticButton>
         </motion.div>
       </div>
 

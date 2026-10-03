@@ -1,8 +1,15 @@
+"use client";
+
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
+import { motion } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 import { services } from "@/lib/data";
 
 export default function ServicesPage() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 800], [0, 100]);
+
   return (
     <div>
       <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-primary-cream">
@@ -51,10 +58,11 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="aspect-[4/3] overflow-hidden">
-              <img
+              <motion.img
                 src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80"
                 alt="Interior design services"
                 className="w-full h-full object-cover"
+                style={{ y }}
               />
             </div>
           </div>

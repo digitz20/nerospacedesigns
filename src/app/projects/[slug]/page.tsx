@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import ProjectImageGrid from "./ProjectImageGrid";
 import { projects } from "@/lib/data";
 
 interface PageProps {
@@ -63,81 +62,7 @@ export default async function ProjectDetail({ params }: PageProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 mb-16 md:mb-24">
-            <div className="md:col-span-8 aspect-[16/9] overflow-hidden">
-              <Image
-                src={project.images[0]}
-                alt={project.title}
-                width={1200}
-                height={675}
-                className="w-full h-full object-cover"
-                priority
-              />
-            </div>
-            <div className="md:col-span-4 aspect-[3/4] md:aspect-auto overflow-hidden">
-              <Image
-                src={project.images[1]}
-                alt={`${project.title} detail`}
-                width={600}
-                height={800}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="md:col-span-4 aspect-[4/3] overflow-hidden">
-              <Image
-                src={project.images[2]}
-                alt={`${project.title} detail`}
-                width={600}
-                height={450}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="md:col-span-8 aspect-[16/9] overflow-hidden">
-              <Image
-                src={project.images[0]}
-                alt={`${project.title} wide`}
-                width={1200}
-                height={675}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-16 md:mb-24">
-            <div>
-              <h3 className="font-heading text-2xl text-primary-dark mb-4">
-                Project Details
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between py-3 border-b border-earthen-brown/20">
-                  <span className="text-xs tracking-wide uppercase text-muted-taupe">
-                    Location
-                  </span>
-                  <span className="text-sm text-primary-dark">{project.location}</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-earthen-brown/20">
-                  <span className="text-xs tracking-wide uppercase text-muted-taupe">
-                    Category
-                  </span>
-                  <span className="text-sm text-primary-dark">{project.category}</span>
-                </div>
-                <div className="flex justify-between py-3 border-b border-earthen-brown/20">
-                  <span className="text-xs tracking-wide uppercase text-muted-taupe">
-                    Year
-                  </span>
-                  <span className="text-sm text-primary-dark">{project.year}</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="font-heading text-2xl text-primary-dark mb-4">
-                Design Approach
-              </h3>
-              <p className="text-sm text-primary-dark/70 leading-relaxed">
-                {project.description}
-              </p>
-            </div>
-          </div>
+          <ProjectImageGrid images={project.images} title={project.title} />
         </div>
       </section>
 
