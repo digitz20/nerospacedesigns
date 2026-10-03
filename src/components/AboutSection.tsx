@@ -35,13 +35,13 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative w-full"
           >
-            <div className="aspect-[4/5] overflow-hidden">
+            <div className="w-full overflow-hidden">
               <img
-                src="/images/about.jpg"
+                src="https://i.pinimg.com/736x/1a/55/d0/1a55d05b0496e891b8119744bdc7c41e.jpg"
                 alt="Nerospace Designs studio"
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover"
                 loading="lazy"
               />
             </div>

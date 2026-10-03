@@ -33,11 +33,13 @@ export default function Navbar() {
         >
           <Link
             href="/"
-            className={`text-lg md:text-xl tracking-[0.15em] transition-colors duration-500 font-heading font-bold ${
-              isScrolled ? "text-coffee-dark" : "text-beige-light"
-            }`}
+            className="flex items-center"
           >
-            {siteConfig.name}
+            <span className={`text-xl md:text-2xl font-bold uppercase tracking-wide transition-colors duration-500 ${
+              isScrolled ? "text-coffee-dark" : "text-beige-light"
+            }`}>
+              {siteConfig.name}
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8 lg:gap-12">

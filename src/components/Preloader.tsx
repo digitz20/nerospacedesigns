@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { siteConfig } from "@/lib/data";
 
 export default function Preloader() {
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -23,14 +24,9 @@ export default function Preloader() {
           className="fixed inset-0 z-[10002] bg-coffee-deep flex items-center justify-center hidden md:flex"
         >
           <div className="text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-heading text-3xl md:text-5xl text-beige-light tracking-wide mb-6 font-bold"
-            >
-              NEROSPACE DESIGNS
-            </motion.h2>
+            <h2 className="font-heading text-4xl md:text-6xl text-beige-light tracking-wide mb-6 font-bold uppercase">
+              {siteConfig.name}
+            </h2>
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}

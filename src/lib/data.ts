@@ -10,7 +10,7 @@ export const siteConfig = {
     pinterest: "https://pinterest.com/nerospacedesigns",
     whatsapp: "https://wa.me/2347048236782",
   },
-  ogImage: "/og-image.jpg",
+  ogImage: "/images/backgrounds/bg-01.jpeg",
 };
 
 export const navLinks = [
@@ -57,97 +57,6 @@ export const services = [
     description:
       "From curated pieces to fully bespoke furniture, we source and design elements that are unique to your space. Each item is selected or created to enhance the overall narrative of the home.",
     image: "/images/services/furniture.jpg",
-  },
-];
-
-export const projects = [
-  {
-    slug: "residence-ikoyi",
-    title: "IKOYI RESIDENCE",
-    location: "Lagos",
-    category: "Residential",
-    year: "2026",
-    description:
-      "A refined family home in Ikoyi featuring warm oak joinery, soft linen upholstery, and a curated art collection. Every material was selected for its tactile quality and ability to age gracefully.",
-    images: [
-      "/images/projects/ikoyi-1.jpg",
-      "/images/projects/ikoyi-2.jpg",
-      "/images/projects/ikoyi-3.jpg",
-    ],
-    aspectRatio: "aspect-[4/5]",
-    secondaryImage: "/images/projects/ikoyi-2.jpg",
-    details: {
-      client: "Private Client",
-      scope: "Full interior design, custom joinery, furniture procurement",
-      duration: "8 months",
-      materials: ["Oak", "Linen", "Brass", "Marble"],
-    },
-  },
-  {
-    slug: "apartment-victoria-island",
-    title: "VICTORIA ISLAND APARTMENT",
-    location: "Lagos",
-    category: "Residential",
-    year: "2025",
-    description:
-      "A modern apartment redesign that maximized natural light and created a serene retreat from city life. Neutral tones, clean lines, and carefully chosen textures define this space.",
-    images: [
-      "/images/projects/vi-1.jpg",
-      "/images/projects/vi-2.jpg",
-      "/images/projects/vi-3.jpg",
-    ],
-    aspectRatio: "aspect-[16/9]",
-    secondaryImage: "/images/projects/vi-2.jpg",
-    details: {
-      client: "Private Client",
-      scope: "Space planning, interior design, styling",
-      duration: "5 months",
-      materials: ["Pine", "Cotton", "Concrete", "Glass"],
-    },
-  },
-  {
-    slug: "office-marina",
-    title: "MARINA OFFICE SUITE",
-    location: "Lagos",
-    category: "Commercial",
-    year: "2025",
-    description:
-      "A creative workspace designed to inspire focus and collaboration. Warm timber meets industrial concrete, with flexible layouts that adapt to modern work styles.",
-    images: [
-      "/images/projects/marina-1.jpg",
-      "/images/projects/marina-2.jpg",
-      "/images/projects/marina-3.jpg",
-    ],
-    aspectRatio: "aspect-[3/4]",
-    secondaryImage: "/images/projects/marina-2.jpg",
-    details: {
-      client: "Tech Startup",
-      scope: "Office design, custom furniture, lighting design",
-      duration: "6 months",
-      materials: ["Walnut", "Steel", "Terrazzo", "Felt"],
-    },
-  },
-  {
-    slug: "penthouse-lekki",
-    title: "LEKKI PENTHOUSE",
-    location: "Lagos",
-    category: "Residential",
-    year: "2024",
-    description:
-      "A luxurious penthouse with panoramic views, featuring a muted material palette, custom kitchen cabinetry, and a spa-inspired master bathroom with natural stone finishes.",
-    images: [
-      "/images/projects/lekki-1.jpg",
-      "/images/projects/lekki-2.jpg",
-      "/images/projects/lekki-3.jpg",
-    ],
-    aspectRatio: "aspect-square",
-    secondaryImage: "/images/projects/lekki-2.jpg",
-    details: {
-      client: "Private Client",
-      scope: "Full interior architecture, bespoke joinery, smart home integration",
-      duration: "10 months",
-      materials: ["Travertine", "Oak", "Brass", "Wool"],
-    },
   },
 ];
 

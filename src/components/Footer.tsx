@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="font-heading text-3xl md:text-4xl text-beige-light tracking-wide font-bold"
+              className="font-heading text-3xl md:text-4xl text-beige-light tracking-wide font-bold uppercase"
             >
               {siteConfig.name}
             </Link>

@@ -2,13 +2,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import ProjectImageGrid from "./ProjectImageGrid";
-import { projects } from "@/lib/data";
+import { getProjects } from "@/lib/projects-server";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
+  const projects = getProjects();
   return projects.map((project) => ({
     slug: project.slug,
   }));
@@ -16,6 +17,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
+  const projects = getProjects();
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
@@ -26,6 +28,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ProjectDetail({ params }: PageProps) {
   const { slug } = await params;
+  const projects = getProjects();
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
@@ -92,6 +95,46 @@ export default async function ProjectDetail({ params }: PageProps) {
                   </span>
                   <span className="text-sm text-coffee-dark font-heading">{project.year}</span>
                 </div>
+                {project.clientName && (
+                  <div className="flex justify-between py-3 border-b border-coffee-accent/20">
+                    <span className="text-xs tracking-wide uppercase text-coffee-muted font-semibold">
+                      Client
+                    </span>
+                    <span className="text-sm text-coffee-dark font-heading">{project.clientName}</span>
+                  </div>
+                )}
+                {project.projectSize && (
+                  <div className="flex justify-between py-3 border-b border-coffee-accent/20">
+                    <span className="text-xs tracking-wide uppercase text-coffee-muted font-semibold">
+                      Size
+                    </span>
+                    <span className="text-sm text-coffee-dark font-heading">{project.projectSize}</span>
+                  </div>
+                )}
+                {project.budgetRange && (
+                  <div className="flex justify-between py-3 border-b border-coffee-accent/20">
+                    <span className="text-xs tracking-wide uppercase text-coffee-muted font-semibold">
+                      Budget
+                    </span>
+                    <span className="text-sm text-coffee-dark font-heading">{project.budgetRange}</span>
+                  </div>
+                )}
+                {project.timeline && (
+                  <div className="flex justify-between py-3 border-b border-coffee-accent/20">
+                    <span className="text-xs tracking-wide uppercase text-coffee-muted font-semibold">
+                      Timeline
+                    </span>
+                    <span className="text-sm text-coffee-dark font-heading">{project.timeline}</span>
+                  </div>
+                )}
+                {project.status && (
+                  <div className="flex justify-between py-3 border-b border-coffee-accent/20">
+                    <span className="text-xs tracking-wide uppercase text-coffee-muted font-semibold">
+                      Status
+                    </span>
+                    <span className="text-sm text-coffee-dark font-heading">{project.status}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div>
