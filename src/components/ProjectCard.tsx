@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -34,44 +35,40 @@ export default function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
     >
       <Link href={`/projects/${slug}`} className="group block">
-        <motion.div
-          initial={{ clipPath: "inset(100% 0 0 0)" }}
-          whileInView={{ clipPath: "inset(0)" }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+        <div
           className={`relative overflow-hidden ${aspectRatio} mb-4 md:mb-6`}
         >
           <img
             src={image}
             alt={title}
-            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
             loading="lazy"
           />
           {secondaryImage && (
             <img
               src={secondaryImage}
-              alt={`${title} alternate`}
-              className="absolute inset-0 w-full h-full object-cover opacity-0 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-              loading="lazy"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+              aria-hidden="true"
             />
           )}
-          <div className="absolute inset-0 bg-primary-dark/0 group-hover:bg-primary-dark/20 transition-colors duration-500" />
+          <div className="absolute inset-0 bg-coffee-dark/0 group-hover:bg-coffee-dark/20 transition-colors duration-500" />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <span className="text-primary-cream text-[11px] tracking-[0.2em] uppercase border border-primary-cream/50 px-6 py-3">
+            <span className="text-beige-light text-[11px] tracking-[0.2em] uppercase border border-beige-light/50 px-6 py-3 font-semibold">
               View Project
             </span>
           </div>
-        </motion.div>
+        </div>
         <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
           <div>
-            <h3 className="font-heading text-xl md:text-2xl text-primary-dark mb-1 group-hover:text-earthen-brown transition-colors duration-300">
+            <h3 className="font-heading text-xl md:text-2xl text-coffee-dark mb-1 group-hover:text-coffee-accent transition-colors duration-300 font-bold uppercase tracking-wide">
               {title}
             </h3>
-            <p className="text-xs text-primary-dark/60 tracking-wide">
+            <p className="text-xs text-coffee-dark/60 tracking-wide font-heading">
               {location} — {category}
             </p>
           </div>
-          <span className="text-xs text-muted-taupe tracking-wider">
+          <span className="text-xs text-coffee-muted tracking-wider font-heading">
             {year}
           </span>
         </div>

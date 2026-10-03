@@ -22,7 +22,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-secondary-dark/95 backdrop-blur-sm shadow-sm"
+          ? "bg-beige-light/95 backdrop-blur-sm shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -33,8 +33,8 @@ export default function Navbar() {
         >
           <Link
             href="/"
-            className={`text-lg md:text-xl tracking-[0.15em] transition-colors duration-500 font-heading ${
-              isScrolled ? "text-primary-cream" : "text-primary-cream"
+            className={`text-lg md:text-xl tracking-[0.15em] transition-colors duration-500 font-heading font-bold ${
+              isScrolled ? "text-coffee-dark" : "text-beige-light"
             }`}
           >
             {siteConfig.name}
@@ -45,25 +45,40 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`group relative text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 hover:text-warm-beige ${
-                  isScrolled ? "text-primary-cream/90" : "text-primary-cream/90"
+                className={`text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 font-semibold relative group ${
+                  isScrolled ? "text-coffee-dark/80" : "text-beige-light/90"
                 }`}
               >
-                <span className="relative">
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-warm-beige transition-all duration-300 group-hover:w-full" />
-                </span>
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-coffee-accent transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
 
+          <div className="hidden md:block">
+            <Link
+              href="/contact"
+              className={`inline-flex items-center gap-2 px-6 py-3 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 font-semibold ${
+                isScrolled
+                  ? "bg-coffee-dark text-beige-light hover:bg-coffee-accent"
+                  : "bg-beige-light text-coffee-dark hover:bg-beige-warm"
+              }`}
+            >
+              Book Consultation
+            </Link>
+          </div>
+
           <button
-            className="md:hidden text-primary-cream p-2 -mr-2"
+            className="md:hidden p-2 -mr-2"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? (
+              <X size={24} className={isScrolled ? "text-coffee-dark" : "text-beige-light"} />
+            ) : (
+              <Menu size={24} className={isScrolled ? "text-coffee-dark" : "text-beige-light"} />
+            )}
           </button>
         </nav>
       </div>
@@ -75,7 +90,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 top-20 bg-secondary-dark z-40"
+            className="md:hidden fixed inset-0 top-20 bg-beige-light z-40"
           >
             <nav className="flex flex-col items-center justify-center h-full gap-8">
               {navLinks.map((link, index) => (
@@ -87,13 +102,20 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="text-2xl tracking-[0.15em] uppercase text-primary-cream hover:text-warm-beige transition-colors font-heading"
+                    className="text-2xl tracking-[0.15em] uppercase text-coffee-dark hover:text-coffee-accent transition-colors font-heading font-bold"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
+              <Link
+                href="/contact"
+                className="mt-4 inline-flex items-center gap-2 bg-coffee-dark text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                Book Consultation
+              </Link>
             </nav>
           </motion.div>
         )}

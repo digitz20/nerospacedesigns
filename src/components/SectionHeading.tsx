@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SplitText from "@/components/SplitText";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -26,17 +25,15 @@ export default function SectionHeading({
       className={cn("mb-12 md:mb-16", center ? "text-center" : "text-left")}
     >
       {eyebrow && (
-        <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-earthen-brown mb-4">
+        <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-coffee-accent mb-4 font-semibold">
           {eyebrow}
         </p>
       )}
-      <SplitText
-        text={title}
-        as="h2"
-        className="font-heading text-4xl md:text-5xl lg:text-6xl text-primary-dark leading-[1.1] mb-4 md:mb-6"
-      />
+      <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-coffee-dark leading-[1.1] mb-4 md:mb-6 font-bold uppercase">
+        {title}
+      </h2>
       {subtitle && (
-        <p className="text-sm md:text-base text-primary-dark/70 max-w-2xl leading-relaxed">
+        <p className="text-sm md:text-base text-coffee-dark/70 max-w-2xl leading-relaxed font-heading">
           {subtitle}
         </p>
       )}

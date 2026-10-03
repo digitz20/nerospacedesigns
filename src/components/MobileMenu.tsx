@@ -12,7 +12,7 @@ export default function MobileMenu() {
   return (
     <>
       <button
-        className="md:hidden fixed bottom-6 right-6 z-50 bg-earthen-brown text-primary-cream p-4 rounded-full shadow-lg"
+        className="md:hidden fixed bottom-6 right-6 z-50 bg-coffee-accent text-beige-light p-4 rounded-full shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
@@ -27,7 +27,7 @@ export default function MobileMenu() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 bg-secondary-dark/98 z-40 flex flex-col items-center justify-center gap-8"
+            className="md:hidden fixed inset-0 bg-coffee-deep/98 z-40 flex flex-col items-center justify-center gap-8"
           >
             <nav className="flex flex-col items-center gap-8">
               {navLinks.map((link, index) => (
@@ -39,7 +39,7 @@ export default function MobileMenu() {
                 >
                   <Link
                     href={link.href}
-                    className="text-2xl tracking-[0.15em] uppercase text-primary-cream hover:text-warm-beige transition-colors font-heading"
+                    className="text-2xl tracking-[0.15em] uppercase text-beige-light hover:text-beige-medium transition-colors font-heading font-bold"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.label}

@@ -9,7 +9,7 @@ interface ProcessTimelineProps {
 
 export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
   return (
-    <section className="py-24 md:py-32 bg-primary-cream">
+    <section className="py-24 md:py-32 bg-beige-light">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
         <SectionHeading
           eyebrow="How We Work"
@@ -29,19 +29,19 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
               className="relative"
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 rounded-full bg-earthen-brown flex items-center justify-center flex-shrink-0">
-                  <span className="font-heading text-lg text-primary-cream">
+                <div className="w-10 h-10 rounded-full bg-coffee-accent flex items-center justify-center flex-shrink-0">
+                  <span className="font-heading text-lg text-beige-light font-bold">
                     {step.id}
                   </span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div className="flex-1 h-[1px] bg-earthen-brown/30" />
+                  <div className="flex-1 h-[1px] bg-coffee-accent/30" />
                 )}
               </div>
-              <h3 className="font-heading text-2xl text-primary-dark mb-3">
+              <h3 className="font-heading text-2xl text-coffee-dark mb-3 font-bold uppercase tracking-wide">
                 {step.title}
               </h3>
-              <p className="text-sm text-primary-dark/70 leading-relaxed">
+              <p className="text-sm text-coffee-dark/70 leading-relaxed font-heading">
                 {step.description}
               </p>
             </motion.div>
@@ -59,20 +59,20 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
               className="flex gap-6"
             >
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-earthen-brown flex items-center justify-center flex-shrink-0">
-                  <span className="font-heading text-lg text-primary-cream">
+                <div className="w-10 h-10 rounded-full bg-coffee-accent flex items-center justify-center flex-shrink-0">
+                  <span className="font-heading text-lg text-beige-light font-bold">
                     {step.id}
                   </span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div className="w-[1px] h-full bg-earthen-brown/30 mt-2" />
+                  <div className="w-[1px] h-full bg-coffee-accent/30 mt-2" />
                 )}
               </div>
               <div className="flex-1 pb-8">
-                <h3 className="font-heading text-2xl text-primary-dark mb-3">
+                <h3 className="font-heading text-2xl text-coffee-dark mb-3 font-bold uppercase tracking-wide">
                   {step.title}
                 </h3>
-                <p className="text-sm text-primary-dark/70 leading-relaxed">
+                <p className="text-sm text-coffee-dark/70 leading-relaxed font-heading">
                   {step.description}
                 </p>
               </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/data";
 import Navbar from "@/components/Navbar";
@@ -8,15 +8,8 @@ import Providers from "@/components/Providers";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-cormorant-garamond",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-inter",
   display: "swap",
 });
 
@@ -32,7 +25,7 @@ export const metadata: Metadata = {
     "spatial planning",
     "bespoke design",
     "luxury interiors",
-    "Lagos",
+    "Abuja",
     "Nigeria",
     "architecture",
   ],
@@ -73,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body">
         <Navbar />

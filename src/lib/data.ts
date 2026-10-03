@@ -2,12 +2,13 @@ export const siteConfig = {
   name: "NEROSPACE DESIGNS",
   description: "Interior architecture, spatial planning and bespoke design for considered living.",
   url: "https://nerospace.designs",
-  email: "info@nerospace.designs",
-  location: "Lagos, Nigeria",
+  email: "nerospacedesigns@gmail.com",
+  phone: "+234 704 823 6782",
+  location: "The Carpenter, 6th Ave, Gwarinpa, Abuja, Federal Capital Territory",
   social: {
     instagram: "https://instagram.com/nerospacedesigns",
     pinterest: "https://pinterest.com/nerospacedesigns",
-    whatsapp: "https://wa.me/2348012345678",
+    whatsapp: "https://wa.me/2347048236782",
   },
   ogImage: "/og-image.jpg",
 };
@@ -27,93 +28,126 @@ export const services = [
     title: "CONSULTATION & SITE ASSESSMENT",
     description:
       "We begin with a thorough understanding of your space, lifestyle, and aspirations. Our initial consultation establishes the foundation for a design that is both functional and deeply personal.",
+    image: "/images/services/consultation.jpg",
   },
   {
     id: "02",
     title: "INTERIOR DESIGN & SPACE PLANNING",
     description:
       "Through spatial analysis and thoughtful layouts, we craft environments that flow naturally. Every room is considered as part of a cohesive whole, balancing aesthetics with everyday usability.",
+    image: "/images/services/space-planning.jpg",
   },
   {
     id: "03",
     title: "3D DESIGN & VISUALIZATION",
     description:
       "Before a single wall is moved, you will see your space come to life. Our photorealistic visualizations ensure complete clarity and confidence in the design direction.",
+    image: "/images/services/3d-visualization.jpg",
   },
   {
     id: "04",
     title: "TECHNICAL DRAWINGS",
     description:
       "Precision in execution is non-negotiable. We produce detailed technical documentation that guides contractors and craftspeople to realize the design exactly as intended.",
+    image: "/images/services/technical-drawings.jpg",
   },
   {
     id: "05",
     title: "FURNITURE & CUSTOM DESIGN",
     description:
       "From curated pieces to fully bespoke furniture, we source and design elements that are unique to your space. Each item is selected or created to enhance the overall narrative of the home.",
+    image: "/images/services/furniture.jpg",
   },
 ];
 
 export const projects = [
   {
-    slug: "the-oak-residence",
-    title: "THE OAK RESIDENCE",
+    slug: "residence-ikoyi",
+    title: "IKOYI RESIDENCE",
     location: "Lagos",
     category: "Residential",
     year: "2026",
     description:
-      "A family home rooted in warmth and material honesty. Exposed oak, soft linen, and a palette of earth tones create a sanctuary that feels both timeless and deeply personal.",
+      "A refined family home in Ikoyi featuring warm oak joinery, soft linen upholstery, and a curated art collection. Every material was selected for its tactile quality and ability to age gracefully.",
     images: [
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
+      "/images/projects/ikoyi-1.jpg",
+      "/images/projects/ikoyi-2.jpg",
+      "/images/projects/ikoyi-3.jpg",
     ],
     aspectRatio: "aspect-[4/5]",
+    secondaryImage: "/images/projects/ikoyi-2.jpg",
+    details: {
+      client: "Private Client",
+      scope: "Full interior design, custom joinery, furniture procurement",
+      duration: "8 months",
+      materials: ["Oak", "Linen", "Brass", "Marble"],
+    },
   },
   {
-    slug: "lincoln-park-apartment",
-    title: "LINCOLN PARK APARTMENT",
+    slug: "apartment-victoria-island",
+    title: "VICTORIA ISLAND APARTMENT",
     location: "Lagos",
     category: "Residential",
     year: "2025",
     description:
-      "An urban retreat defined by restraint. Clean lines, muted neutrals, and carefully considered negative space allow the architecture to breathe and the inhabitants to thrive.",
+      "A modern apartment redesign that maximized natural light and created a serene retreat from city life. Neutral tones, clean lines, and carefully chosen textures define this space.",
     images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80",
-      "https://images.unsplash.com/photo-1600047509352-236bb1f3c4a9?w=800&q=80",
+      "/images/projects/vi-1.jpg",
+      "/images/projects/vi-2.jpg",
+      "/images/projects/vi-3.jpg",
     ],
     aspectRatio: "aspect-[16/9]",
+    secondaryImage: "/images/projects/vi-2.jpg",
+    details: {
+      client: "Private Client",
+      scope: "Space planning, interior design, styling",
+      duration: "5 months",
+      materials: ["Pine", "Cotton", "Concrete", "Glass"],
+    },
   },
   {
-    slug: "victoria-island-loft",
-    title: "VICTORIA ISLAND LOFT",
+    slug: "office-marina",
+    title: "MARINA OFFICE SUITE",
     location: "Lagos",
     category: "Commercial",
     year: "2025",
     description:
-      "A creative workspace designed to inspire. Raw concrete meets warm timber, while flexible layouts accommodate both focused work and collaborative moments.",
+      "A creative workspace designed to inspire focus and collaboration. Warm timber meets industrial concrete, with flexible layouts that adapt to modern work styles.",
     images: [
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80",
-      "https://images.unsplash.com/photo-1600566753086-00f18f6b0050?w=800&q=80",
+      "/images/projects/marina-1.jpg",
+      "/images/projects/marina-2.jpg",
+      "/images/projects/marina-3.jpg",
     ],
     aspectRatio: "aspect-[3/4]",
+    secondaryImage: "/images/projects/marina-2.jpg",
+    details: {
+      client: "Tech Startup",
+      scope: "Office design, custom furniture, lighting design",
+      duration: "6 months",
+      materials: ["Walnut", "Steel", "Terrazzo", "Felt"],
+    },
   },
   {
-    slug: "lekki-family-home",
-    title: "LEKKI FAMILY HOME",
+    slug: "penthouse-lekki",
+    title: "LEKKI PENTHOUSE",
     location: "Lagos",
     category: "Residential",
     year: "2024",
     description:
-      "A home designed for growing families. Flexible spaces, durable materials, and a seamless indoor-outdoor connection make this house a true family haven.",
+      "A luxurious penthouse with panoramic views, featuring a muted material palette, custom kitchen cabinetry, and a spa-inspired master bathroom with natural stone finishes.",
     images: [
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&q=80",
-      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
+      "/images/projects/lekki-1.jpg",
+      "/images/projects/lekki-2.jpg",
+      "/images/projects/lekki-3.jpg",
     ],
     aspectRatio: "aspect-square",
+    secondaryImage: "/images/projects/lekki-2.jpg",
+    details: {
+      client: "Private Client",
+      scope: "Full interior architecture, bespoke joinery, smart home integration",
+      duration: "10 months",
+      materials: ["Travertine", "Oak", "Brass", "Wool"],
+    },
   },
 ];
 
@@ -154,8 +188,8 @@ export const testimonials = [
 ];
 
 export const galleryImages = [
-  "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
-  "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80",
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
-  "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80",
+  "/images/gallery/1.jpg",
+  "/images/gallery/2.jpg",
+  "/images/gallery/3.jpg",
+  "/images/gallery/4.jpg",
 ];

@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary-dark: #242629;
-  --color-secondary-dark: #0B1014;
-  --color-primary-cream: #F7F2E6;
-  --color-secondary-cream: #F3EAE2;
-  --color-warm-beige: #ECDFD0;
-  --color-earthen-brown: #5D3E34;
-  --color-muted-taupe: #A89483;
+  --color-coffee-dark: #3C2415;
+  --color-coffee-deep: #2A1810;
+  --color-beige-light: #F5F0E8;
+  --color-beige-warm: #EDE4D8;
+  --color-beige-medium: #E0D5C5;
+  --color-coffee-accent: #6D4C41;
+  --color-coffee-muted: #A1887F;
   --font-heading: var(--font-cormorant-garamond);
-  --font-body: var(--font-inter);
+  --font-body: var(--font-cormorant-garamond);
 }
 
 @font-face {
@@ -39,39 +39,15 @@
 @font-face {
   font-family: "Cormorant Garamond";
   src: url("/fonts/cormorant-garamond.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-garamond.woff2") format("woff2");
   font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter.woff2") format("woff2");
-  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
@@ -81,9 +57,9 @@ html {
 }
 
 body {
-  background-color: var(--color-primary-cream);
-  color: var(--color-primary-dark);
-  font-family: var(--font-body), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-beige-light);
+  color: var(--color-coffee-dark);
+  font-family: var(--font-body), "Cormorant Garamond", Georgia, "Times New Roman", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -92,65 +68,38 @@ body {
   font-family: var(--font-heading), "Cormorant Garamond", Georgia, serif;
 }
 
-.letter-spacing-wide {
-  letter-spacing: 0.15em;
+::selection {
+  background-color: var(--color-coffee-accent);
+  color: var(--color-beige-light);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}
-
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
+::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
-  background-color: var(--color-earthen-brown);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
-  will-change: transform;
 }
 
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid var(--color-earthen-brown);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-  will-change: transform;
+::-webkit-scrollbar-track {
+  background: var(--color-beige-light);
 }
 
-.cursor-dot.hovering {
-  width: 60px;
-  height: 60px;
-  background-color: var(--color-primary-cream);
-  mix-blend-mode: normal;
+::-webkit-scrollbar-thumb {
+  background: var(--color-coffee-accent);
+  border-radius: 4px;
 }
 
-.cursor-ring.hovering {
-  width: 60px;
-  height: 60px;
-  border-color: var(--color-primary-cream);
-  mix-blend-mode: normal;
-  background-color: rgba(93, 62, 52, 0.1);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-coffee-dark);
 }
 
-@media (max-width: 768px) {
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -165,55 +114,4 @@ body {
 
 .animate-marquee {
   animation: marquee 30s linear infinite;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-primary-cream);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-earthen-brown);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted-taupe);
-}
-
-::selection {
-  background: var(--color-earthen-brown);
-  color: var(--color-primary-cream);
-}
-
-::-moz-selection {
-  background: var(--color-earthen-brown);
-  color: var(--color-primary-cream);
-}
-
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .animate-marquee {
-    animation: none;
-  }
-
-  .cursor-dot,
-  .cursor-ring {
-    display: none;
-  }
 }

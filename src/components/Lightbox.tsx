@@ -40,12 +40,12 @@ export default function Lightbox({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[10001] bg-secondary-dark/95 flex items-center justify-center p-4 md:p-8"
+        className="fixed inset-0 z-[10001] bg-coffee-deep/95 flex items-center justify-center p-4 md:p-8"
         onClick={onClose}
       >
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-primary-cream/70 hover:text-primary-cream transition-colors z-10"
+          className="absolute top-6 right-6 text-beige-light/70 hover:text-beige-light transition-colors z-10"
           aria-label="Close lightbox"
         >
           <X size={32} />
@@ -56,7 +56,7 @@ export default function Lightbox({
             const newIndex = (currentIndex - 1 + images.length) % images.length;
             onNavigate(newIndex);
           }}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-primary-cream/70 hover:text-primary-cream transition-colors z-10"
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
           aria-label="Previous image"
         >
           <ChevronLeft size={40} />
@@ -67,7 +67,7 @@ export default function Lightbox({
             const newIndex = (currentIndex + 1) % images.length;
             onNavigate(newIndex);
           }}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-primary-cream/70 hover:text-primary-cream transition-colors z-10"
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
           aria-label="Next image"
         >
           <ChevronRight size={40} />

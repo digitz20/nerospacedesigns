@@ -5,7 +5,7 @@ import { projects } from "@/lib/data";
 export default function ProjectsPage() {
   return (
     <div>
-      <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-primary-cream">
+      <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
             eyebrow="Selected Work"
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section className="pb-24 md:pb-32 bg-primary-cream">
+      <section className="pb-24 md:pb-32 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
             {projects.map((project, index) => (
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
                 aspectRatio={project.aspectRatio}
                 slug={project.slug}
                 index={index}
-                secondaryImage={project.images[1]}
+                secondaryImage={project.secondaryImage}
               />
             ))}
           </div>

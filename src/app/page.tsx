@@ -19,7 +19,7 @@ export default function Home() {
     <div>
       <Hero />
 
-      <section className="py-24 md:py-32 bg-primary-cream">
+      <section className="py-24 md:py-32 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
             eyebrow="Selected Work"
@@ -40,7 +40,7 @@ export default function Home() {
                 aspectRatio={project.aspectRatio}
                 slug={project.slug}
                 index={index}
-                secondaryImage={project.images[1]}
+                secondaryImage={project.secondaryImage}
               />
             ))}
           </div>
@@ -48,7 +48,7 @@ export default function Home() {
           <div className="text-center mt-12 md:mt-16">
             <a
               href="/projects"
-              className="group inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-earthen-brown hover:text-muted-taupe transition-colors"
+              className="group inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-coffee-accent hover:text-coffee-dark transition-colors font-semibold"
             >
               View All Projects
               <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -61,7 +61,7 @@ export default function Home() {
 
       <StatsSection />
 
-      <section className="py-24 md:py-32 bg-secondary-cream">
+      <section className="py-24 md:py-32 bg-beige-warm">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
             eyebrow="What We Do"
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-24 md:py-32 bg-secondary-dark">
+      <section className="py-24 md:py-32 bg-coffee-dark">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
             eyebrow="Design Philosophy"
@@ -122,15 +122,15 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 className="text-center md:text-left"
               >
-                <div className="w-12 h-12 rounded-full bg-earthen-brown flex items-center justify-center mx-auto md:mx-0 mb-6">
-                  <span className="font-heading text-xl text-primary-cream">
+                <div className="w-12 h-12 rounded-full bg-beige-medium flex items-center justify-center mx-auto md:mx-0 mb-6">
+                  <span className="font-heading text-xl text-coffee-dark font-bold">
                     {item.id}
                   </span>
                 </div>
-                <h3 className="font-heading text-2xl text-primary-cream mb-4">
+                <h3 className="font-heading text-2xl text-beige-light mb-4 font-bold uppercase tracking-wide">
                   {item.title}
                 </h3>
-                <p className="text-sm text-primary-cream/70 leading-relaxed">
+                <p className="text-sm text-beige-light/70 leading-relaxed font-heading">
                   {item.description}
                 </p>
               </motion.div>
@@ -141,15 +141,15 @@ export default function Home() {
 
       <ProjectGallery />
 
-      <section className="py-24 md:py-32 bg-primary-cream">
+      <section className="py-24 md:py-32 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <ProcessTimeline steps={processSteps} />
         </div>
       </section>
 
-      <AboutSection />
-
       <Marquee />
+
+      <AboutSection />
 
       <Testimonial
         quote={testimonials[0].quote}

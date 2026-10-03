@@ -1,17 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useScroll, useTransform } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
-interface AboutSectionProps {}
-
-export default function AboutSection({}: AboutSectionProps) {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 800], [0, 100]);
-
+export default function AboutSection() {
   return (
-    <section className="py-24 md:py-32 bg-primary-cream">
+    <section className="py-24 md:py-32 bg-beige-light">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <motion.div
@@ -25,22 +19,14 @@ export default function AboutSection({}: AboutSectionProps) {
               title="About Nerospace"
               subtitle=""
             />
-            <p className="text-base md:text-lg text-primary-dark/80 leading-relaxed mb-6">
-              NEROSPACE DESIGNS IS A BOUTIQUE INTERIOR DESIGN STUDIO CREATING
-              REFINED SPACES WHERE ARCHITECTURE, MATERIALITY AND EVERYDAY LIFE
-              MEET.
+            <p className="text-base md:text-lg text-coffee-dark/80 leading-relaxed mb-6 font-heading font-bold uppercase">
+              Nerospace Designs is a boutique interior design studio creating refined spaces where architecture, materiality and everyday life meet.
             </p>
-            <p className="text-sm text-primary-dark/70 leading-relaxed mb-8">
-              Founded on the belief that great design is born from deep listening
-              and meticulous craft, we approach each project as a unique
-              collaboration. Our work spans residential and commercial spaces,
-              always with a commitment to timeless elegance and thoughtful
-              functionality.
+            <p className="text-sm text-coffee-dark/70 leading-relaxed mb-8 font-heading">
+              Founded on the belief that great design is born from deep listening and meticulous craft, we approach each project as a unique collaboration. Our work spans residential and commercial spaces, always with a commitment to timeless elegance and thoughtful functionality.
             </p>
-            <p className="text-sm text-primary-dark/70 leading-relaxed">
-              Based in Lagos, Nigeria, our studio brings a global perspective to
-              local contexts, creating spaces that are both distinctly African
-              and universally refined.
+            <p className="text-sm text-coffee-dark/70 leading-relaxed font-heading">
+              Based in Abuja, Nigeria, our studio brings a global perspective to local contexts, creating spaces that are both distinctly African and universally refined.
             </p>
           </motion.div>
 
@@ -52,15 +38,14 @@ export default function AboutSection({}: AboutSectionProps) {
             className="relative"
           >
             <div className="aspect-[4/5] overflow-hidden">
-              <motion.img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+              <img
+                src="/images/about.jpg"
                 alt="Nerospace Designs studio"
                 className="w-full h-full object-cover"
-                style={{ y }}
                 loading="lazy"
               />
             </div>
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 md:w-48 md:h-48 border border-earthen-brown/30 -z-10" />
+            <div className="absolute -bottom-6 -left-6 w-32 h-32 md:w-48 md:h-48 border border-coffee-accent/30 -z-10" />
           </motion.div>
         </div>
       </div>
