@@ -123,6 +123,19 @@ body {
   }
 }
 
+.hero-sharp-image {
+  background-size: contain;
+  background-position: center;
+}
+
+@media (max-width: 767px) {
+  .hero-sharp-image {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+}
+
+
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
@@ -131,3 +144,4 @@ body {
   opacity: 0;
   animation: fadeUp 0.8s forwards;
 }
+

@@ -626,7 +626,7 @@ function ProjectManager({
           >
             ← Previous
           </button>
-          <span className="text-sm text-coffee-dark font-heading">
+          <span className="text-sm text-beige-light font-heading">
             Page {adminPage} of {totalPages}
           </span>
           <button

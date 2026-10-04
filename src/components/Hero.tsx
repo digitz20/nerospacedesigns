@@ -133,7 +133,7 @@ export default function Hero() {
           return (
             <div
               key={`blur-${img.id}`}
-              className="absolute inset-0 bg-no-repeat"
+              className="absolute inset-0 bg-no-repeat hidden md:block"
               style={{
                 backgroundImage: `url(${img.url})`,
                 backgroundSize: "cover",
@@ -155,10 +155,9 @@ export default function Hero() {
               <div
                 key={img.id}
                 ref={isActive ? activeSlideRef : null}
-                className="absolute inset-0 bg-no-repeat"
+                className="absolute inset-0 bg-no-repeat hero-sharp-image"
                 style={{
                   backgroundImage: `url(${img.url})`,
-                  backgroundSize: "contain",
                   backgroundPosition: isActive
                     ? `${position.x}% ${position.y}%`
                     : "center",
