@@ -22,6 +22,7 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [lastKnownUpdate, setLastKnownUpdate] = useState<number>(0);
 
   const loadProjects = async (pageNum: number) => {
     setLoading(true);
@@ -42,7 +43,18 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     loadProjects(1);
-  }, []);
+
+    const interval = setInterval(() => {
+      const stored = sessionStorage.getItem("lastProjectUpdate");
+      const timestamp = stored ? Number(stored) : 0;
+      if (timestamp > lastKnownUpdate) {
+        setLastKnownUpdate(timestamp);
+        loadProjects(page);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [lastKnownUpdate, page]);
 
   return (
     <div>

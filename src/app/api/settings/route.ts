@@ -12,8 +12,6 @@ interface Settings {
     whatsapp: string;
     tiktok: string;
     twitter: string;
-    linkedin: string;
-    youtube: string;
     facebook: string;
   };
   siteName: string;
@@ -29,8 +27,6 @@ export async function GET() {
       whatsapp: "",
       tiktok: "",
       twitter: "",
-      linkedin: "",
-      youtube: "",
       facebook: "",
     },
     siteName: "",

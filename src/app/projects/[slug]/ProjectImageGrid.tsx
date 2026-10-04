@@ -18,79 +18,68 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
     return null;
   }
 
-  const first = safeImages[0];
-  const second = safeImages[1] || first;
-  const third = safeImages[2] || first;
-  const fourth = safeImages[3] || safeImages[0];
+  const gridClass =
+    safeImages.length === 1
+      ? "grid-cols-1"
+      : safeImages.length === 2
+        ? "grid-cols-1 md:grid-cols-2"
+        : safeImages.length === 3
+          ? "grid-cols-1 md:grid-cols-12"
+          : "grid-cols-1 md:grid-cols-12";
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 mb-16 md:mb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="md:col-span-8 aspect-[16/9] overflow-hidden cursor-pointer"
-          onClick={() => setLightboxIndex(0)}
-        >
-          <Image
-            src={first}
-            alt={title}
-            width={1200}
-            height={675}
-            className="w-full h-full object-cover"
-            priority
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="md:col-span-4 aspect-[3/4] md:aspect-auto overflow-hidden cursor-pointer"
-          onClick={() => setLightboxIndex(1)}
-        >
-          <Image
-            src={second}
-            alt={`${title} detail`}
-            width={600}
-            height={800}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="md:col-span-4 aspect-[4/3] overflow-hidden cursor-pointer"
-          onClick={() => setLightboxIndex(2)}
-        >
-          <Image
-            src={third}
-            alt={`${title} detail`}
-            width={600}
-            height={450}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="md:col-span-8 aspect-[16/9] overflow-hidden cursor-pointer"
-          onClick={() => setLightboxIndex(0)}
-        >
-          <Image
-            src={fourth}
-            alt={`${title} wide`}
-            width={1200}
-            height={675}
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+      <div className={`grid ${gridClass} gap-4 md:gap-6 mb-16 md:mb-24`}>
+        {safeImages.map((src, index) => {
+          const isFirst = index === 0;
+          const isLast = index === safeImages.length - 1;
+          const colSpan =
+            safeImages.length === 1
+              ? "md:col-span-12"
+              : safeImages.length === 2
+                ? "md:col-span-6"
+                : safeImages.length === 3
+                  ? index === 0
+                    ? "md:col-span-12"
+                    : "md:col-span-6"
+                  : index % 2 === 0
+                    ? "md:col-span-8"
+                    : "md:col-span-4";
+
+          const aspectClass =
+            safeImages.length === 1
+              ? "aspect-[16/9]"
+              : safeImages.length === 2
+                ? "aspect-[4/3]"
+                : safeImages.length === 3
+                  ? index === 0
+                    ? "aspect-[16/9]"
+                    : "aspect-[4/3]"
+                  : index % 2 === 0
+                    ? "aspect-[16/9]"
+                    : "aspect-[3/4]";
+
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className={`${colSpan} ${aspectClass} overflow-hidden cursor-pointer`}
+              onClick={() => setLightboxIndex(index)}
+            >
+              <Image
+                src={src}
+                alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
+                width={1200}
+                height={675}
+                className="w-full h-full object-cover"
+                priority={isFirst}
+              />
+            </motion.div>
+          );
+        })}
       </div>
 
       {lightboxIndex !== null && safeImages.length > 0 && (

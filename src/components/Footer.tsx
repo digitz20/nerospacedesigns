@@ -4,16 +4,66 @@ import { siteConfig } from "@/lib/data";
 import Link from "next/link";
 import { Camera, Pin, MessageCircle, Phone, MapPin, Mail } from "lucide-react";
 
+function TikTokIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 12a4 4 0 1 0 4 4V2" />
+      <path d="M15 12a4 4 0 0 1-4 4V8" />
+    </svg>
+  );
+}
+
+function XIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 4l6.5 8L4 20h2l5.5-7 4.5 7H20l-7-8.5L20 4h-2l-5.5 7L8 4H4z" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const socialLinks = [
     { href: siteConfig.social.instagram, label: "Instagram", icon: Camera },
     { href: siteConfig.social.pinterest, label: "Pinterest", icon: Pin },
     { href: siteConfig.social.whatsapp, label: "WhatsApp", icon: MessageCircle },
-    { href: siteConfig.social.tiktok, label: "TikTok", icon: null },
-    { href: siteConfig.social.twitter, label: "Twitter", icon: null },
-    { href: siteConfig.social.linkedin, label: "LinkedIn", icon: null },
-    { href: siteConfig.social.youtube, label: "YouTube", icon: null },
-    { href: siteConfig.social.facebook, label: "Facebook", icon: null },
+    { href: siteConfig.social.tiktok, label: "TikTok", icon: TikTokIcon },
+    { href: siteConfig.social.twitter, label: "X", icon: XIcon },
+    { href: siteConfig.social.facebook, label: "Facebook", icon: FacebookIcon },
   ].filter((link) => link.href);
 
   return (
@@ -89,7 +139,7 @@ export default function Footer() {
                   aria-label={link.label}
                   className="text-beige-light/60 hover:text-beige-medium transition-colors text-xs font-semibold uppercase tracking-wide"
                 >
-                  {link.icon ? <link.icon size={18} /> : link.label.slice(0, 2)}
+                  {link.icon ? <link.icon size={18} /> : link.label}
                 </Link>
               ))}
             </div>

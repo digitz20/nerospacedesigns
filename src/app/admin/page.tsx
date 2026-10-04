@@ -30,8 +30,6 @@ interface Settings {
     whatsapp: string;
     tiktok: string;
     twitter: string;
-    linkedin: string;
-    youtube: string;
     facebook: string;
   };
   siteName: string;
@@ -219,6 +217,14 @@ function ProjectManager({
     }
   };
 
+  const refreshProjects = useCallback(() => {
+    try {
+      sessionStorage.setItem("lastProjectUpdate", Date.now().toString());
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -237,6 +243,7 @@ function ProjectManager({
         });
         onToast("Project created", "success");
       }
+      refreshProjects();
       await loadProjects(editing ? adminPage : 1);
       resetForm();
     } catch {
@@ -269,6 +276,7 @@ function ProjectManager({
     try {
       await api(`/api/projects/${id}`, { method: "DELETE" });
       onToast("Project deleted", "success");
+      refreshProjects();
       await loadProjects(adminPage);
     } catch {
       onToast("Failed to delete project", "error");
@@ -793,8 +801,6 @@ function SettingsManager({
       whatsapp: "",
       tiktok: "",
       twitter: "",
-      linkedin: "",
-      youtube: "",
       facebook: "",
     },
     siteName: "",
@@ -1010,36 +1016,6 @@ function SettingsManager({
                   setSettings({
                     ...settings,
                     social: { ...settings.social, twitter: e.target.value },
-                  })
-                }
-                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
-                LinkedIn URL
-              </label>
-              <input
-                value={settings.social.linkedin}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    social: { ...settings.social, linkedin: e.target.value },
-                  })
-                }
-                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
-                YouTube URL
-              </label>
-              <input
-                value={settings.social.youtube}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    social: { ...settings.social, youtube: e.target.value },
                   })
                 }
                 className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
