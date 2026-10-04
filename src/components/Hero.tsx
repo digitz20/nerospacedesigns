@@ -14,26 +14,67 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
   visible: true,
 }));
 
-const DISPLAY_DURATION = 60000;
+const DISPLAY_DURATION = 90000;
 const TRANSITION_DURATION = 1500;
-const KEN_BURNS_DURATION = 60000;
 
-const KEN_BURNS_CLASSES = [
-  "hero-ken-burns-1",
-  "hero-ken-burns-2",
-  "hero-ken-burns-3",
-  "hero-ken-burns-4",
-  "hero-ken-burns-5",
-  "hero-ken-burns-6",
-  "hero-ken-burns-7",
-  "hero-ken-burns-8",
-];
+interface Waypoint {
+  x: number;
+  y: number;
+  scale: number;
+}
+
+function randomBetween(min: number, max: number): number {
+  return Math.random() * (max - min) + min;
+}
+
+function generateRandomFlightPath(duration: number): Waypoint[] {
+  const waypoints: Waypoint[] = [];
+  const numWaypoints = 6 + Math.floor(Math.random() * 5);
+
+  let currentX = randomBetween(-3, 3);
+  let currentY = randomBetween(-3, 3);
+  let currentScale = randomBetween(0.9, 1.05);
+
+  waypoints.push({ x: currentX, y: currentY, scale: currentScale });
+
+  const segmentDuration = duration / (numWaypoints - 1);
+
+  for (let i = 1; i < numWaypoints; i++) {
+    const isZoomIn = Math.random() > 0.45;
+
+    if (isZoomIn) {
+      currentScale = randomBetween(1.2, 1.5);
+    } else {
+      currentScale = randomBetween(0.9, 1.05);
+    }
+
+    currentX = randomBetween(-8, 8);
+    currentY = randomBetween(-8, 8);
+
+    waypoints.push({ x: currentX, y: currentY, scale: currentScale });
+  }
+
+  return waypoints;
+}
+
+function lerp(start: number, end: number, t: number): number {
+  return start + (end - start) * t;
+}
+
+function easeInOutSine(t: number): number {
+  return -(Math.cos(Math.PI * t) - 1) / 2;
+}
 
 export default function Hero() {
   const [images] = useState<HeroImage[]>(HERO_IMAGES);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 0.9 });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const activeSlideRef = useRef<HTMLDivElement>(null);
+  const flightPathRef = useRef<Waypoint[]>([]);
+  const animationRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(0);
 
   const visibleImages = images.filter((img) => img.visible);
 
@@ -55,20 +96,62 @@ export default function Hero() {
     };
   }, [visibleImages.length]);
 
+  useEffect(() => {
+    flightPathRef.current = generateRandomFlightPath(DISPLAY_DURATION);
+    startTimeRef.current = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTimeRef.current;
+      const progress = Math.min(elapsed / DISPLAY_DURATION, 1);
+
+      const path = flightPathRef.current;
+      const totalSegments = path.length - 1;
+      const segmentProgress = progress * totalSegments;
+      const segmentIndex = Math.min(Math.floor(segmentProgress), totalSegments - 1);
+      const localProgress = segmentProgress - segmentIndex;
+
+      const easedProgress = easeInOutSine(localProgress);
+
+      const from = path[segmentIndex];
+      const to = path[segmentIndex + 1];
+
+      const x = lerp(from.x, to.x, easedProgress);
+      const y = lerp(from.y, to.y, easedProgress);
+      const scale = lerp(from.scale, to.scale, easedProgress);
+
+      setTransform({ x, y, scale });
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [currentIndex]);
+
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         {visibleImages.length > 0
           ? visibleImages.map((img, index) => {
               const isActive = index === currentIndex;
-              const kenBurnsClass = KEN_BURNS_CLASSES[index % KEN_BURNS_CLASSES.length];
               return (
                 <div
                   key={img.id}
-                  className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kenBurnsClass : ""}`}
+                  ref={isActive ? activeSlideRef : null}
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                   style={{
                     backgroundImage: `url(${img.url})`,
                     opacity: isActive ? 1 : 0,
+                    transform: isActive
+                      ? `translate(${transform.x}%, ${transform.y}%) scale(${transform.scale})`
+                      : "scale(0.9)",
                     transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                     zIndex: isActive ? 1 : 0,
                   }}
