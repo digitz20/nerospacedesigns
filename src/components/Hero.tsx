@@ -15,7 +15,7 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
 }));
 
 const DISPLAY_DURATION = 60000;
-const TRANSITION_DURATION = 2000;
+const TRANSITION_DURATION = 1500;
 const KEN_BURNS_DURATION = 60000;
 
 const KEN_BURNS_CLASSES = [
@@ -25,6 +25,8 @@ const KEN_BURNS_CLASSES = [
   "hero-ken-burns-4",
   "hero-ken-burns-5",
   "hero-ken-burns-6",
+  "hero-ken-burns-7",
+  "hero-ken-burns-8",
 ];
 
 export default function Hero() {
