@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
+import ProjectCard from "@/components/ProjectCard";
 import ServiceCard from "@/components/ServiceCard";
 import AboutSection from "@/components/AboutSection";
 import ProcessTimeline from "@/components/ProcessTimeline";

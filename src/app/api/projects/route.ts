@@ -3,6 +3,7 @@ import { readDataFile, writeDataFile, generateId, generateSlug } from "@/lib/ser
 
 interface Project {
   id: string;
+  slug: string;
   title: string;
   location: string;
   category: string;
