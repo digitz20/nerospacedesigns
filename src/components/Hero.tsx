@@ -8,11 +8,83 @@ interface HeroImage {
   visible: boolean;
 }
 
-const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
-  id: `bg-${String(i + 1).padStart(2, "0")}`,
-  url: `/images/backgrounds/bg-${String(i + 1).padStart(2, "0")}.jpeg`,
-  visible: true,
-}));
+const HERO_IMAGES: HeroImage[] = [
+  {
+    id: "bg-01",
+    url: "https://i.pinimg.com/736x/12/c8/3e/12c83e3d9b9552e57da6a304d359090a.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-02",
+    url: "https://i.pinimg.com/736x/1b/47/c8/1b47c819e74f43e45aba38ff6f6adad8.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-03",
+    url: "https://i.pinimg.com/736x/37/c3/dc/37c3dc32c08915cfc398979d21c8a16d.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-04",
+    url: "https://i.pinimg.com/736x/0a/ed/8b/0aed8b501eccf695066ddadcb545321f.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-05",
+    url: "https://i.pinimg.com/736x/f0/e4/68/f0e4685bdcf05dca0ccefdf4817aa91e.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-06",
+    url: "https://i.pinimg.com/736x/06/d2/ed/06d2edcd64fd8e8995ab1092345cd019.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-07",
+    url: "https://i.pinimg.com/736x/e5/f4/bd/e5f4bdaad8908646673a2a965327477b.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-08",
+    url: "https://i.pinimg.com/736x/39/19/d4/3919d48146d59d45cc20d23c87abfa61.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-09",
+    url: "https://i.pinimg.com/1200x/5f/c1/9d/5fc19d342f9f62c95ba706d55b9c8758.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-10",
+    url: "https://i.pinimg.com/1200x/30/cc/70/30cc70b7d3ddb081f9c86a84aca8029c.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-11",
+    url: "https://i.pinimg.com/1200x/60/96/a8/6096a8fb96f930e10afd9db17a1362d7.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-12",
+    url: "https://i.pinimg.com/736x/e9/5a/45/e95a45e655d77b5e648b550b2988b980.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-13",
+    url: "https://i.pinimg.com/1200x/09/d0/64/09d064b8eddaa2572f9b7da61b9114cf.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-14",
+    url: "https://i.pinimg.com/736x/98/e6/81/98e681c8d1542d5c9efba44e8947b2b5.jpg",
+    visible: true,
+  },
+  {
+    id: "bg-15",
+    url: "https://i.pinimg.com/736x/1f/4e/ca/1f4eca63571cef2ae62f5c5354cb8856.jpg",
+    visible: true,
+  },
+];
 
 const DISPLAY_DURATION = 60000;
 const TRANSITION_DURATION = 1500;

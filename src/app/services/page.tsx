@@ -77,8 +77,8 @@ export default function ServicesPage() {
             </div>
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="/images/services-hero.jpg"
-                alt="Interior design services"
+                src="https://i.pinimg.com/736x/ef/c3/e1/efc3e12c2775ff5a1d5c52c0b3fa9031.jpg"
+                alt="Bespoke interior design"
                 className="w-full h-full object-cover"
               />
             </div>

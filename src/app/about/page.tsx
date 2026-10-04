@@ -58,7 +58,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="aspect-[4/5] overflow-hidden">
               <img
-                src="/images/about.jpg"
+                src="https://i.pinimg.com/736x/3b/ab/34/3bab349ed98fdbecab786df9b4c9ace6.jpg"
                 alt="Nerospace Designs studio"
                 className="w-full h-full object-cover"
               />
