@@ -221,7 +221,7 @@ export default function Hero() {
                     backgroundImage: `url(${img.url})`,
                     backgroundSize: "contain",
                     backgroundPosition: "center",
-                    backgroundColor: "#2A1810",
+                    backgroundColor: "#3A291C",
                     opacity: isActive ? 1 : 0,
                     transform: isActive
                       ? `translate(${transform.x}%, ${transform.y}%)`
