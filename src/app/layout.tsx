@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/data";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Providers from "@/components/Providers";
+import SiteShell from "@/components/SiteShell";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -69,11 +67,7 @@ export default function RootLayout({
       className={`${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body">
-        <Navbar />
-        <Providers>
-          <main className="flex-1">{children}</main>
-        </Providers>
-        <Footer />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );
