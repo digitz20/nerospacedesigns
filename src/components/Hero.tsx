@@ -33,7 +33,7 @@ function generateRandomFlightPath(duration: number): Waypoint[] {
 
   let currentX = randomBetween(-3, 3);
   let currentY = randomBetween(-3, 3);
-  let currentScale = randomBetween(0.9, 1.05);
+  let currentScale = randomBetween(1.2, 1.35);
 
   waypoints.push({ x: currentX, y: currentY, scale: currentScale });
 
@@ -43,9 +43,9 @@ function generateRandomFlightPath(duration: number): Waypoint[] {
     const isZoomIn = Math.random() > 0.45;
 
     if (isZoomIn) {
-      currentScale = randomBetween(1.2, 1.5);
+      currentScale = randomBetween(1.35, 1.7);
     } else {
-      currentScale = randomBetween(0.9, 1.05);
+      currentScale = randomBetween(1.2, 1.35);
     }
 
     currentX = randomBetween(-8, 8);
@@ -69,7 +69,7 @@ export default function Hero() {
   const [images] = useState<HeroImage[]>(HERO_IMAGES);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 0.9 });
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1.2 });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeSlideRef = useRef<HTMLDivElement>(null);
   const flightPathRef = useRef<Waypoint[]>([]);
@@ -148,10 +148,11 @@ export default function Hero() {
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                   style={{
                     backgroundImage: `url(${img.url})`,
+                    backgroundSize: "cover",
                     opacity: isActive ? 1 : 0,
                     transform: isActive
                       ? `translate(${transform.x}%, ${transform.y}%) scale(${transform.scale})`
-                      : "scale(0.9)",
+                      : "scale(1.2)",
                     transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                     zIndex: isActive ? 1 : 0,
                   }}
