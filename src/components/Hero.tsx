@@ -14,7 +14,7 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
   visible: true,
 }));
 
-const DISPLAY_DURATION = 90000;
+const DISPLAY_DURATION = 60000;
 const TRANSITION_DURATION = 1500;
 
 interface Waypoint {
@@ -29,15 +29,13 @@ function randomBetween(min: number, max: number): number {
 
 function generateRandomFlightPath(duration: number): Waypoint[] {
   const waypoints: Waypoint[] = [];
-  const numWaypoints = 6 + Math.floor(Math.random() * 5);
+  const numWaypoints = 8 + Math.floor(Math.random() * 6);
 
   let currentX = randomBetween(-3, 3);
   let currentY = randomBetween(-3, 3);
   let currentScale = randomBetween(1.2, 1.35);
 
   waypoints.push({ x: currentX, y: currentY, scale: currentScale });
-
-  const segmentDuration = duration / (numWaypoints - 1);
 
   for (let i = 1; i < numWaypoints; i++) {
     const isZoomIn = Math.random() > 0.45;
