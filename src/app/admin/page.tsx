@@ -24,7 +24,16 @@ interface Project {
 
 interface Settings {
   contact: { email: string; phone: string; location: string };
-  social: { instagram: string; pinterest: string; whatsapp: string };
+  social: {
+    instagram: string;
+    pinterest: string;
+    whatsapp: string;
+    tiktok: string;
+    twitter: string;
+    linkedin: string;
+    youtube: string;
+    facebook: string;
+  };
   siteName: string;
   tagline: string;
 }
@@ -778,7 +787,16 @@ function SettingsManager({
 }) {
   const [settings, setSettings] = useState<Settings>({
     contact: { email: "", phone: "", location: "" },
-    social: { instagram: "", pinterest: "", whatsapp: "" },
+    social: {
+      instagram: "",
+      pinterest: "",
+      whatsapp: "",
+      tiktok: "",
+      twitter: "",
+      linkedin: "",
+      youtube: "",
+      facebook: "",
+    },
     siteName: "",
     tagline: "",
   });
@@ -921,50 +939,127 @@ function SettingsManager({
           <h3 className="font-heading text-lg text-beige-light font-bold uppercase border-b border-beige-medium/20 pb-2">
             Social Links
           </h3>
-          <div>
-            <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
-              Instagram URL
-            </label>
-            <input
-              value={settings.social.instagram}
-              onChange={(e) =>
-                setSettings({
-                  ...settings,
-                  social: { ...settings.social, instagram: e.target.value },
-                })
-              }
-              className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
-              Pinterest URL
-            </label>
-            <input
-              value={settings.social.pinterest}
-              onChange={(e) =>
-                setSettings({
-                  ...settings,
-                  social: { ...settings.social, pinterest: e.target.value },
-                })
-              }
-              className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
-              WhatsApp URL
-            </label>
-            <input
-              value={settings.social.whatsapp}
-              onChange={(e) =>
-                setSettings({
-                  ...settings,
-                  social: { ...settings.social, whatsapp: e.target.value },
-                })
-              }
-              className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
-            />
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                Instagram URL
+              </label>
+              <input
+                value={settings.social.instagram}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, instagram: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                Pinterest URL
+              </label>
+              <input
+                value={settings.social.pinterest}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, pinterest: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                WhatsApp URL
+              </label>
+              <input
+                value={settings.social.whatsapp}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, whatsapp: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                TikTok URL
+              </label>
+              <input
+                value={settings.social.tiktok}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, tiktok: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                Twitter / X URL
+              </label>
+              <input
+                value={settings.social.twitter}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, twitter: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                LinkedIn URL
+              </label>
+              <input
+                value={settings.social.linkedin}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, linkedin: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                YouTube URL
+              </label>
+              <input
+                value={settings.social.youtube}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, youtube: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                Facebook URL
+              </label>
+              <input
+                value={settings.social.facebook}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    social: { ...settings.social, facebook: e.target.value },
+                  })
+                }
+                className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 

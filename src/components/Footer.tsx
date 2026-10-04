@@ -5,6 +5,17 @@ import Link from "next/link";
 import { Camera, Pin, MessageCircle, Phone, MapPin, Mail } from "lucide-react";
 
 export default function Footer() {
+  const socialLinks = [
+    { href: siteConfig.social.instagram, label: "Instagram", icon: Camera },
+    { href: siteConfig.social.pinterest, label: "Pinterest", icon: Pin },
+    { href: siteConfig.social.whatsapp, label: "WhatsApp", icon: MessageCircle },
+    { href: siteConfig.social.tiktok, label: "TikTok", icon: null },
+    { href: siteConfig.social.twitter, label: "Twitter", icon: null },
+    { href: siteConfig.social.linkedin, label: "LinkedIn", icon: null },
+    { href: siteConfig.social.youtube, label: "YouTube", icon: null },
+    { href: siteConfig.social.facebook, label: "Facebook", icon: null },
+  ].filter((link) => link.href);
+
   return (
     <footer className="bg-coffee-deep py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
@@ -69,33 +80,18 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex items-center gap-6 mt-6">
-              <Link
-                href={siteConfig.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="text-beige-light/60 hover:text-beige-medium transition-colors"
-              >
-                <Camera size={18} />
-              </Link>
-              <Link
-                href={siteConfig.social.pinterest}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Pinterest"
-                className="text-beige-light/60 hover:text-beige-medium transition-colors"
-              >
-                <Pin size={18} />
-              </Link>
-              <Link
-                href={siteConfig.social.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="text-beige-light/60 hover:text-beige-medium transition-colors"
-              >
-                <MessageCircle size={18} />
-              </Link>
+              {socialLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="text-beige-light/60 hover:text-beige-medium transition-colors text-xs font-semibold uppercase tracking-wide"
+                >
+                  {link.icon ? <link.icon size={18} /> : link.label.slice(0, 2)}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

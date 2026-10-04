@@ -9,6 +9,11 @@ export const siteConfig = {
     instagram: "https://instagram.com/nerospacedesigns",
     pinterest: "https://pinterest.com/nerospacedesigns",
     whatsapp: "https://wa.me/2347048236782",
+    tiktok: "https://tiktok.com/@nerospacedesigns",
+    twitter: "https://x.com/nerospacedesigns",
+    linkedin: "https://linkedin.com/company/nerospacedesigns",
+    youtube: "https://youtube.com/@nerospacedesigns",
+    facebook: "https://facebook.com/nerospacedesigns",
   },
   ogImage: "/images/backgrounds/bg-01.jpeg",
 };

@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const projects = getProjects();
+  const projects = await getProjects();
   return projects.map((project) => ({
     slug: project.slug,
   }));
@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const projects = getProjects();
+  const projects = await getProjects();
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ProjectDetail({ params }: PageProps) {
   const { slug } = await params;
-  const projects = getProjects();
+  const projects = await getProjects();
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {

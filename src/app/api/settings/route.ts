@@ -3,7 +3,16 @@ import { readDataFile, writeDataFile } from "@/lib/server";
 
 interface Settings {
   contact: { email: string; phone: string; location: string };
-  social: { instagram: string; pinterest: string; whatsapp: string };
+  social: {
+    instagram: string;
+    pinterest: string;
+    whatsapp: string;
+    tiktok: string;
+    twitter: string;
+    linkedin: string;
+    youtube: string;
+    facebook: string;
+  };
   siteName: string;
   tagline: string;
 }
@@ -11,7 +20,16 @@ interface Settings {
 export async function GET() {
   const settings = readDataFile<Settings>("settings.json", {
     contact: { email: "", phone: "", location: "" },
-    social: { instagram: "", pinterest: "", whatsapp: "" },
+    social: {
+      instagram: "",
+      pinterest: "",
+      whatsapp: "",
+      tiktok: "",
+      twitter: "",
+      linkedin: "",
+      youtube: "",
+      facebook: "",
+    },
     siteName: "",
     tagline: "",
   });
