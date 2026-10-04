@@ -5,13 +5,9 @@ import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
-import ServiceCard from "@/components/ServiceCard";
-import AboutSection from "@/components/AboutSection";
-import ProcessTimeline from "@/components/ProcessTimeline";
-import Testimonial from "@/components/Testimonial";
-import CTASection from "@/components/CTASection";
-import Marquee from "@/components/Marquee";
-import { services, processSteps, servicesHeading } from "@/lib/data";
+import ContactForm from "@/components/ContactForm";
+import { siteConfig } from "@/lib/data";
+import { Mail, Phone, MapPin, Ruler, Sofa, Box, Hammer, Paintbrush, ShoppingCart, ClipboardList, PenTool, Home, ExternalLink } from "lucide-react";
 
 interface Project {
   id: string;
@@ -33,7 +29,78 @@ interface Testimonial {
   role: string;
 }
 
-export default function Home() {
+const services = [
+  {
+    title: "Consultation and site assessment",
+    description: "We visit, measure and listen, then agree a clear brief and budget.",
+    icon: Ruler,
+  },
+  {
+    title: "Interior design and space planning",
+    description: "Layouts that make every room work harder and feel larger.",
+    icon: Sofa,
+  },
+  {
+    title: "3D visualization",
+    description: "See your finished room in realistic renders before anything is built.",
+    icon: Box,
+  },
+  {
+    title: "Technical drawings",
+    description: "Precise plans and details your contractors can build from.",
+    icon: ClipboardList,
+  },
+  {
+    title: "Custom furniture",
+    description: "Beds, wardrobes, kitchens and shelving made to fit your space.",
+    icon: Hammer,
+  },
+  {
+    title: "Sourcing and procurement",
+    description: "Materials, lighting and furnishings bought from trusted suppliers.",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Project management",
+    description: "We coordinate trades, timelines and quality so you don't have to.",
+    icon: PenTool,
+  },
+  {
+    title: "Styling and finishing",
+    description: "Art, textiles and accessories that bring the room together.",
+    icon: Paintbrush,
+  },
+  {
+    title: "Renovations",
+    description: "Full remodels of kitchens, living areas, bathrooms and more.",
+    icon: Home,
+  },
+];
+
+const processSteps = [
+  {
+    title: "Consult",
+    description: "We visit your space and agree the brief.",
+  },
+  {
+    title: "Design",
+    description: "Layouts, materials and a 3D preview.",
+  },
+  {
+    title: "Draw",
+    description: "Technical drawings and a costed plan.",
+  },
+  {
+    title: "Build",
+    description: "Furniture made, trades managed, items sourced.",
+  },
+  {
+    title: "Style",
+    description: "Final touches, then handover.",
+  },
+];
+
+export default function HomePage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
@@ -60,6 +127,231 @@ export default function Home() {
   return (
     <div>
       <Hero />
+
+      <section className="py-24 md:py-32 bg-beige-light">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="max-w-3xl">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-coffee-dark leading-[1.1] mb-6 font-bold uppercase">
+              Rooms that feel like you.
+            </h2>
+            <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
+              Nerospacedesigns is an interior design studio in Abuja. We plan, design and build calm, warm spaces for homes and offices.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
+              >
+                Book a consultation
+              </a>
+              <a
+                href="/projects"
+                className="inline-flex items-center justify-center gap-2 border-2 border-coffee-dark text-coffee-dark px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-coffee-dark hover:text-beige-light font-semibold"
+              >
+                See our work
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 bg-beige-warm">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="max-w-3xl">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-coffee-dark leading-[1.1] mb-6 font-bold uppercase">
+              A studio built around how you live.
+            </h2>
+            <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-6">
+              We start with a visit to your space and a conversation about your routines, your taste and your budget. Then we design every detail, from the floor plan to the last cushion.
+            </p>
+            <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
+              Our work leans on natural timber, stone, soft light and quiet colour. Each piece is chosen to last and to feel right in Nigerian homes and climate.
+            </p>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-coffee-accent hover:text-coffee-dark transition-colors font-semibold"
+            >
+              Talk to the studio
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-beige-light border-y border-coffee-dark/10">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {[
+              { label: "Location", value: "Gwarinpa, Abuja" },
+              { label: "Projects", value: "Homes, offices, shops" },
+              { label: "Service", value: "Concept to handover" },
+              { label: "Workshop", value: "Custom furniture made locally" },
+            ].map((item, i) => (
+              <div key={i}>
+                <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-2 font-semibold">
+                  {item.label}
+                </p>
+                <p className="text-sm md:text-base text-coffee-dark font-heading font-semibold">
+                  {item.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 bg-beige-warm">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <SectionHeading
+            eyebrow="What we do"
+            title="Hire us for one service or let us run the whole project."
+            subtitle=""
+            center
+          />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-16">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="group p-6 border border-coffee-dark/10 hover:border-coffee-dark/30 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center mb-4 group-hover:bg-coffee-accent transition-colors">
+                  <service.icon size={18} />
+                </div>
+                <h3 className="font-heading text-lg text-coffee-dark mb-2 font-bold uppercase tracking-wide">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-coffee-dark/70 leading-relaxed font-heading">
+                  {service.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 bg-beige-light">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <SectionHeading
+            eyebrow="How a project runs"
+            title="Start your project."
+            subtitle="Tell us about your space. We reply within two working days."
+            center
+          />
+
+          <div className="grid md:grid-cols-5 gap-8 md:gap-12 mt-12 md:mt-16">
+            {processSteps.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="text-center"
+              >
+                <div className="w-12 h-12 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center mx-auto mb-4 font-heading text-lg font-bold">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <h3 className="font-heading text-lg text-coffee-dark mb-2 font-bold uppercase tracking-wide">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-coffee-dark/70 leading-relaxed font-heading">
+                  {step.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32 bg-beige-warm">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+            <div>
+              <SectionHeading
+                eyebrow="Contact"
+                title="Talk to the studio"
+                subtitle=""
+              />
+
+              <div className="space-y-6 mt-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0">
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
+                      Visit
+                    </p>
+                    <p className="text-sm text-coffee-dark font-heading font-semibold">
+                      The carpenter, 6th Ave, Gwarinpa,<br />
+                      Abuja, Federal Capital Territory
+                    </p>
+                  </div>
+                </div>
+
+                <a href={`tel:${siteConfig.phone}`} className="flex items-start gap-4 group">
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 group-hover:bg-coffee-accent transition-colors">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
+                      Call or WhatsApp
+                    </p>
+                    <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
+                      {siteConfig.phone}
+                    </p>
+                  </div>
+                </a>
+
+                <a href={`mailto:${siteConfig.email}`} className="flex items-start gap-4 group">
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 group-hover:bg-coffee-accent transition-colors">
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
+                      Email
+                    </p>
+                    <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
+                      {siteConfig.email}
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 group-hover:bg-coffee-accent transition-colors">
+                    <ExternalLink size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
+                      Instagram
+                    </p>
+                    <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
+                      @nerospacedesigns
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-heading text-2xl text-coffee-dark mb-6 font-bold uppercase">
+                Send enquiry
+              </h3>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {projects.length > 0 && (
         <section className="py-24 md:py-32 bg-beige-light">
@@ -93,113 +385,48 @@ export default function Home() {
                 href="/projects"
                 className="group inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-coffee-accent hover:text-coffee-dark transition-colors font-semibold"
               >
-                View All Projects
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
+                View all projects
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
             </div>
           </div>
         </section>
       )}
 
-      <section className="py-24 md:py-32 bg-beige-warm">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-          <SectionHeading
-            eyebrow={servicesHeading.eyebrow}
-            title={servicesHeading.title}
-            subtitle={servicesHeading.subtitle}
-            center
-          />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={service.id}
-                id={service.id}
-                title={service.title}
-                description={service.description}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 md:py-32 bg-coffee-dark">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-          <SectionHeading
-            eyebrow="Design Philosophy"
-            title="Principles We Live By"
-            subtitle=""
-            center
-          />
-
-          <div className="grid md:grid-cols-3 gap-12 md:gap-16">
-            {[
-              {
-                id: "01",
-                title: "FUNCTION",
-                description:
-                  "Every element has a purpose. We believe that beautiful design must first and foremost serve the way you live.",
-              },
-              {
-                id: "02",
-                title: "MATERIALITY",
-                description:
-                  "Materials create atmosphere, texture and character. We select each material with intention and care.",
-              },
-              {
-                id: "03",
-                title: "TIMELESSNESS",
-                description:
-                  "Design should remain relevant beyond trends. We create spaces that will be loved for generations.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="text-center md:text-left"
-              >
-                <div className="w-12 h-12 rounded-full bg-beige-medium flex items-center justify-center mx-auto md:mx-0 mb-6">
-                  <span className="font-heading text-xl text-coffee-dark font-bold">
-                    {item.id}
-                  </span>
-                </div>
-                <h3 className="font-heading text-2xl text-beige-light mb-4 font-bold uppercase tracking-wide">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-beige-light/70 leading-relaxed font-heading">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 md:py-32 bg-beige-light">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-          <ProcessTimeline steps={processSteps} />
-        </div>
-      </section>
-
-      <Marquee />
-
-      <AboutSection />
-
       {testimonials.length > 0 && (
-        <Testimonial
-          quote={testimonials[0].quote}
-          author={testimonials[0].author}
-          role={testimonials[0].role}
-        />
-      )}
+        <section className="py-24 md:py-32 bg-beige-warm">
+          <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
+            <SectionHeading
+              eyebrow="Testimonials"
+              title="What our clients say"
+              subtitle=""
+              center
+            />
 
-      <CTASection />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {testimonials.slice(0, 3).map((t, i) => (
+                <motion.div
+                  key={t.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="p-6 border border-coffee-dark/10 hover:border-coffee-dark/30 transition-colors"
+                >
+                  <p className="text-sm text-coffee-dark leading-relaxed font-heading mb-4">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div className="w-8 h-[1px] bg-coffee-accent/50 mb-3" />
+                  <p className="text-xs text-coffee-dark font-semibold font-heading">{t.author}</p>
+                  {t.role && (
+                    <p className="text-xs text-coffee-muted font-heading">{t.role}</p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
