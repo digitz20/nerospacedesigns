@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getSql, ensureSchema } from "@/lib/database";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface ProjectRow {
   id: string;
   title: string;
@@ -72,7 +75,7 @@ export async function GET(
         year,
         description,
         images,
-        aspect_ratio AS aspectRatio
+        aspect_ratio
       FROM projects
       WHERE id = ${id}
       LIMIT 1

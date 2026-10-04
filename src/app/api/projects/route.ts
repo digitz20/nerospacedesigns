@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { generateId, generateSlug } from "@/lib/server";
 import { getSql, ensureSchema } from "@/lib/database";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface Project {
   id: string;
   slug: string;

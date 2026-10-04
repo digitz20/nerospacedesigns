@@ -12,6 +12,16 @@ interface ProjectImageGridProps {
 
 export default function ProjectImageGrid({ images, title }: ProjectImageGridProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const safeImages = images.filter((src) => src && src.trim() !== "");
+
+  if (safeImages.length === 0) {
+    return null;
+  }
+
+  const first = safeImages[0];
+  const second = safeImages[1] || first;
+  const third = safeImages[2] || first;
+  const fourth = safeImages[3] || safeImages[0];
 
   return (
     <>
@@ -25,7 +35,7 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
           onClick={() => setLightboxIndex(0)}
         >
           <Image
-            src={images[0]}
+            src={first}
             alt={title}
             width={1200}
             height={675}
@@ -42,7 +52,7 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
           onClick={() => setLightboxIndex(1)}
         >
           <Image
-            src={images[1]}
+            src={second}
             alt={`${title} detail`}
             width={600}
             height={800}
@@ -58,7 +68,7 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
           onClick={() => setLightboxIndex(2)}
         >
           <Image
-            src={images[2]}
+            src={third}
             alt={`${title} detail`}
             width={600}
             height={450}
@@ -74,7 +84,7 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
           onClick={() => setLightboxIndex(0)}
         >
           <Image
-            src={images[3]}
+            src={fourth}
             alt={`${title} wide`}
             width={1200}
             height={675}
@@ -83,9 +93,9 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
         </motion.div>
       </div>
 
-      {lightboxIndex !== null && (
+      {lightboxIndex !== null && safeImages.length > 0 && (
         <Lightbox
-          images={images}
+          images={safeImages}
           currentIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
           onNavigate={setLightboxIndex}

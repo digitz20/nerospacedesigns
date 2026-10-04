@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { readDataFile, writeDataFile } from "@/lib/server";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface Settings {
   contact: { email: string; phone: string; location: string };
   social: {
