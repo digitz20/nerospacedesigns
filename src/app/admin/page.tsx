@@ -237,7 +237,7 @@ function ProjectManager({
         });
         onToast("Project created", "success");
       }
-      await loadProjects(adminPage);
+      await loadProjects(editing ? adminPage : 1);
       resetForm();
     } catch {
       onToast("Failed to save project", "error");
@@ -268,8 +268,8 @@ function ProjectManager({
     if (!confirm("Are you sure you want to delete this project?")) return;
     try {
       await api(`/api/projects/${id}`, { method: "DELETE" });
-      setProjects((prev) => prev.filter((p) => p.id !== id));
       onToast("Project deleted", "success");
+      await loadProjects(adminPage);
     } catch {
       onToast("Failed to delete project", "error");
     }

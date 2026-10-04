@@ -74,7 +74,7 @@ export default function ProjectImageGrid({ images, title }: ProjectImageGridProp
           onClick={() => setLightboxIndex(0)}
         >
           <Image
-            src={images[0]}
+            src={images[3]}
             alt={`${title} wide`}
             width={1200}
             height={675}
