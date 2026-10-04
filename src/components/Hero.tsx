@@ -15,7 +15,14 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
 }));
 
 const DISPLAY_DURATION = 30000;
-const TRANSITION_DURATION = 1500;
+const TRANSITION_DURATION = 2000;
+const KEN_BURNS_DURATION = 30000;
+
+const KEN_BURNS_CLASSES = [
+  "hero-ken-burns-1",
+  "hero-ken-burns-2",
+  "hero-ken-burns-3",
+];
 
 export default function Hero() {
   const [images] = useState<HeroImage[]>(HERO_IMAGES);
@@ -49,22 +56,24 @@ export default function Hero() {
         {visibleImages.length > 0
           ? visibleImages.map((img, index) => {
               const isActive = index === currentIndex;
+              const kenBurnsClass = KEN_BURNS_CLASSES[index % KEN_BURNS_CLASSES.length];
               return (
                 <div
                   key={img.id}
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  className={`absolute inset-0 bg-cover bg-center bg-no-repeat ${isActive ? kenBurnsClass : ""}`}
                   style={{
                     backgroundImage: `url(${img.url})`,
                     opacity: isActive ? 1 : 0,
+                    filter: isActive ? "blur(1px)" : "blur(0px)",
                     transform: isActive ? "scale(1.05)" : "scale(1)",
-                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out, transform ${TRANSITION_DURATION}ms ease-in-out`,
+                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out, transform ${TRANSITION_DURATION}ms ease-in-out, filter ${TRANSITION_DURATION}ms ease-in-out`,
                     zIndex: isActive ? 1 : 0,
                   }}
                 />
               );
             })
           : null}
-        <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/60 via-coffee-deep/40 to-coffee-deep/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/50 via-coffee-deep/30 to-coffee-deep/70" />
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 text-center">

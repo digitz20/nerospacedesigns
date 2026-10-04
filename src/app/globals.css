@@ -123,6 +123,21 @@ body {
   }
 }
 
+@keyframes kenBurns1 {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.15) translate(-2%, -1%); }
+}
+
+@keyframes kenBurns2 {
+  0% { transform: scale(1.1) translate(-1%, 0); }
+  100% { transform: scale(1) translate(1%, -1%); }
+}
+
+@keyframes kenBurns3 {
+  0% { transform: scale(1) translate(1%, 1%); }
+  100% { transform: scale(1.12) translate(-1%, 0); }
+}
+
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
@@ -130,4 +145,16 @@ body {
 .animate-fadeUp {
   opacity: 0;
   animation: fadeUp 0.8s forwards;
+}
+
+.hero-ken-burns-1 {
+  animation: kenBurns1 30s ease-out forwards;
+}
+
+.hero-ken-burns-2 {
+  animation: kenBurns2 30s ease-out forwards;
+}
+
+.hero-ken-burns-3 {
+  animation: kenBurns3 30s ease-out forwards;
 }
