@@ -122,7 +122,7 @@ export default function Footer() {
                 </span>
               </a>
               <a
-                href={`tel:${siteConfig.phone}`}
+                href={siteConfig.social.whatsapp}
                 className="flex items-center gap-3 group"
               >
                 <div className="w-8 h-8 rounded-full bg-beige-medium/20 text-beige-medium flex items-center justify-center group-hover:bg-coffee-accent group-hover:text-beige-light transition-colors">

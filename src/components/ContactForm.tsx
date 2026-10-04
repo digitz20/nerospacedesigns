@@ -62,10 +62,10 @@ export default function ContactForm() {
                 <Phone size={18} className="text-coffee-accent mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs text-coffee-muted tracking-wide uppercase mb-1 font-semibold">
-                    Phone
+                    WhatsApp
                   </p>
                   <a
-                    href={`tel:${siteConfig.phone}`}
+                    href={siteConfig.social.whatsapp}
                     className="text-sm text-coffee-dark hover:text-coffee-accent transition-colors font-heading"
                   >
                     {siteConfig.phone}

@@ -294,13 +294,13 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <a href={`tel:${siteConfig.phone}`} className="flex items-start gap-4 group">
+                <a href={siteConfig.social.whatsapp} className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 group-hover:bg-coffee-accent transition-colors">
                     <Phone size={18} />
                   </div>
                   <div>
                     <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
-                      Call or WhatsApp
+                      WhatsApp
                     </p>
                     <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
                       {siteConfig.phone}

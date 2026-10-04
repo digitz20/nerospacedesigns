@@ -34,9 +34,9 @@ export default function ContactPage() {
                 icon: Mail,
               },
               {
-                label: "Phone",
+                label: "WhatsApp",
                 value: siteConfig.phone,
-                href: `tel:${siteConfig.phone.replace(/\s/g, "")}`,
+                href: siteConfig.social.whatsapp,
                 icon: Phone,
               },
               {

@@ -137,11 +137,11 @@ export default function Hero() {
               className="absolute inset-0 bg-no-repeat"
               style={{
                 backgroundImage: `url(${img.url})`,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
                 backgroundPosition: "center",
-                opacity: isActive ? 0.5 : 0,
-                filter: "blur(20px)",
-                transform: "scale(1.08)",
+                opacity: isActive ? 0.6 : 0,
+                filter: "blur(30px) brightness(0.7)",
+                transform: "scale(1.05)",
                 transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                 zIndex: isActive ? 1 : 0,
               }}
