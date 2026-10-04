@@ -139,7 +139,7 @@ export default function Hero() {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 opacity: isActive ? 0.5 : 0,
-                filter: "blur(18px) brightness(0.7)",
+                filter: "blur(25px) brightness(0.7)",
                 transform: "scale(1.05)",
                 transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                 zIndex: isActive ? 1 : 0,
