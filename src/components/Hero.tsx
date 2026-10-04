@@ -58,7 +58,7 @@ export default function Hero() {
   const [images] = useState<HeroImage[]>(HERO_IMAGES);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [position, setPosition] = useState({ x: 50, y: 50 });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeSlideRef = useRef<HTMLDivElement>(null);
   const flightPathRef = useRef<Waypoint[]>([]);
@@ -106,9 +106,8 @@ export default function Hero() {
 
       const x = lerp(from.x, to.x, easedProgress);
       const y = lerp(from.y, to.y, easedProgress);
-      const scale = lerp(from.scale, to.scale, easedProgress);
 
-      setTransform({ x, y, scale });
+      setPosition({ x: 50 + x, y: 50 + y });
 
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
@@ -139,8 +138,8 @@ export default function Hero() {
                 backgroundImage: `url(${img.url})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                opacity: isActive ? 0.6 : 0,
-                filter: "blur(30px) brightness(0.7)",
+                opacity: isActive ? 0.5 : 0,
+                filter: "blur(15px) brightness(0.7)",
                 transform: "scale(1.05)",
                 transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                 zIndex: isActive ? 1 : 0,
@@ -160,11 +159,10 @@ export default function Hero() {
                 style={{
                   backgroundImage: `url(${img.url})`,
                   backgroundSize: "contain",
-                  backgroundPosition: "center",
+                  backgroundPosition: isActive
+                    ? `${position.x}% ${position.y}%`
+                    : "center",
                   opacity: isActive ? 1 : 0,
-                  transform: isActive
-                    ? `translate(${transform.x}%, ${transform.y}%)`
-                    : "translate(0, 0)",
                   filter: "blur(0px)",
                   transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                   zIndex: isActive ? 2 : 0,
