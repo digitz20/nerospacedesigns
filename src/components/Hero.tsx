@@ -22,6 +22,9 @@ const KEN_BURNS_CLASSES = [
   "hero-ken-burns-1",
   "hero-ken-burns-2",
   "hero-ken-burns-3",
+  "hero-ken-burns-4",
+  "hero-ken-burns-5",
+  "hero-ken-burns-6",
 ];
 
 export default function Hero() {
@@ -64,9 +67,8 @@ export default function Hero() {
                   style={{
                     backgroundImage: `url(${img.url})`,
                     opacity: isActive ? 1 : 0,
-                    filter: isActive ? "blur(1px)" : "blur(0px)",
-                    transform: isActive ? "scale(1.05)" : "scale(1)",
-                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out, transform ${TRANSITION_DURATION}ms ease-in-out, filter ${TRANSITION_DURATION}ms ease-in-out`,
+                    transform: isActive ? "scale(1.15)" : "scale(1)",
+                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out, transform ${TRANSITION_DURATION}ms ease-in-out`,
                     zIndex: isActive ? 1 : 0,
                   }}
                 />
