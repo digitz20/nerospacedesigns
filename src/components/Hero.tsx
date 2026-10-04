@@ -8,14 +8,14 @@ interface HeroImage {
   visible: boolean;
 }
 
-const HERO_IMAGES: HeroImage[] = Array.from({ length: 20 }, (_, i) => ({
+const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
   id: `bg-${String(i + 1).padStart(2, "0")}`,
   url: `/images/backgrounds/bg-${String(i + 1).padStart(2, "0")}.jpeg`,
   visible: true,
 }));
 
-const DISPLAY_DURATION = 5000;
-const TRANSITION_DURATION = 600;
+const DISPLAY_DURATION = 30000;
+const TRANSITION_DURATION = 1500;
 
 export default function Hero() {
   const [images] = useState<HeroImage[]>(HERO_IMAGES);
