@@ -1,23 +1,8 @@
 import { NextResponse } from "next/server";
-import { writeDataFile, readDataFile, sanitizeFilename } from "@/lib/server";
-import fs from "fs";
-import path from "path";
+import { getSql, ensureSchema } from "@/lib/database";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "images", "admin-uploads");
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
-
-function ensureUploadDir() {
-  try {
-    if (!fs.existsSync(UPLOAD_DIR)) {
-      fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-    }
-  } catch (error) {
-    console.error("Upload dir error:", error);
-    return false;
-  }
-  return true;
-}
 
 export async function POST(request: Request) {
   try {
@@ -42,33 +27,22 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!ensureUploadDir()) {
-      return NextResponse.json(
-        { error: "Server misconfigured: cannot create upload directory" },
-        { status: 500 }
-      );
-    }
+    await ensureSchema();
 
+    const db = getSql();
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const originalName = file.name;
-    const safeName = sanitizeFilename(originalName);
-    const finalName = `${Date.now()}-${safeName}`;
-    const filePath = path.join(UPLOAD_DIR, finalName);
+    const id = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+    const mimeType = file.type || "image/jpeg";
 
-    try {
-      fs.writeFileSync(filePath, buffer);
-    } catch (error) {
-      console.error("File write error:", error);
-      return NextResponse.json(
-        { error: "Failed to save uploaded file" },
-        { status: 500 }
-      );
-    }
+    await db`
+      INSERT INTO admin_images (id, filename, mime_type, data)
+      VALUES (${id}, ${file.name}, ${mimeType}, ${buffer})
+    `;
 
-    const publicUrl = `/images/admin-uploads/${finalName}`;
+    const publicUrl = `/api/images/${id}`;
 
-    return NextResponse.json({ url: publicUrl, filename: finalName });
+    return NextResponse.json({ url: publicUrl, filename: file.name });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });

@@ -1,5 +1,22 @@
 import { NextResponse } from "next/server";
-import { readDataFile, writeDataFile } from "@/lib/server";
+import { getSql, ensureSchema } from "@/lib/database";
+
+interface ProjectRow {
+  id: string;
+  title: string;
+  location: string;
+  category: string;
+  year: string;
+  description: string;
+  images: string[];
+  aspect_ratio: string;
+  client_name: string;
+  project_size: string;
+  budget_range: string;
+  timeline: string;
+  status: string;
+  featured: boolean;
+}
 
 interface Project {
   id: string;
@@ -10,27 +27,69 @@ interface Project {
   description: string;
   images: string[];
   aspectRatio: string;
-  details?: Record<string, unknown>;
+  clientName?: string;
+  projectSize?: string;
+  budgetRange?: string;
+  timeline?: string;
+  status?: string;
+  featured?: boolean;
 }
 
-function getProjectData(id: string): { projects: Project[]; project: Project | null } {
-  const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-  const project = data.projects.find((p) => p.id === id) || null;
-  return { project, projects: data.projects };
+function toProject(row: ProjectRow): Project {
+  return {
+    id: row.id,
+    title: row.title,
+    location: row.location,
+    category: row.category,
+    year: row.year,
+    description: row.description,
+    images: Array.isArray(row.images) ? row.images : [],
+    aspectRatio: row.aspect_ratio,
+    clientName: row.client_name || undefined,
+    projectSize: row.project_size || undefined,
+    budgetRange: row.budget_range || undefined,
+    timeline: row.timeline || undefined,
+    status: row.status || undefined,
+    featured: Boolean(row.featured),
+  };
 }
 
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
-  const { project } = getProjectData(id);
+  try {
+    await ensureSchema();
+    const { id } = await params;
 
-  if (!project) {
-    return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    const db = getSql();
+    const rows = (await db`
+      SELECT
+        id,
+        title,
+        location,
+        category,
+        year,
+        description,
+        images,
+        aspect_ratio AS aspectRatio
+      FROM projects
+      WHERE id = ${id}
+      LIMIT 1
+    `) as ProjectRow[];
+
+    const row = rows[0];
+    if (!row) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+
+    const project = toProject(row);
+
+    return NextResponse.json({ project });
+  } catch (error) {
+    console.error("GET /api/projects/[id] error:", error);
+    return NextResponse.json({ error: "Failed to load project" }, { status: 500 });
   }
-
-  return NextResponse.json({ project });
 }
 
 export async function PUT(
@@ -46,29 +105,43 @@ export async function PUT(
       return NextResponse.json({ error: "Project data required" }, { status: 400 });
     }
 
-    try {
-      const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-      const index = data.projects.findIndex((p) => p.id === id);
+    await ensureSchema();
 
-      if (index === -1) {
-        return NextResponse.json({ error: "Project not found" }, { status: 404 });
-      }
+    const db = getSql();
+    const rows = (await db`
+      UPDATE projects
+      SET
+        title = ${project.title ?? ""},
+        location = ${project.location ?? ""},
+        category = ${project.category ?? "Residential"},
+        year = ${project.year ?? ""},
+        description = ${project.description ?? ""},
+        images = ${Array.isArray(project.images) ? project.images : []},
+        aspect_ratio = ${project.aspectRatio ?? "aspect-[4/5]"},
+        client_name = ${project.clientName ?? ""},
+        project_size = ${project.projectSize ?? ""},
+        budget_range = ${project.budgetRange ?? ""},
+        timeline = ${project.timeline ?? ""},
+        status = ${project.status ?? "Planning"},
+        featured = ${Boolean(project.featured)},
+        updated_at = NOW()
+      WHERE id = ${id}
+      RETURNING *
+    `) as ProjectRow[];
 
-      data.projects[index] = { ...data.projects[index], ...project };
-      writeDataFile("projects.json", data);
+    const updated = rows[0];
 
-      return NextResponse.json({ success: true, project: data.projects[index] });
-    } catch (fsError) {
-      console.error("Project update filesystem error:", fsError);
-      return NextResponse.json(
-        {
-          error: "Failed to update project. In production, you must use a database instead of local files because Vercel serverless functions have a read-only filesystem.",
-        },
-        { status: 500 }
-      );
+    if (!updated) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
-  } catch {
-    return NextResponse.json({ error: "Failed to update" }, { status: 500 });
+
+    return NextResponse.json({
+      success: true,
+      project: toProject(updated),
+    });
+  } catch (error) {
+    console.error("PUT /api/projects/[id] error:", error);
+    return NextResponse.json({ error: "Failed to update project" }, { status: 500 });
   }
 }
 
@@ -77,25 +150,23 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    await ensureSchema();
     const { id } = await params;
-    try {
-      const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-      const project = data.projects.find((p) => p.id === id);
 
-      data.projects = data.projects.filter((p) => p.id !== id);
-      writeDataFile("projects.json", data);
+    const db = getSql();
+    const rows = (await db`
+      DELETE FROM projects
+      WHERE id = ${id}
+      RETURNING id
+    `) as { id: string }[];
 
-      return NextResponse.json({ success: true, projects: data.projects });
-    } catch (fsError) {
-      console.error("Project delete filesystem error:", fsError);
-      return NextResponse.json(
-        {
-          error: "Failed to delete project. In production, you must use a database instead of local files because Vercel serverless functions have a read-only filesystem.",
-        },
-        { status: 500 }
-      );
+    if (rows.length === 0) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
-  } catch {
-    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("DELETE /api/projects/[id] error:", error);
+    return NextResponse.json({ error: "Failed to delete project" }, { status: 500 });
   }
 }
