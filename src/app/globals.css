@@ -125,114 +125,194 @@ body {
 
 @keyframes kenBurns1 {
   0% { transform: scale(1) translate(0, 0); }
-  10% { transform: scale(1.4) translate(-5%, -3%); }
-  20% { transform: scale(1.15) translate(-10%, 2%); }
-  30% { transform: scale(1.5) translate(-3%, 8%); }
-  40% { transform: scale(1.1) translate(4%, 5%); }
-  50% { transform: scale(1.45) translate(10%, -2%); }
-  60% { transform: scale(1.2) translate(6%, -8%); }
-  70% { transform: scale(1.35) translate(-2%, -5%); }
-  80% { transform: scale(1.05) translate(-8%, 3%); }
-  90% { transform: scale(1.4) translate(3%, 6%); }
-  100% { transform: scale(1.25) translate(-4%, -4%); }
+  5% { transform: scale(1.15) translate(-3%, -2%); }
+  10% { transform: scale(1.4) translate(-8%, -5%); }
+  15% { transform: scale(1.55) translate(-12%, 2%); }
+  20% { transform: scale(1.5) translate(-8%, 8%); }
+  25% { transform: scale(1.35) translate(-2%, 12%); }
+  30% { transform: scale(1.2) translate(5%, 8%); }
+  35% { transform: scale(1.15) translate(10%, 3%); }
+  40% { transform: scale(1.25) translate(12%, -3%); }
+  45% { transform: scale(1.4) translate(8%, -8%); }
+  50% { transform: scale(1.55) translate(3%, -12%); }
+  55% { transform: scale(1.5) translate(-3%, -8%); }
+  60% { transform: scale(1.35) translate(-8%, -2%); }
+  65% { transform: scale(1.2) translate(-12%, 3%); }
+  70% { transform: scale(1.15) translate(-10%, 8%); }
+  75% { transform: scale(1.25) translate(-5%, 12%); }
+  80% { transform: scale(1.4) translate(2%, 10%); }
+  85% { transform: scale(1.55) translate(8%, 5%); }
+  90% { transform: scale(1.5) translate(12%, -2%); }
+  95% { transform: scale(1.35) translate(8%, -6%); }
+  100% { transform: scale(1.2) translate(3%, -10%); }
 }
 
 @keyframes kenBurns2 {
   0% { transform: scale(1.2) translate(5%, 3%); }
-  10% { transform: scale(1.05) translate(10%, -4%); }
-  20% { transform: scale(1.45) translate(8%, 6%); }
-  30% { transform: scale(1.15) translate(-4%, 10%); }
-  40% { transform: scale(1.35) translate(-10%, -3%); }
-  50% { transform: scale(1) translate(-6%, -8%); }
-  60% { transform: scale(1.4) translate(2%, -5%); }
-  70% { transform: scale(1.1) translate(8%, 2%); }
-  80% { transform: scale(1.3) translate(5%, 8%); }
-  90% { transform: scale(1.15) translate(-5%, -6%); }
-  100% { transform: scale(1.25) translate(-8%, 4%); }
+  5% { transform: scale(1.35) translate(10%, -2%); }
+  10% { transform: scale(1.5) translate(12%, -7%); }
+  15% { transform: scale(1.55) translate(8%, -12%); }
+  20% { transform: scale(1.4) translate(2%, -10%); }
+  25% { transform: scale(1.25) translate(-3%, -6%); }
+  30% { transform: scale(1.15) translate(-8%, -2%); }
+  35% { transform: scale(1.2) translate(-12%, 3%); }
+  40% { transform: scale(1.35) translate(-10%, 8%); }
+  45% { transform: scale(1.5) translate(-5%, 12%); }
+  50% { transform: scale(1.55) translate(2%, 10%); }
+  55% { transform: scale(1.4) translate(8%, 5%); }
+  60% { transform: scale(1.25) translate(12%, 0); }
+  65% { transform: scale(1.15) translate(10%, -5%); }
+  70% { transform: scale(1.2) translate(5%, -10%); }
+  75% { transform: scale(1.35) translate(-2%, -12%); }
+  80% { transform: scale(1.5) translate(-8%, -8%); }
+  85% { transform: scale(1.55) translate(-12%, -2%); }
+  90% { transform: scale(1.4) translate(-10%, 5%); }
+  95% { transform: scale(1.25) translate(-5%, 10%); }
+  100% { transform: scale(1.15) translate(3%, 12%); }
 }
 
 @keyframes kenBurns3 {
   0% { transform: scale(1.15) translate(-6%, 4%); }
-  10% { transform: scale(1.35) translate(-2%, 10%); }
-  20% { transform: scale(1.05) translate(6%, 8%); }
-  30% { transform: scale(1.45) translate(10%, -3%); }
-  40% { transform: scale(1.2) translate(5%, -10%); }
-  50% { transform: scale(1.4) translate(-5%, -6%); }
-  60% { transform: scale(1.1) translate(-10%, 2%); }
-  70% { transform: scale(1.3) translate(-8%, -8%); }
-  80% { transform: scale(1.05) translate(3%, 5%); }
-  90% { transform: scale(1.35) translate(8%, -2%); }
-  100% { transform: scale(1.2) translate(-3%, -10%); }
+  5% { transform: scale(1.05) translate(-10%, 8%); }
+  10% { transform: scale(1.2) translate(-12%, 12%); }
+  15% { transform: scale(1.4) translate(-8%, 10%); }
+  20% { transform: scale(1.55) translate(-2%, 6%); }
+  25% { transform: scale(1.6) translate(5%, 2%); }
+  30% { transform: scale(1.5) translate(10%, -3%); }
+  35% { transform: scale(1.35) translate(12%, -8%); }
+  40% { transform: scale(1.2) translate(8%, -12%); }
+  45% { transform: scale(1.15) translate(3%, -10%); }
+  50% { transform: scale(1.3) translate(-2%, -6%); }
+  55% { transform: scale(1.5) translate(-6%, -2%); }
+  60% { transform: scale(1.6) translate(-10%, 3%); }
+  65% { transform: scale(1.5) translate(-12%, 8%); }
+  70% { transform: scale(1.35) translate(-8%, 12%); }
+  75% { transform: scale(1.2) translate(-2%, 10%); }
+  80% { transform: scale(1.15) translate(5%, 5%); }
+  85% { transform: scale(1.3) translate(10%, 0); }
+  90% { transform: scale(1.5) translate(12%, -5%); }
+  95% { transform: scale(1.55) translate(8%, -10%); }
+  100% { transform: scale(1.4) translate(2%, -12%); }
 }
 
 @keyframes kenBurns4 {
   0% { transform: scale(1.3) translate(4%, -5%); }
-  10% { transform: scale(1.1) translate(8%, 2%); }
-  20% { transform: scale(1.4) translate(10%, -8%); }
-  30% { transform: scale(1.05) translate(3%, -10%); }
-  40% { transform: scale(1.35) translate(-6%, -4%); }
-  50% { transform: scale(1.15) translate(-10%, 5%); }
-  60% { transform: scale(1.45) translate(-8%, 10%); }
-  70% { transform: scale(1.2) translate(2%, 8%); }
-  80% { transform: scale(1.3) translate(6%, -5%); }
-  90% { transform: scale(1.05) translate(-3%, -10%); }
-  100% { transform: scale(1.25) translate(-10%, 3%); }
+  5% { transform: scale(1.45) translate(8%, -10%); }
+  10% { transform: scale(1.55) translate(12%, -8%); }
+  15% { transform: scale(1.5) translate(10%, -2%); }
+  20% { transform: scale(1.35) translate(5%, 3%); }
+  25% { transform: scale(1.2) translate(0, 8%); }
+  30% { transform: scale(1.15) translate(-5%, 12%); }
+  35% { transform: scale(1.3) translate(-10%, 10%); }
+  40% { transform: scale(1.5) translate(-12%, 5%); }
+  45% { transform: scale(1.6) translate(-8%, 0); }
+  50% { transform: scale(1.5) translate(-3%, -5%); }
+  55% { transform: scale(1.35) translate(2%, -10%); }
+  60% { transform: scale(1.2) translate(8%, -12%); }
+  65% { transform: scale(1.15) translate(12%, -8%); }
+  70% { transform: scale(1.3) translate(10%, -2%); }
+  75% { transform: scale(1.5) translate(5%, 5%); }
+  80% { transform: scale(1.6) translate(0, 10%); }
+  85% { transform: scale(1.5) translate(-5%, 12%); }
+  90% { transform: scale(1.35) translate(-10%, 8%); }
+  95% { transform: scale(1.2) translate(-12%, 2%); }
+  100% { transform: scale(1.25) translate(-8%, -5%); }
 }
 
 @keyframes kenBurns5 {
   0% { transform: scale(1.05) translate(-8%, 6%); }
-  10% { transform: scale(1.3) translate(-10%, -2%); }
-  20% { transform: scale(1.15) translate(-4%, -10%); }
-  30% { transform: scale(1.4) translate(6%, -8%); }
-  40% { transform: scale(1.05) translate(10%, -3%); }
-  50% { transform: scale(1.35) translate(8%, 6%); }
-  60% { transform: scale(1.2) translate(3%, 10%); }
-  70% { transform: scale(1.45) translate(-6%, 5%); }
-  80% { transform: scale(1.1) translate(-10%, -4%); }
-  90% { transform: scale(1.3) translate(-5%, -8%); }
-  100% { transform: scale(1.15) translate(5%, -6%); }
+  5% { transform: scale(1.2) translate(-12%, 10%); }
+  10% { transform: scale(1.4) translate(-10%, 12%); }
+  15% { transform: scale(1.55) translate(-4%, 8%); }
+  20% { transform: scale(1.6) translate(3%, 3%); }
+  25% { transform: scale(1.5) translate(10%, -2%); }
+  30% { transform: scale(1.35) translate(12%, -8%); }
+  35% { transform: scale(1.2) translate(8%, -12%); }
+  40% { transform: scale(1.15) translate(2%, -10%); }
+  45% { transform: scale(1.3) translate(-3%, -5%); }
+  50% { transform: scale(1.5) translate(-8%, 0); }
+  55% { transform: scale(1.6) translate(-12%, 5%); }
+  60% { transform: scale(1.5) translate(-10%, 10%); }
+  65% { transform: scale(1.35) translate(-4%, 12%); }
+  70% { transform: scale(1.2) translate(3%, 8%); }
+  75% { transform: scale(1.15) translate(10%, 3%); }
+  80% { transform: scale(1.3) translate(12%, -3%); }
+  85% { transform: scale(1.5) translate(8%, -8%); }
+  90% { transform: scale(1.6) translate(2%, -12%); }
+  95% { transform: scale(1.45) translate(-5%, -10%); }
+  100% { transform: scale(1.25) translate(-10%, -4%); }
 }
 
 @keyframes kenBurns6 {
   0% { transform: scale(1.35) translate(6%, -4%); }
-  10% { transform: scale(1.05) translate(10%, 5%); }
-  20% { transform: scale(1.25) translate(8%, 10%); }
-  30% { transform: scale(1.15) translate(-2%, 8%); }
-  40% { transform: scale(1.4) translate(-10%, 3%); }
-  50% { transform: scale(1.1) translate(-8%, -6%); }
-  60% { transform: scale(1.3) translate(-3%, -10%); }
-  70% { transform: scale(1.05) translate(5%, -8%); }
-  80% { transform: scale(1.35) translate(10%, 2%); }
-  90% { transform: scale(1.2) translate(6%, 8%); }
-  100% { transform: scale(1.15) translate(-4%, 10%); }
+  5% { transform: scale(1.5) translate(10%, -8%); }
+  10% { transform: scale(1.55) translate(12%, -12%); }
+  15% { transform: scale(1.4) translate(6%, -10%); }
+  20% { transform: scale(1.2) translate(0, -5%); }
+  25% { transform: scale(1.15) translate(-5%, 0); }
+  30% { transform: scale(1.3) translate(-10%, 5%); }
+  35% { transform: scale(1.5) translate(-12%, 10%); }
+  40% { transform: scale(1.6) translate(-8%, 12%); }
+  45% { transform: scale(1.5) translate(-2%, 8%); }
+  50% { transform: scale(1.35) translate(5%, 3%); }
+  55% { transform: scale(1.2) translate(10%, -2%); }
+  60% { transform: scale(1.15) translate(12%, -7%); }
+  65% { transform: scale(1.3) translate(8%, -12%); }
+  70% { transform: scale(1.5) translate(2%, -10%); }
+  75% { transform: scale(1.6) translate(-5%, -5%); }
+  80% { transform: scale(1.5) translate(-10%, 2%); }
+  85% { transform: scale(1.35) translate(-12%, 8%); }
+  90% { transform: scale(1.2) translate(-8%, 12%); }
+  95% { transform: scale(1.15) translate(0, 10%); }
+  100% { transform: scale(1.3) translate(6%, 5%); }
 }
 
 @keyframes kenBurns7 {
   0% { transform: scale(1.1) translate(-4%, -8%); }
-  10% { transform: scale(1.4) translate(2%, -6%); }
-  20% { transform: scale(1.05) translate(8%, -2%); }
-  30% { transform: scale(1.3) translate(10%, 5%); }
-  40% { transform: scale(1.15) translate(6%, 10%); }
-  50% { transform: scale(1.35) translate(-3%, 8%); }
-  60% { transform: scale(1.05) translate(-10%, 4%); }
-  70% { transform: scale(1.25) translate(-8%, -5%); }
-  80% { transform: scale(1.4) translate(-2%, -10%); }
-  90% { transform: scale(1.15) translate(4%, -8%); }
-  100% { transform: scale(1.3) translate(10%, -3%); }
+  5% { transform: scale(1.25) translate(0, -12%); }
+  10% { transform: scale(1.45) translate(5%, -10%); }
+  15% { transform: scale(1.6) translate(10%, -5%); }
+  20% { transform: scale(1.55) translate(12%, 2%); }
+  25% { transform: scale(1.4) translate(8%, 8%); }
+  30% { transform: scale(1.25) translate(2%, 12%); }
+  35% { transform: scale(1.15) translate(-3%, 10%); }
+  40% { transform: scale(1.2) translate(-8%, 5%); }
+  45% { transform: scale(1.35) translate(-12%, 0); }
+  50% { transform: scale(1.5) translate(-10%, -5%); }
+  55% { transform: scale(1.6) translate(-5%, -10%); }
+  60% { transform: scale(1.5) translate(2%, -12%); }
+  65% { transform: scale(1.35) translate(8%, -8%); }
+  70% { transform: scale(1.2) translate(12%, -2%); }
+  75% { transform: scale(1.15) translate(10%, 5%); }
+  80% { transform: scale(1.3) translate(5%, 10%); }
+  85% { transform: scale(1.5) translate(-2%, 12%); }
+  90% { transform: scale(1.6) translate(-8%, 8%); }
+  95% { transform: scale(1.45) translate(-12%, 2%); }
+  100% { transform: scale(1.25) translate(-10%, -5%); }
 }
 
 @keyframes kenBurns8 {
   0% { transform: scale(1.25) translate(3%, 6%); }
-  10% { transform: scale(1.1) translate(-5%, 10%); }
-  20% { transform: scale(1.35) translate(-10%, 4%); }
-  30% { transform: scale(1.05) translate(-8%, -5%); }
-  40% { transform: scale(1.4) translate(-2%, -10%); }
-  50% { transform: scale(1.15) translate(5%, -8%); }
-  60% { transform: scale(1.3) translate(10%, -3%); }
-  70% { transform: scale(1.05) translate(8%, 5%); }
-  80% { transform: scale(1.2) translate(3%, 10%); }
-  90% { transform: scale(1.35) translate(-6%, 6%); }
-  100% { transform: scale(1.1) translate(-10%, -2%); }
+  5% { transform: scale(1.4) translate(-2%, 10%); }
+  10% { transform: scale(1.55) translate(-8%, 12%); }
+  15% { transform: scale(1.6) translate(-12%, 8%); }
+  20% { transform: scale(1.45) translate(-10%, 2%); }
+  25% { transform: scale(1.3) translate(-5%, -3%); }
+  30% { transform: scale(1.2) translate(2%, -8%); }
+  35% { transform: scale(1.25) translate(8%, -12%); }
+  40% { transform: scale(1.4) translate(12%, -10%); }
+  45% { transform: scale(1.55) translate(10%, -4%); }
+  50% { transform: scale(1.6) translate(5%, 3%); }
+  55% { transform: scale(1.45) translate(-2%, 8%); }
+  60% { transform: scale(1.3) translate(-8%, 12%); }
+  65% { transform: scale(1.2) translate(-12%, 8%); }
+  70% { transform: scale(1.25) translate(-10%, 2%); }
+  75% { transform: scale(1.4) translate(-5%, -5%); }
+  80% { transform: scale(1.55) translate(2%, -10%); }
+  85% { transform: scale(1.6) translate(8%, -12%); }
+  90% { transform: scale(1.45) translate(12%, -8%); }
+  95% { transform: scale(1.3) translate(10%, -2%); }
+  100% { transform: scale(1.2) translate(5%, 5%); }
 }
 
 .animate-marquee {
