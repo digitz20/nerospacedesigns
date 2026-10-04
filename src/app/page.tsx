@@ -11,7 +11,7 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 import Testimonial from "@/components/Testimonial";
 import CTASection from "@/components/CTASection";
 import Marquee from "@/components/Marquee";
-import { services, processSteps, testimonials } from "@/lib/data";
+import { services, processSteps, testimonials, servicesHeading } from "@/lib/data";
 
 interface Project {
   id: string;
@@ -89,9 +89,9 @@ export default function Home() {
       <section className="py-24 md:py-32 bg-beige-warm">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
-            eyebrow="What We Do"
-            title="Our Services"
-            subtitle="From concept to completion, we offer a comprehensive suite of design services tailored to your unique vision."
+            eyebrow={servicesHeading.eyebrow}
+            title={servicesHeading.title}
+            subtitle={servicesHeading.subtitle}
             center
           />
 
@@ -176,7 +176,6 @@ export default function Home() {
 
       <Testimonial
         quote={testimonials[0].quote}
-        author={testimonials[0].author}
         role={testimonials[0].role}
       />
 

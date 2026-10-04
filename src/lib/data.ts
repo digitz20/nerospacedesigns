@@ -25,6 +25,20 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+export const servicesHeading = {
+  eyebrow: "What We Do",
+  title: "Our Services",
+  subtitle:
+    "From concept to completion, we offer a comprehensive suite of design services tailored to your unique vision.",
+};
+
+export const processHeading = {
+  eyebrow: "How We Work",
+  title: "Our Process",
+  subtitle:
+    "A structured approach to creating spaces that inspire and endure.",
+};
+
 export const services = [
   {
     id: "01",
@@ -94,7 +108,6 @@ export const testimonials = [
   {
     quote:
       "NEROSPACE UNDERSTOOD HOW WE WANTED THE SPACE TO FEEL BEFORE WE EVEN KNEW HOW TO DESCRIBE IT.",
-    author: "CLIENT NAME",
     role: "Private Residence, Lagos",
   },
 ];

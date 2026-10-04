@@ -3,6 +3,7 @@
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import { motion } from "framer-motion";
+import { servicesHeading } from "@/lib/data";
 
 export default function ServicesPage() {
   return (
@@ -10,9 +11,9 @@ export default function ServicesPage() {
       <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
-            eyebrow="What We Do"
-            title="Our Services"
-            subtitle="From concept to completion, we offer a comprehensive suite of design services tailored to your unique vision."
+            eyebrow={servicesHeading.eyebrow}
+            title={servicesHeading.title}
+            subtitle={servicesHeading.subtitle}
             center
           />
         </div>

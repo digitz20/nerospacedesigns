@@ -2,6 +2,7 @@
 
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
+import { processHeading } from "@/lib/data";
 
 export default function ProcessPage() {
   return (
@@ -9,9 +10,9 @@ export default function ProcessPage() {
       <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <SectionHeading
-            eyebrow="How We Work"
-            title="Our Process"
-            subtitle="A structured approach to creating spaces that inspire and endure."
+            eyebrow={processHeading.eyebrow}
+            title={processHeading.title}
+            subtitle={processHeading.subtitle}
             center
           />
         </div>
