@@ -11,7 +11,7 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 import Testimonial from "@/components/Testimonial";
 import CTASection from "@/components/CTASection";
 import Marquee from "@/components/Marquee";
-import { services, processSteps, testimonials, servicesHeading } from "@/lib/data";
+import { services, processSteps, servicesHeading } from "@/lib/data";
 
 interface Project {
   id: string;
@@ -26,8 +26,16 @@ interface Project {
   secondaryImage?: string;
 }
 
+interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+}
+
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
     fetch("/api/projects?page=1")
@@ -35,6 +43,15 @@ export default function Home() {
       .then((data) => {
         if (data.projects) {
           setProjects(data.projects.slice(0, 4));
+        }
+      })
+      .catch(() => {});
+
+    fetch("/api/testimonials")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.testimonials && data.testimonials.length > 0) {
+          setTestimonials(data.testimonials);
         }
       })
       .catch(() => {});
@@ -174,10 +191,13 @@ export default function Home() {
 
       <AboutSection />
 
-      <Testimonial
-        quote={testimonials[0].quote}
-        role={testimonials[0].role}
-      />
+      {testimonials.length > 0 && (
+        <Testimonial
+          quote={testimonials[0].quote}
+          author={testimonials[0].author}
+          role={testimonials[0].role}
+        />
+      )}
 
       <CTASection />
     </div>

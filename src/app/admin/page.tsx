@@ -3,7 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
-type Tab = "projects" | "email" | "settings";
+type Tab = "projects" | "email" | "settings" | "testimonials";
+
+interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+}
 
 interface Project {
   id: string;
@@ -60,6 +67,7 @@ function AdminNav({
 }) {
   const tabs: { key: Tab; label: string }[] = [
     { key: "projects", label: "Projects" },
+    { key: "testimonials", label: "Testimonials" },
     { key: "email", label: "Send Email" },
     { key: "settings", label: "Settings" },
   ];
@@ -634,6 +642,157 @@ function ProjectManager({
   );
 }
 
+function TestimonialManager({
+  onToast,
+}: {
+  onToast: (message: string, type: "success" | "error") => void;
+}) {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("");
+  const [role, setRole] = useState("");
+
+  const loadTestimonials = useCallback(async () => {
+    try {
+      const data = await api<{ testimonials: Testimonial[] }>("/api/testimonials");
+      setTestimonials(data.testimonials);
+    } catch {
+      onToast("Failed to load testimonials", "error");
+    } finally {
+      setLoading(false);
+    }
+  }, [onToast]);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, [loadTestimonials]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await api("/api/testimonials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quote, author, role }),
+      });
+      onToast("Testimonial added", "success");
+      setQuote("");
+      setAuthor("");
+      setRole("");
+      loadTestimonials();
+    } catch {
+      onToast("Failed to add testimonial", "error");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this testimonial?")) return;
+    try {
+      await api("/api/testimonials", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      onToast("Testimonial deleted", "success");
+      loadTestimonials();
+    } catch {
+      onToast("Failed to delete testimonial", "error");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="w-8 h-8 border-2 border-coffee-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h2 className="font-heading text-2xl text-beige-light font-bold uppercase">
+          Testimonials
+        </h2>
+        <p className="text-beige-medium text-sm mt-1">
+          Manage client testimonials displayed on the main site
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
+        <div>
+          <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+            Quote *
+          </label>
+          <textarea
+            value={quote}
+            onChange={(e) => setQuote(e.target.value)}
+            required
+            rows={4}
+            className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none resize-none"
+          />
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+              Client Name
+            </label>
+            <input
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+              Role / Location
+            </label>
+            <input
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full bg-coffee-dark border border-beige-medium/30 text-beige-light px-3 py-2 text-sm font-heading focus:border-beige-medium focus:outline-none"
+            />
+          </div>
+        </div>
+        <button
+          type="submit"
+          className="bg-coffee-accent text-beige-light px-8 py-3 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-beige-warm hover:text-coffee-dark transition-colors"
+        >
+          Add Testimonial
+        </button>
+      </form>
+
+      <div className="space-y-4">
+        {testimonials.map((item) => (
+          <div
+            key={item.id}
+            className="border border-beige-medium/20 p-5 flex flex-col sm:flex-row gap-4 items-start justify-between"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-beige-light font-heading mb-2">"{item.quote}"</p>
+              <p className="text-xs text-beige-medium">
+                {item.author && <span className="font-semibold">{item.author}</span>}
+                {item.author && item.role && <span> — </span>}
+                {item.role}
+              </p>
+            </div>
+            <button
+              onClick={() => handleDelete(item.id)}
+              className="text-xs tracking-[0.15em] uppercase font-semibold text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 hover:border-red-400 transition-colors flex-shrink-0"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+        {testimonials.length === 0 && (
+          <p className="text-sm text-beige-medium font-heading">No testimonials yet.</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function EmailManager({
   onToast,
 }: {
@@ -1115,6 +1274,11 @@ export default function AdminPage() {
       <main className="max-w-6xl mx-auto px-6 py-10">
         {tab === "projects" && (
           <ProjectManager
+            onToast={handleToast}
+          />
+        )}
+        {tab === "testimonials" && (
+          <TestimonialManager
             onToast={handleToast}
           />
         )}

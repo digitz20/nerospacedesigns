@@ -49,4 +49,14 @@ export async function ensureSchema() {
       created_at TIMESTAMP NOT NULL DEFAULT NOW()
     )
   `;
+
+  await db`
+    CREATE TABLE IF NOT EXISTS testimonials (
+      id TEXT PRIMARY KEY,
+      quote TEXT NOT NULL DEFAULT '',
+      author TEXT NOT NULL DEFAULT '',
+      role TEXT NOT NULL DEFAULT '',
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
+  `;
 }
