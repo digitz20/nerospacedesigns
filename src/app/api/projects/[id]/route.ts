@@ -46,17 +46,27 @@ export async function PUT(
       return NextResponse.json({ error: "Project data required" }, { status: 400 });
     }
 
-    const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-    const index = data.projects.findIndex((p) => p.id === id);
+    try {
+      const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
+      const index = data.projects.findIndex((p) => p.id === id);
 
-    if (index === -1) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      if (index === -1) {
+        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      }
+
+      data.projects[index] = { ...data.projects[index], ...project };
+      writeDataFile("projects.json", data);
+
+      return NextResponse.json({ success: true, project: data.projects[index] });
+    } catch (fsError) {
+      console.error("Project update filesystem error:", fsError);
+      return NextResponse.json(
+        {
+          error: "Failed to update project. In production, you must use a database instead of local files because Vercel serverless functions have a read-only filesystem.",
+        },
+        { status: 500 }
+      );
     }
-
-    data.projects[index] = { ...data.projects[index], ...project };
-    writeDataFile("projects.json", data);
-
-    return NextResponse.json({ success: true, project: data.projects[index] });
   } catch {
     return NextResponse.json({ error: "Failed to update" }, { status: 500 });
   }
@@ -68,13 +78,23 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-    const project = data.projects.find((p) => p.id === id);
+    try {
+      const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
+      const project = data.projects.find((p) => p.id === id);
 
-    data.projects = data.projects.filter((p) => p.id !== id);
-    writeDataFile("projects.json", data);
+      data.projects = data.projects.filter((p) => p.id !== id);
+      writeDataFile("projects.json", data);
 
-    return NextResponse.json({ success: true, projects: data.projects });
+      return NextResponse.json({ success: true, projects: data.projects });
+    } catch (fsError) {
+      console.error("Project delete filesystem error:", fsError);
+      return NextResponse.json(
+        {
+          error: "Failed to delete project. In production, you must use a database instead of local files because Vercel serverless functions have a read-only filesystem.",
+        },
+        { status: 500 }
+      );
+    }
   } catch {
     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }

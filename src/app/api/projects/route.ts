@@ -45,26 +45,36 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
-    const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
-    const baseSlug = generateSlug(project.title || generateId());
-    let slug = baseSlug;
-    const existingSlugs = new Set(data.projects.map((p) => p.slug));
-    let counter = 1;
-    while (existingSlugs.has(slug)) {
-      slug = `${baseSlug}-${counter++}`;
+    try {
+      const data = readDataFile<{ projects: Project[] }>("projects.json", { projects: [] });
+      const baseSlug = generateSlug(project.title || generateId());
+      let slug = baseSlug;
+      const existingSlugs = new Set(data.projects.map((p) => p.slug));
+      let counter = 1;
+      while (existingSlugs.has(slug)) {
+        slug = `${baseSlug}-${counter++}`;
+      }
+      const newProject: Project = {
+        id: generateId(),
+        slug,
+        ...project,
+        images: project.images || [],
+        aspectRatio: project.aspectRatio || "aspect-[4/5]",
+      };
+
+      data.projects.push(newProject);
+      writeDataFile("projects.json", data);
+
+      return NextResponse.json({ success: true, project: newProject });
+    } catch (fsError) {
+      console.error("Project save filesystem error:", fsError);
+      return NextResponse.json(
+        {
+          error: "Failed to save project. In production, you must use a database instead of local files because Vercel serverless functions have a read-only filesystem.",
+        },
+        { status: 500 }
+      );
     }
-    const newProject: Project = {
-      id: generateId(),
-      slug,
-      ...project,
-      images: project.images || [],
-      aspectRatio: project.aspectRatio || "aspect-[4/5]",
-    };
-
-    data.projects.push(newProject);
-    writeDataFile("projects.json", data);
-
-    return NextResponse.json({ success: true, project: newProject });
   } catch {
     return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
   }

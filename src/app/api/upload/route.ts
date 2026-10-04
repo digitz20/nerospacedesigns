@@ -1,17 +1,22 @@
 import { NextResponse } from "next/server";
 import { writeDataFile, readDataFile, sanitizeFilename } from "@/lib/server";
+import fs from "fs";
+import path from "path";
 
 const UPLOAD_DIR = path.join(process.cwd(), "public", "images", "admin-uploads");
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-import fs from "fs";
-import path from "path";
-
 function ensureUploadDir() {
-  if (!fs.existsSync(UPLOAD_DIR)) {
-    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(UPLOAD_DIR)) {
+      fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+    }
+  } catch (error) {
+    console.error("Upload dir error:", error);
+    return false;
   }
+  return true;
 }
 
 export async function POST(request: Request) {
@@ -37,7 +42,13 @@ export async function POST(request: Request) {
       );
     }
 
-    ensureUploadDir();
+    if (!ensureUploadDir()) {
+      return NextResponse.json(
+        { error: "Server misconfigured: cannot create upload directory" },
+        { status: 500 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const originalName = file.name;
@@ -45,7 +56,15 @@ export async function POST(request: Request) {
     const finalName = `${Date.now()}-${safeName}`;
     const filePath = path.join(UPLOAD_DIR, finalName);
 
-    fs.writeFileSync(filePath, buffer);
+    try {
+      fs.writeFileSync(filePath, buffer);
+    } catch (error) {
+      console.error("File write error:", error);
+      return NextResponse.json(
+        { error: "Failed to save uploaded file" },
+        { status: 500 }
+      );
+    }
 
     const publicUrl = `/images/admin-uploads/${finalName}`;
 
