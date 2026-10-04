@@ -69,8 +69,7 @@ export default function Hero() {
                   style={{
                     backgroundImage: `url(${img.url})`,
                     opacity: isActive ? 1 : 0,
-                    transform: isActive ? "scale(1.15)" : "scale(1)",
-                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out, transform ${TRANSITION_DURATION}ms ease-in-out`,
+                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                     zIndex: isActive ? 1 : 0,
                   }}
                 />
