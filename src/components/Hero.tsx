@@ -208,33 +208,55 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0">
-        {visibleImages.length > 0
-          ? visibleImages.map((img, index) => {
-              const isActive = index === currentIndex;
-              return (
-                <div
-                  key={img.id}
-                  ref={isActive ? activeSlideRef : null}
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: `url(${img.url})`,
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    backgroundColor: "#3A291C",
-                    opacity: isActive ? 1 : 0,
-                    transform: isActive
-                      ? `translate(${transform.x}%, ${transform.y}%)`
-                      : "translate(0, 0)",
-                    transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
-                    zIndex: isActive ? 1 : 0,
-                  }}
-                />
-              );
-            })
-          : null}
-        <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/50 via-coffee-deep/30 to-coffee-deep/70" />
-      </div>
+      <div className="absolute inset-0 bg-[#3A291C]" />
+
+      {visibleImages.length > 0
+        ? visibleImages.map((img, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <div
+                key={img.id}
+                ref={isActive ? activeSlideRef : null}
+                className="absolute inset-0 bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${img.url})`,
+                  backgroundSize: "contain",
+                  backgroundPosition: "center",
+                  opacity: isActive ? 1 : 0,
+                  transform: isActive
+                    ? `translate(${transform.x}%, ${transform.y}%)`
+                    : "translate(0, 0)",
+                  filter: isActive ? "blur(0px)" : "blur(0px)",
+                  transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
+                  zIndex: isActive ? 2 : 0,
+                }}
+              />
+            );
+          })
+        : null}
+
+      {visibleImages.length > 0 &&
+        visibleImages.map((img, index) => {
+          const isActive = index === currentIndex;
+          return (
+            <div
+              key={`blur-${img.id}`}
+              className="absolute inset-0 bg-no-repeat"
+              style={{
+                backgroundImage: `url(${img.url})`,
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+                opacity: isActive ? 0.6 : 0,
+                filter: "blur(18px)",
+                transform: "scale(1.05)",
+                transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
+                zIndex: isActive ? 1 : 0,
+              }}
+            />
+          );
+        })}
+
+      <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/40 via-coffee-deep/20 to-coffee-deep/60 z-[3]" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 text-center">
         {isLoaded && (
