@@ -14,9 +14,9 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 15 }, (_, i) => ({
   visible: true,
 }));
 
-const DISPLAY_DURATION = 30000;
+const DISPLAY_DURATION = 60000;
 const TRANSITION_DURATION = 2000;
-const KEN_BURNS_DURATION = 30000;
+const KEN_BURNS_DURATION = 60000;
 
 const KEN_BURNS_CLASSES = [
   "hero-ken-burns-1",
