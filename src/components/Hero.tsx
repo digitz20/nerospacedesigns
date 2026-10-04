@@ -210,6 +210,27 @@ export default function Hero() {
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-[#3A291C]" />
 
+      {visibleImages.length > 0 &&
+        visibleImages.map((img, index) => {
+          const isActive = index === currentIndex;
+          return (
+            <div
+              key={`blur-${img.id}`}
+              className="absolute inset-0 bg-no-repeat"
+              style={{
+                backgroundImage: `url(${img.url})`,
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+                opacity: isActive ? 0.5 : 0,
+                filter: "blur(20px)",
+                transform: "scale(1.08)",
+                transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
+                zIndex: isActive ? 1 : 0,
+              }}
+            />
+          );
+        })}
+
       {visibleImages.length > 0
         ? visibleImages.map((img, index) => {
             const isActive = index === currentIndex;
@@ -226,7 +247,7 @@ export default function Hero() {
                   transform: isActive
                     ? `translate(${transform.x}%, ${transform.y}%)`
                     : "translate(0, 0)",
-                  filter: isActive ? "blur(0px)" : "blur(0px)",
+                  filter: "blur(0px)",
                   transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
                   zIndex: isActive ? 2 : 0,
                 }}
@@ -234,27 +255,6 @@ export default function Hero() {
             );
           })
         : null}
-
-      {visibleImages.length > 0 &&
-        visibleImages.map((img, index) => {
-          const isActive = index === currentIndex;
-          return (
-            <div
-              key={`blur-${img.id}`}
-              className="absolute inset-0 bg-no-repeat"
-              style={{
-                backgroundImage: `url(${img.url})`,
-                backgroundSize: "contain",
-                backgroundPosition: "center",
-                opacity: isActive ? 0.6 : 0,
-                filter: "blur(18px)",
-                transform: "scale(1.05)",
-                transition: `opacity ${TRANSITION_DURATION}ms ease-in-out`,
-                zIndex: isActive ? 1 : 0,
-              }}
-            />
-          );
-        })}
 
       <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/40 via-coffee-deep/20 to-coffee-deep/60 z-[3]" />
 

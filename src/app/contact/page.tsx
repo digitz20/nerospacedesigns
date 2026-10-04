@@ -42,27 +42,29 @@ export default function ContactPage() {
               {
                 label: "Location",
                 value: siteConfig.location,
-                href: "#",
+                href: `https://maps.google.com/?q=${encodeURIComponent(siteConfig.location)}`,
                 icon: MapPin,
               },
             ].map((item, i) => (
-              <div key={i}>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-3 font-semibold">
-                  {item.label}
-                </p>
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    className="text-lg font-heading text-coffee-dark hover:text-coffee-accent transition-colors font-semibold"
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  <p className="text-lg font-heading text-coffee-dark font-semibold">
-                    {item.value}
+              <a
+                key={i}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block p-6 border border-coffee-dark/10 hover:border-coffee-dark/30 transition-colors"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center group-hover:bg-coffee-accent transition-colors">
+                    <item.icon size={18} />
+                  </div>
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted font-semibold">
+                    {item.label}
                   </p>
-                )}
-              </div>
+                </div>
+                <p className="text-lg font-heading text-coffee-dark group-hover:text-coffee-accent transition-colors font-semibold">
+                  {item.value}
+                </p>
+              </a>
             ))}
           </div>
         </div>

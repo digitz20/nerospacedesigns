@@ -110,26 +110,43 @@ export default function Footer() {
               Contact
             </h4>
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Mail size={16} className="text-beige-medium mt-0.5 flex-shrink-0" />
-                <a href={`mailto:${siteConfig.email}`} className="text-sm text-beige-light/70 hover:text-beige-medium transition-colors font-heading">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-full bg-beige-medium/20 text-beige-medium flex items-center justify-center group-hover:bg-coffee-accent group-hover:text-beige-light transition-colors">
+                  <Mail size={16} />
+                </div>
+                <span className="text-sm text-beige-light/70 group-hover:text-beige-light transition-colors font-heading">
                   {siteConfig.email}
-                </a>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone size={16} className="text-beige-medium mt-0.5 flex-shrink-0" />
-                <a href={`tel:${siteConfig.phone}`} className="text-sm text-beige-light/70 hover:text-beige-medium transition-colors font-heading">
+                </span>
+              </a>
+              <a
+                href={`tel:${siteConfig.phone}`}
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-full bg-beige-medium/20 text-beige-medium flex items-center justify-center group-hover:bg-coffee-accent group-hover:text-beige-light transition-colors">
+                  <Phone size={16} />
+                </div>
+                <span className="text-sm text-beige-light/70 group-hover:text-beige-light transition-colors font-heading">
                   {siteConfig.phone}
-                </a>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin size={16} className="text-beige-medium mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-beige-light/70 font-heading">
+                </span>
+              </a>
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(siteConfig.location)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 group"
+              >
+                <div className="w-8 h-8 rounded-full bg-beige-medium/20 text-beige-medium flex items-center justify-center group-hover:bg-coffee-accent group-hover:text-beige-light transition-colors">
+                  <MapPin size={16} />
+                </div>
+                <span className="text-sm text-beige-light/70 group-hover:text-beige-light transition-colors font-heading">
                   {siteConfig.location}
-                </p>
-              </div>
+                </span>
+              </a>
             </div>
-            <div className="flex items-center gap-6 mt-6">
+            <div className="flex items-center gap-4 mt-8">
               {socialLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -137,7 +154,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="text-beige-light/60 hover:text-beige-medium transition-colors text-xs font-semibold uppercase tracking-wide"
+                  className="w-10 h-10 rounded-full bg-beige-medium/20 text-beige-medium flex items-center justify-center hover:bg-coffee-accent hover:text-beige-light transition-colors"
                 >
                   {link.icon ? <link.icon size={18} /> : link.label}
                 </Link>
