@@ -28,7 +28,6 @@ export async function ensureSchema() {
       year TEXT NOT NULL DEFAULT '',
       description TEXT NOT NULL DEFAULT '',
       images TEXT[] NOT NULL DEFAULT '{}',
-      videos TEXT[] NOT NULL DEFAULT '{}',
       aspect_ratio TEXT NOT NULL DEFAULT 'aspect-[4/5]',
       client_name TEXT NOT NULL DEFAULT '',
       project_size TEXT NOT NULL DEFAULT '',
@@ -59,5 +58,9 @@ export async function ensureSchema() {
       role TEXT NOT NULL DEFAULT '',
       created_at TIMESTAMP NOT NULL DEFAULT NOW()
     )
+  `;
+
+  await db`
+    ALTER TABLE projects ADD COLUMN IF NOT EXISTS videos TEXT[] NOT NULL DEFAULT '{}'
   `;
 }
