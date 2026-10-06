@@ -18,6 +18,7 @@ interface Project {
   year: string;
   description: string;
   images: string[];
+  videos: string[];
   aspectRatio: string;
   secondaryImage?: string;
 }
@@ -372,6 +373,7 @@ export default function HomePage() {
                   category={project.category}
                   year={project.year}
                   image={project.images[0]}
+                  videos={project.videos}
                   aspectRatio={project.aspectRatio}
                   slug={project.slug}
                   index={index}

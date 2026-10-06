@@ -12,6 +12,7 @@ interface ProjectRow {
   year: string;
   description: string;
   images: string[];
+  videos: string[];
   aspect_ratio: string;
   client_name: string;
   project_size: string;
@@ -29,6 +30,7 @@ interface Project {
   year: string;
   description: string;
   images: string[];
+  videos: string[];
   aspectRatio: string;
   clientName?: string;
   projectSize?: string;
@@ -47,6 +49,7 @@ function toProject(row: ProjectRow): Project {
     year: row.year,
     description: row.description,
     images: Array.isArray(row.images) ? row.images : [],
+    videos: Array.isArray(row.videos) ? row.videos : [],
     aspectRatio: row.aspect_ratio,
     clientName: row.client_name || undefined,
     projectSize: row.project_size || undefined,
@@ -75,6 +78,7 @@ export async function GET(
         year,
         description,
         images,
+        videos,
         aspect_ratio
       FROM projects
       WHERE id = ${id}
@@ -120,6 +124,7 @@ export async function PUT(
         year = ${project.year ?? ""},
         description = ${project.description ?? ""},
         images = ${Array.isArray(project.images) ? project.images : []},
+        videos = ${Array.isArray(project.videos) ? project.videos : []},
         aspect_ratio = ${project.aspectRatio ?? "aspect-[4/5]"},
         client_name = ${project.clientName ?? ""},
         project_size = ${project.projectSize ?? ""},

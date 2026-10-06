@@ -20,6 +20,7 @@ interface Project {
   year: string;
   description: string;
   images: string[];
+  videos: string[];
   aspectRatio: string;
   clientName?: string;
   projectSize?: string;
@@ -65,6 +66,7 @@ function AdminNav({
   setTab: (t: Tab) => void;
   onLogout: () => void;
 }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const tabs: { key: Tab; label: string }[] = [
     { key: "projects", label: "Projects" },
     { key: "testimonials", label: "Testimonials" },
@@ -74,12 +76,27 @@ function AdminNav({
 
   return (
     <nav className="border-b border-beige-medium/20">
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <h1 className="font-heading text-xl text-beige-light font-bold uppercase tracking-wider pt-4 pb-2">
-            Admin
-          </h1>
-          <div className="flex gap-1">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-4">
+            <h1 className="font-heading text-xl text-beige-light font-bold uppercase tracking-wider">
+              Admin
+            </h1>
+            <button
+              onClick={() => setMobileOpen((prev) => !prev)}
+              className="md:hidden text-beige-light p-2"
+              aria-label="Toggle menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                {mobileOpen ? (
+                  <path d="M18 6L6 18M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+          <div className="hidden md:flex items-center gap-6">
             {tabs.map((t) => (
               <button
                 key={t.key}
@@ -94,14 +111,42 @@ function AdminNav({
                 {t.label}
               </button>
             ))}
+            <button
+              onClick={onLogout}
+              className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light transition-colors py-4"
+            >
+              Logout
+            </button>
           </div>
         </div>
-        <button
-          onClick={onLogout}
-          className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light transition-colors py-4"
-        >
-          Logout
-        </button>
+
+        {mobileOpen && (
+          <div className="md:hidden pb-4 space-y-1">
+            {tabs.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => {
+                  setTab(t.key);
+                  setMobileOpen(false);
+                }}
+                className={cn(
+                  "block w-full text-left text-xs tracking-[0.15em] uppercase font-semibold py-3 px-2 transition-colors",
+                  tab === t.key
+                    ? "text-beige-light"
+                    : "text-beige-medium hover:text-beige-light"
+                )}
+              >
+                {t.label}
+              </button>
+            ))}
+            <button
+              onClick={onLogout}
+              className="block w-full text-left text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light transition-colors py-3 px-2"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );
@@ -154,6 +199,7 @@ function ProjectManager({
     year: new Date().getFullYear().toString(),
     description: "",
     images: [] as string[],
+    videos: [] as string[],
     aspectRatio: "aspect-[4/5]",
     clientName: "",
     projectSize: "",
@@ -189,6 +235,7 @@ function ProjectManager({
       year: new Date().getFullYear().toString(),
       description: "",
       images: [],
+      videos: [],
       aspectRatio: "aspect-[4/5]",
       clientName: "",
       projectSize: "",
@@ -218,6 +265,30 @@ function ProjectManager({
         images: [...prev.images, ...results.map((r) => r.url)],
       }));
       onToast("Images uploaded", "success");
+    } catch {
+      onToast("Upload failed", "error");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleVideoUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    try {
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const fd = new FormData();
+        fd.set("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body: fd });
+        if (!res.ok) throw new Error("Upload failed");
+        return res.json();
+      });
+      const results = await Promise.all(uploadPromises);
+      setForm((prev) => ({
+        ...prev,
+        videos: [...prev.videos, ...results.map((r) => r.url)],
+      }));
+      onToast("Videos uploaded", "success");
     } catch {
       onToast("Upload failed", "error");
     } finally {
@@ -267,6 +338,7 @@ function ProjectManager({
       year: project.year,
       description: project.description,
       images: [...project.images],
+      videos: project.videos ? [...project.videos] : [],
       aspectRatio: project.aspectRatio,
       clientName: project.clientName || "",
       projectSize: project.projectSize || "",
@@ -534,6 +606,56 @@ function ProjectManager({
                           setForm((prev) => ({
                             ...prev,
                             images: prev.images.filter(
+                              (_, idx) => idx !== i
+                            ),
+                          }))
+                        }
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs flex items-center justify-center"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-beige-medium text-xs tracking-widest uppercase mb-1.5 font-semibold">
+                Project Videos
+              </label>
+              <input
+                type="file"
+                accept="video/mp4,video/webm,video/quicktime"
+                multiple
+                className="hidden"
+                id="project-videos"
+                onChange={(e) => handleVideoUpload(e.target.files)}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("project-videos")?.click()
+                }
+                disabled={uploading}
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium border border-beige-medium/30 px-4 py-2 hover:border-beige-medium hover:text-beige-light transition-colors disabled:opacity-50"
+              >
+                {uploading ? "Uploading..." : "+ Upload Videos"}
+              </button>
+              {form.videos.length > 0 && (
+                <div className="flex gap-2 mt-3 flex-wrap">
+                  {form.videos.map((url, i) => (
+                    <div key={i} className="relative w-20 h-20 border border-beige-medium/30">
+                      <video
+                        src={url}
+                        className="w-full h-full object-cover"
+                        muted
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            videos: prev.videos.filter(
                               (_, idx) => idx !== i
                             ),
                           }))

@@ -4,8 +4,14 @@ import { getSql, ensureSchema } from "@/lib/database";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "video/mp4",
+  "video/webm",
+  "video/quicktime",
+];
 
 export async function POST(request: Request) {
   try {
@@ -18,14 +24,7 @@ export async function POST(request: Request) {
 
     if (!ALLOWED_TYPES.includes(file.type)) {
       return NextResponse.json(
-        { error: "Invalid file type. Only jpg, png, webp allowed." },
-        { status: 400 }
-      );
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: "File too large. Max size is 5MB." },
+        { error: "Invalid file type. Allowed: jpg, png, webp, mp4, webm, mov." },
         { status: 400 }
       );
     }
@@ -36,7 +35,7 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const id = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-    const mimeType = file.type || "image/jpeg";
+    const mimeType = file.type || "application/octet-stream";
 
     await db`
       INSERT INTO admin_images (id, filename, mime_type, data)

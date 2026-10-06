@@ -14,6 +14,7 @@ interface Project {
   year: string;
   description: string;
   images: string[];
+  videos: string[];
   aspectRatio: string;
   clientName?: string;
   projectSize?: string;
@@ -48,6 +49,7 @@ export async function GET(request: Request) {
         year,
         description,
         images,
+        videos,
         aspect_ratio AS aspectRatio,
         client_name AS clientName,
         project_size AS projectSize,
@@ -70,6 +72,7 @@ export async function GET(request: Request) {
       year: row.year,
       description: row.description,
       images: Array.isArray(row.images) ? row.images : [],
+      videos: Array.isArray(row.videos) ? row.videos : [],
       aspectRatio: row.aspectRatio,
       clientName: row.clientName || undefined,
       projectSize: row.projectSize || undefined,
@@ -125,6 +128,7 @@ export async function POST(request: Request) {
         year,
         description,
         images,
+        videos,
         aspect_ratio,
         client_name,
         project_size,
@@ -142,6 +146,7 @@ export async function POST(request: Request) {
         ${project.year || ""},
         ${project.description || ""},
         ${Array.isArray(project.images) ? project.images : []},
+        ${Array.isArray(project.videos) ? project.videos : []},
         ${project.aspectRatio || "aspect-[4/5]"},
         ${project.clientName || ""},
         ${project.projectSize || ""},
@@ -161,6 +166,7 @@ export async function POST(request: Request) {
       year: project.year || "",
       description: project.description || "",
       images: Array.isArray(project.images) ? project.images : [],
+      videos: Array.isArray(project.videos) ? project.videos : [],
       aspectRatio: project.aspectRatio || "aspect-[4/5]",
       clientName: project.clientName || undefined,
       projectSize: project.projectSize || undefined,

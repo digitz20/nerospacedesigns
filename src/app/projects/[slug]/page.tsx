@@ -60,7 +60,7 @@ export default async function ProjectDetail({ params }: PageProps) {
             </p>
           </div>
 
-          <ProjectImageGrid images={project.images} title={project.title} />
+          <ProjectImageGrid images={project.images} videos={project.videos} title={project.title} />
         </div>
       </section>
 

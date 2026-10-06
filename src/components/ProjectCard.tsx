@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useState, useRef } from "react";
 
 interface ProjectCardProps {
   title: string;
@@ -10,6 +11,7 @@ interface ProjectCardProps {
   category: string;
   year: string;
   image: string;
+  videos: string[];
   aspectRatio: string;
   slug: string;
   index: number;
@@ -22,11 +24,17 @@ export default function ProjectCard({
   category,
   year,
   image,
+  videos,
   aspectRatio,
   slug,
   index,
   secondaryImage,
 }: ProjectCardProps) {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const hasVideo = videos && videos.length > 0;
+  const primaryVideo = hasVideo ? videos[0] : null;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -38,19 +46,43 @@ export default function ProjectCard({
         <div
           className={`relative overflow-hidden ${aspectRatio} mb-4 md:mb-6`}
         >
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-          {secondaryImage && (
-            <img
-              src={secondaryImage}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-              aria-hidden="true"
+          {primaryVideo && !isVideoPlaying ? (
+            <video
+              ref={videoRef}
+              src={primaryVideo}
+              className="w-full h-full object-cover"
+              muted
+              autoPlay
+              playsInline
+              loop
             />
+          ) : primaryVideo && isVideoPlaying ? (
+            <video
+              ref={videoRef}
+              src={primaryVideo}
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              playsInline
+              onEnded={() => setIsVideoPlaying(false)}
+            />
+          ) : (
+            <>
+              <img
+                src={image}
+                alt={title}
+                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              {secondaryImage && (
+                <img
+                  src={secondaryImage}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  aria-hidden="true"
+                />
+              )}
+            </>
           )}
           <div className="absolute inset-0 bg-coffee-dark/0 group-hover:bg-coffee-dark/20 transition-colors duration-500" />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
