@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
-import Lightbox from "@/components/Lightbox";
+import MediaLightbox from "@/components/MediaLightbox";
 
 interface ProjectImageGridProps {
   images: string[];
@@ -12,8 +12,8 @@ interface ProjectImageGridProps {
 }
 
 export default function ProjectImageGrid({ images, videos, title }: ProjectImageGridProps) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [playingVideoIndex, setPlayingVideoIndex] = useState<number | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
 
   const safeImages = images.filter((src) => src && src.trim() !== "");
@@ -21,7 +21,13 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
   const totalItems = safeImages.length + safeVideos.length;
 
   if (totalItems === 0) {
-    return null;
+    return (
+      <div className="w-full aspect-[16/9] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
+        <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">
+          No Media
+        </span>
+      </div>
+    );
   }
 
   const getItemSrc = (index: number) => {
@@ -40,6 +46,11 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
         : totalItems === 3
           ? "grid-cols-1 md:grid-cols-12"
           : "grid-cols-1 md:grid-cols-12";
+
+  const mediaItems = [
+    ...safeImages.map((src) => ({ type: "image" as const, src })),
+    ...safeVideos.map((src) => ({ type: "video" as const, src })),
+  ];
 
   return (
     <>
@@ -76,7 +87,6 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
           const isVideo = item.type === "video";
           const videoIndex = isVideo ? index - safeImages.length : -1;
-          const isPlaying = isVideo && playingVideoIndex === videoIndex;
 
           return (
             <motion.div
@@ -85,22 +95,10 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`${colSpan} ${aspectClass} overflow-hidden ${isVideo ? "cursor-pointer" : "cursor-pointer"}`}
+              className={`${colSpan} ${aspectClass} overflow-hidden cursor-pointer`}
               onClick={() => {
-                if (isVideo) {
-                  const video = videoRefs.current[videoIndex];
-                  if (video) {
-                    if (isPlaying) {
-                      video.pause();
-                      setPlayingVideoIndex(null);
-                    } else {
-                      video.play();
-                      setPlayingVideoIndex(videoIndex);
-                    }
-                  }
-                } else {
-                  setLightboxIndex(index);
-                }
+                setLightboxIndex(index);
+                setLightboxOpen(true);
               }}
             >
               {isVideo ? (
@@ -114,7 +112,6 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   autoPlay
                   playsInline
                   loop
-                  onEnded={() => setPlayingVideoIndex(null)}
                 />
               ) : (
                 <Image
@@ -126,17 +123,34 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   priority={isFirst}
                 />
               )}
+              {isVideo && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-beige-light/80 flex items-center justify-center">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="text-coffee-dark ml-0.5"
+                    >
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  </div>
+                </div>
+              )}
             </motion.div>
           );
         })}
       </div>
 
-      {lightboxIndex !== null && safeImages.length > 0 && (
-        <Lightbox
-          images={safeImages}
+      {lightboxOpen && (
+        <MediaLightbox
+          items={mediaItems}
           currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onNavigate={setLightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+          onNavigate={(index) => setLightboxIndex(index)}
         />
       )}
     </>

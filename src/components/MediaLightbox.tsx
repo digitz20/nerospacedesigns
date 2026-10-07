@@ -1,0 +1,139 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+
+interface MediaItem {
+  type: "image" | "video";
+  src: string;
+}
+
+interface MediaLightboxProps {
+  items: MediaItem[];
+  currentIndex: number;
+  onClose: () => void;
+  onNavigate: (index: number) => void;
+}
+
+export default function MediaLightbox({
+  items,
+  currentIndex,
+  onClose,
+  onNavigate,
+}: MediaLightboxProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+      if (e.key === "ArrowLeft") {
+        const newIndex = (currentIndex - 1 + items.length) % items.length;
+        onNavigate(newIndex);
+      }
+      if (e.key === "ArrowRight") {
+        const newIndex = (currentIndex + 1) % items.length;
+        onNavigate(newIndex);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentIndex, items.length, onClose, onNavigate]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [currentIndex]);
+
+  const currentItem = items[currentIndex];
+  const isVideo = currentItem?.type === "video";
+  const hasPrev = items.length > 1;
+  const hasNext = items.length > 1;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[10001] bg-coffee-deep/95 flex items-center justify-center p-4 md:p-8"
+        onClick={onClose}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 text-beige-light/70 hover:text-beige-light transition-colors z-10"
+          aria-label="Close lightbox"
+        >
+          <X size={32} />
+        </button>
+
+        {hasPrev && (
+          <button
+            onClick={() => {
+              const newIndex = (currentIndex - 1 + items.length) % items.length;
+              onNavigate(newIndex);
+            }}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
+            aria-label="Previous"
+          >
+            <ChevronLeft size={40} />
+          </button>
+        )}
+
+        {hasNext && (
+          <button
+            onClick={() => {
+              const newIndex = (currentIndex + 1) % items.length;
+              onNavigate(newIndex);
+            }}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
+            aria-label="Next"
+          >
+            <ChevronRight size={40} />
+          </button>
+        )}
+
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.3 }}
+          className="max-w-full max-h-[85vh] flex items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {isVideo ? (
+            <video
+              ref={videoRef}
+              src={currentItem.src}
+              className="max-w-full max-h-[85vh] object-contain"
+              controls
+              autoPlay
+              playsInline
+            />
+          ) : (
+            <img
+              src={currentItem.src}
+              alt={`Gallery media ${currentIndex + 1}`}
+              className="max-w-full max-h-[85vh] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+        </motion.div>
+
+        {items.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
+            <span className="text-beige-light/70 text-xs tracking-widest uppercase font-semibold">
+              {currentIndex + 1} / {items.length}
+            </span>
+          </div>
+        )}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
