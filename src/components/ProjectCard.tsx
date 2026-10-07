@@ -49,8 +49,11 @@ export default function ProjectCard({
               autoPlay
               playsInline
               loop
+              preload="auto"
               poster={poster}
-            />
+            >
+              Your browser does not support the video tag.
+            </video>
           ) : hasImage ? (
             <>
               <img

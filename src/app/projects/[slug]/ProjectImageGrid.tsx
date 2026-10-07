@@ -71,21 +71,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     ? "md:col-span-8"
                     : "md:col-span-4";
 
-          const aspectClass =
-            totalItems === 1
-              ? "aspect-[3/4]"
-              : totalItems === 2
-                ? "aspect-[3/4]"
-                : totalItems === 3
-                  ? index === 0
-                    ? "aspect-[3/4]"
-                    : "aspect-[3/4]"
-                  : index % 2 === 0
-                    ? "aspect-[3/4]"
-                    : "aspect-[3/4]";
-
           const isVideo = item.type === "video";
-          const naturalClass = "";
 
           return (
             <motion.div
@@ -94,7 +80,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`${colSpan} ${naturalClass} overflow-hidden cursor-pointer`}
+              className={`${colSpan} overflow-hidden cursor-pointer`}
               onClick={() => {
                 setLightboxIndex(index);
                 setLightboxOpen(true);
@@ -108,8 +94,11 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   autoPlay
                   playsInline
                   loop
+                  preload="auto"
                   poster={safeImages[0] || undefined}
-                />
+                >
+                  Your browser does not support the video tag.
+                </video>
               ) : (
                 <Image
                   src={item.src}
