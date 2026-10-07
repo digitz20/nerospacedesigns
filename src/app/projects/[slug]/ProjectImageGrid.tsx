@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import MediaLightbox from "@/components/MediaLightbox";
+import { useViewportAutoplay } from "@/hooks/useViewportAutoplay";
 
 interface ProjectImageGridProps {
   images: string[];
@@ -87,7 +88,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
           const isVideo = item.type === "video";
           const videoIndex = isVideo ? index - safeImages.length : -1;
-          const poster = safeImages[0] || undefined;
+          const videoRef = isVideo ? useViewportAutoplay({ threshold: 0.5 }) : { current: null };
 
           return (
             <motion.div
@@ -104,17 +105,14 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
             >
               {isVideo ? (
                 <video
-                  ref={(el) => {
-                    videoRefs.current[videoIndex] = el;
-                  }}
+                  ref={videoRef as any}
                   src={item.src}
                   className="w-full h-full object-cover"
                   muted
-                  autoPlay
                   playsInline
                   loop
-                  preload="auto"
-                  poster={poster}
+                  preload="metadata"
+                  poster={safeImages[0] || undefined}
                 />
               ) : (
                 <Image
