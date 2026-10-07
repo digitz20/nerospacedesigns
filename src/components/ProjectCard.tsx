@@ -40,35 +40,18 @@ export default function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
     >
       <Link href={`/projects/${slug}`} className="group block">
-        <div className={`relative overflow-hidden ${aspectRatio} mb-4 md:mb-6`}>
+        <div className={`relative overflow-hidden ${aspectRatio} mb-3 md:mb-4`}>
           {hasVideo ? (
-            <>
-              <video
-                src={videos[0]}
-                className="w-full h-full object-cover"
-                muted
-                autoPlay
-                playsInline
-                loop
-                preload="metadata"
-                poster={poster}
-              />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none md:hidden">
-                <div className="w-12 h-12 rounded-full bg-beige-light/80 flex items-center justify-center">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="text-coffee-dark ml-0.5"
-                  >
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
-                </div>
-              </div>
-            </>
+            <video
+              src={videos[0]}
+              className="w-full h-full object-cover"
+              muted
+              autoPlay
+              playsInline
+              loop
+              preload="metadata"
+              poster={poster}
+            />
           ) : hasImage ? (
             <>
               <img
@@ -95,16 +78,16 @@ export default function ProjectCard({
           )}
           <div className="absolute inset-0 bg-coffee-dark/0 group-hover:bg-coffee-dark/20 transition-colors duration-500" />
         </div>
-        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
+        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-2">
           <div>
-            <h3 className="font-heading text-xl md:text-2xl text-coffee-dark mb-1 group-hover:text-coffee-accent transition-colors duration-300 font-bold uppercase tracking-wide">
+            <h3 className="font-heading text-lg md:text-xl text-coffee-dark mb-0.5 group-hover:text-coffee-accent transition-colors duration-300 font-bold uppercase tracking-wide">
               {title}
             </h3>
-            <p className="text-xs text-coffee-dark/60 tracking-wide font-heading">
+            <p className="text-[11px] md:text-xs text-coffee-dark/60 tracking-wide font-heading">
               {location} — {category}
             </p>
           </div>
-          <span className="text-xs text-coffee-muted tracking-wider font-heading">
+          <span className="text-[11px] md:text-xs text-coffee-muted tracking-wider font-heading">
             {year}
           </span>
         </div>

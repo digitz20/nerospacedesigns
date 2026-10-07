@@ -173,7 +173,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/40 via-coffee-deep/20 to-coffee-deep/60 z-[3]" />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 py-20 md:py-28 lg:py-32 text-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24 lg:py-28 text-center">
         {isLoaded && (
           <>
             <p
@@ -184,7 +184,7 @@ export default function Hero() {
             </p>
 
             <h1
-              className="font-halogen text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] text-beige-light leading-[0.85] tracking-[0.08em] mb-12 md:mb-20 lg:mb-24 font-black uppercase animate-fadeUp"
+              className="font-halogen text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] text-beige-light leading-[0.95] tracking-[0.08em] mb-16 md:mb-24 lg:mb-32 font-black uppercase animate-fadeUp"
               style={{ animationDelay: "0.25s" }}
             >
               Spaces That Feel

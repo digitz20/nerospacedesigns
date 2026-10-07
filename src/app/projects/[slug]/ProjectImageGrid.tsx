@@ -22,7 +22,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
   if (totalItems === 0) {
     return (
-      <div className="w-full aspect-[16/9] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
+      <div className="w-full aspect-[3/4] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
         <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">
           No Media
         </span>
