@@ -30,6 +30,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const hasVideo = videos && videos.length > 0;
   const hasImage = image && image.trim() !== "";
+  const poster = hasImage ? image : undefined;
 
   return (
     <motion.div
@@ -48,6 +49,8 @@ export default function ProjectCard({
               autoPlay
               playsInline
               loop
+              preload="metadata"
+              poster={poster}
             />
           ) : hasImage ? (
             <>

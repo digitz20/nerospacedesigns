@@ -66,6 +66,9 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} h-full antialiased`}
     >
+      {/* Replace the kit ID below with your Adobe Fonts kit ID for Sweet Sans Pro */}
+      <link rel="preconnect" href="https://use.typekit.net" />
+      <link rel="stylesheet" href="https://use.typekit.net/abc123.css" />
       <body className="min-h-full flex flex-col font-body">
         <SiteShell>{children}</SiteShell>
       </body>

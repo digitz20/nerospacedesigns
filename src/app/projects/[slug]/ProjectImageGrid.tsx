@@ -112,18 +112,20 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   autoPlay
                   playsInline
                   loop
+                  preload="metadata"
+                  poster={safeImages[0] || undefined}
                 />
               ) : (
-                <Image
-                  src={item.src}
-                  alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
-                  width={1200}
-                  height={675}
-                  className="w-full h-full object-cover"
-                  priority={isFirst}
-                />
-               )}
-             </motion.div>
+                 <Image
+                   src={item.src}
+                   alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
+                   width={1200}
+                   height={675}
+                   className="w-full h-full object-cover"
+                   priority={isFirst}
+                 />
+                )}
+            </motion.div>
           );
         })}
       </div>
