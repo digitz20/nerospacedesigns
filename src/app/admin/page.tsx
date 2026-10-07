@@ -314,6 +314,7 @@ function ProjectManager({
           body: JSON.stringify({ project: form }),
         });
         onToast("Project updated", "success");
+        window.dispatchEvent(new Event("content-updated"));
       } else {
         await api("/api/projects", {
           method: "POST",
@@ -321,6 +322,7 @@ function ProjectManager({
           body: JSON.stringify({ project: form }),
         });
         onToast("Project created", "success");
+        window.dispatchEvent(new Event("content-updated"));
       }
       refreshProjects();
       await loadProjects(editing ? adminPage : 1);
@@ -356,6 +358,7 @@ function ProjectManager({
     try {
       await api(`/api/projects/${id}`, { method: "DELETE" });
       onToast("Project deleted", "success");
+      window.dispatchEvent(new Event("content-updated"));
       refreshProjects();
       await loadProjects(adminPage);
     } catch {
@@ -799,6 +802,7 @@ function TestimonialManager({
         body: JSON.stringify({ quote, author, role }),
       });
       onToast("Testimonial added", "success");
+      window.dispatchEvent(new Event("content-updated"));
       setQuote("");
       setAuthor("");
       setRole("");
@@ -817,6 +821,7 @@ function TestimonialManager({
         body: JSON.stringify({ id }),
       });
       onToast("Testimonial deleted", "success");
+      window.dispatchEvent(new Event("content-updated"));
       loadTestimonials();
     } catch {
       onToast("Failed to delete testimonial", "error");

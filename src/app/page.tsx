@@ -7,7 +7,7 @@ import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/lib/data";
-import { Mail, Phone, MapPin, Ruler, Sofa, Box, Hammer, Paintbrush, ShoppingCart, ClipboardList, PenTool, Home, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, Ruler, Sofa, Box, Hammer, Paintbrush, ShoppingCart, ClipboardList, PenTool, Home, ExternalLink, FolderOpen, Wrench } from "lucide-react";
 
 interface Project {
   id: string;
@@ -123,7 +123,67 @@ export default function HomePage() {
         }
       })
       .catch(() => {});
+
+    const INACTIVITY_LIMIT = 15 * 60 * 1000;
+    let lastActivity = Date.now();
+    let inactivityTimer: ReturnType<typeof setTimeout> | null = null;
+    let pollTimer: ReturnType<typeof setInterval> | null = null;
+
+    const refreshIfNeeded = () => {
+      const now = Date.now();
+      if (now - lastActivity >= INACTIVITY_LIMIT) {
+        window.location.reload();
+      }
+    };
+
+    const resetInactivity = () => {
+      lastActivity = Date.now();
+    };
+
+    const events = ["mousedown", "mousemove", "keydown", "scroll", "touchstart", "click"];
+    events.forEach((event) => window.addEventListener(event, resetInactivity));
+
+    pollTimer = setInterval(() => {
+      refreshIfNeeded();
+    }, 60000);
+
+    const handleContentUpdate = () => {
+      lastActivity = Date.now();
+      refreshProjects();
+      refreshTestimonials();
+    };
+
+    window.addEventListener("content-updated", handleContentUpdate);
+
+    return () => {
+      events.forEach((event) => window.removeEventListener(event, resetInactivity));
+      window.removeEventListener("content-updated", handleContentUpdate);
+      if (pollTimer) clearInterval(pollTimer);
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+    };
   }, []);
+
+  const refreshProjects = () => {
+    fetch("/api/projects?page=1")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.projects) {
+          setProjects(data.projects.slice(0, 4));
+        }
+      })
+      .catch(() => {});
+  };
+
+  const refreshTestimonials = () => {
+    fetch("/api/testimonials")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.testimonials && data.testimonials.length > 0) {
+          setTestimonials(data.testimonials);
+        }
+      })
+      .catch(() => {});
+  };
 
   return (
     <div>
@@ -182,32 +242,41 @@ export default function HomePage() {
             {[
               {
                 label: "Location",
+                icon: MapPin,
                 value:
                   "Abuja. We serve clients across the city and nearby areas, with site visits and consultations available on request.",
               },
               {
                 label: "Projects",
+                icon: FolderOpen,
                 value:
                   "Residential and commercial spaces. From homes and bathrooms to offices, cafes, and shops, we design spaces that feel considered, comfortable, and true to the people who use them.",
               },
               {
                 label: "Service",
+                icon: ClipboardList,
                 value:
                   "Concept to handover. We guide you through every step: consultation and site assessment, space planning, 3D visualization, technical drawings, sourcing and procurement, project management, and final styling.",
               },
               {
                 label: "Workshop",
+                icon: Wrench,
                 value:
                   "Custom furniture and curated sourcing. We bring together foreign and locally made products, so you get pieces that suit your taste, budget, and space, whether made to measure or selected from trusted suppliers.",
               },
             ].map((item, i) => (
-              <div key={i}>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-2 font-bold">
-                  {item.label}
-                </p>
-                <p className="text-sm md:text-base text-coffee-dark font-heading font-semibold">
-                  {item.value}
-                </p>
+              <div key={i} className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <item.icon size={16} />
+                </div>
+                <div>
+                  <p className="text-[11px] tracking-[0.2em] uppercase text-coffee-dark mb-2 font-extrabold">
+                    {item.label}
+                  </p>
+                  <p className="text-sm md:text-base text-coffee-dark/80 font-heading font-semibold leading-relaxed">
+                    {item.value}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
