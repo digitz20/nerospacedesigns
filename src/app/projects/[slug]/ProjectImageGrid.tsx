@@ -86,7 +86,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     : "aspect-[3/4]";
 
           const isVideo = item.type === "video";
-          const videoRef = isVideo ? useViewportAutoplay({ threshold: 0.5 }) : { current: null };
+          const videoRef = isVideo ? useViewportAutoplay({ threshold: 0.1, rootMargin: "100px" }) : { current: null };
 
           return (
             <motion.div
@@ -108,6 +108,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   className="w-full h-full object-cover"
                   muted
                   playsInline
+                  webkit-playsinline="true"
                   loop
                   preload="metadata"
                   poster={safeImages[0] || undefined}

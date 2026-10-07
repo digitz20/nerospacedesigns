@@ -32,7 +32,7 @@ export default function ProjectCard({
   const hasVideo = videos && videos.length > 0;
   const hasImage = image && image.trim() !== "";
   const poster = hasImage ? image : undefined;
-  const videoRef = useViewportAutoplay({ threshold: 0.5 });
+  const videoRef = useViewportAutoplay({ threshold: 0.1, rootMargin: "100px" });
 
   return (
     <motion.div
@@ -50,6 +50,7 @@ export default function ProjectCard({
               className="w-full h-full object-cover"
               muted
               playsInline
+              webkit-playsinline="true"
               loop
               preload="metadata"
               poster={poster}
