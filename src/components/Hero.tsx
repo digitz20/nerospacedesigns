@@ -173,7 +173,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/40 via-coffee-deep/20 to-coffee-deep/60 z-[3]" />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24 lg:py-28 text-center">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 text-center">
         {isLoaded && (
           <>
             <p
@@ -184,7 +184,7 @@ export default function Hero() {
             </p>
 
             <h1
-              className="font-halogen text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] text-beige-light leading-[1.1] tracking-[0.06em] mb-14 md:mb-20 lg:mb-28 font-extrabold uppercase animate-fadeUp"
+              className="font-halogen text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-beige-light leading-[1.05] tracking-[0.04em] mb-8 md:mb-10 lg:mb-12 font-extrabold uppercase animate-fadeUp"
               style={{ animationDelay: "0.25s" }}
             >
               Spaces That Feel
@@ -193,7 +193,7 @@ export default function Hero() {
             </h1>
 
             <p
-              className="text-sm md:text-base text-beige-light/80 max-w-xl mx-auto mb-10 md:mb-12 leading-relaxed font-heading animate-fadeUp"
+              className="text-sm md:text-base text-beige-light/80 max-w-xl mx-auto mb-8 md:mb-10 leading-relaxed font-heading animate-fadeUp"
               style={{ animationDelay: "0.4s" }}
             >
               Interior architecture, spatial planning and bespoke design for
@@ -201,7 +201,7 @@ export default function Hero() {
             </p>
 
             <div
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fadeUp"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 animate-fadeUp"
               style={{ animationDelay: "0.55s" }}
             >
               <a
@@ -234,7 +234,7 @@ export default function Hero() {
 
       {visibleImages.length > 1 && (
         <div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-10 animate-fadeUp"
+          className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-10 animate-fadeUp"
           style={{ animationDelay: "1.5s" }}
         >
           {visibleImages.map((_, index) => (
@@ -257,7 +257,7 @@ export default function Hero() {
 
       {visibleImages.length <= 1 && (
         <div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-fadeUp"
+          className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 animate-fadeUp"
           style={{ animationDelay: "1.5s" }}
         >
           <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-beige-light/50 to-transparent" />
