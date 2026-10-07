@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import MediaLightbox from "@/components/MediaLightbox";
-import { useViewportAutoplay } from "@/hooks/useViewportAutoplay";
 
 interface ProjectImageGridProps {
   images: string[];
@@ -86,7 +85,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     : "aspect-[3/4]";
 
           const isVideo = item.type === "video";
-          const videoRef = isVideo ? useViewportAutoplay({ threshold: 0.1, rootMargin: "100px" }) : { current: null };
+          const videoAspectClass = isVideo ? "" : aspectClass;
 
           return (
             <motion.div
@@ -95,7 +94,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`${colSpan} ${aspectClass} overflow-hidden cursor-pointer`}
+              className={`${colSpan} ${videoAspectClass} overflow-hidden cursor-pointer`}
               onClick={() => {
                 setLightboxIndex(index);
                 setLightboxOpen(true);
@@ -103,14 +102,12 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
             >
               {isVideo ? (
                 <video
-                  ref={videoRef as any}
                   src={item.src}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto"
                   muted
+                  autoPlay
                   playsInline
-                  webkit-playsinline="true"
                   loop
-                  preload="metadata"
                   poster={safeImages[0] || undefined}
                 />
               ) : (

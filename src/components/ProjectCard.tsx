@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useViewportAutoplay } from "@/hooks/useViewportAutoplay";
 
 interface ProjectCardProps {
   title: string;
@@ -32,7 +31,6 @@ export default function ProjectCard({
   const hasVideo = videos && videos.length > 0;
   const hasImage = image && image.trim() !== "";
   const poster = hasImage ? image : undefined;
-  const videoRef = useViewportAutoplay({ threshold: 0.1, rootMargin: "100px" });
 
   return (
     <motion.div
@@ -45,14 +43,12 @@ export default function ProjectCard({
         <div className={`relative overflow-hidden ${aspectRatio}`}>
           {hasVideo ? (
             <video
-              ref={videoRef}
               src={videos[0]}
               className="w-full h-full object-cover"
               muted
+              autoPlay
               playsInline
-              webkit-playsinline="true"
               loop
-              preload="metadata"
               poster={poster}
             />
           ) : hasImage ? (

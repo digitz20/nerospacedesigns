@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface MediaItem {
   type: "image" | "video";
@@ -26,16 +26,12 @@ export default function MediaLightbox({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") {
-        const newIndex = (currentIndex - 1 + items.length) % items.length;
-        onNavigate(newIndex);
+        onNavigate((currentIndex - 1 + items.length) % items.length);
       }
       if (e.key === "ArrowRight") {
-        const newIndex = (currentIndex + 1) % items.length;
-        onNavigate(newIndex);
+        onNavigate((currentIndex + 1) % items.length);
       }
     };
 
@@ -52,8 +48,6 @@ export default function MediaLightbox({
 
   const currentItem = items[currentIndex];
   const isVideo = currentItem?.type === "video";
-  const hasPrev = items.length > 1;
-  const hasNext = items.length > 1;
 
   return (
     <AnimatePresence>
@@ -72,12 +66,9 @@ export default function MediaLightbox({
           <X size={32} />
         </button>
 
-        {hasPrev && (
+        {currentIndex > 0 && (
           <button
-            onClick={() => {
-              const newIndex = (currentIndex - 1 + items.length) % items.length;
-              onNavigate(newIndex);
-            }}
+            onClick={() => onNavigate(currentIndex - 1)}
             className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
             aria-label="Previous"
           >
@@ -85,12 +76,9 @@ export default function MediaLightbox({
           </button>
         )}
 
-        {hasNext && (
+        {currentIndex < items.length - 1 && (
           <button
-            onClick={() => {
-              const newIndex = (currentIndex + 1) % items.length;
-              onNavigate(newIndex);
-            }}
+            onClick={() => onNavigate(currentIndex + 1)}
             className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-beige-light/70 hover:text-beige-light transition-colors z-10"
             aria-label="Next"
           >
