@@ -107,8 +107,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     videoRefs.current[videoIndex] = el;
                   }}
                   src={item.src}
-                  className="absolute inset-0 w-full h-full"
-                  style={{ objectFit: "cover" }}
+                  className="w-full h-full object-cover"
                   muted
                   autoPlay
                   playsInline

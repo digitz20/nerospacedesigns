@@ -184,7 +184,7 @@ export default function Hero() {
             </p>
 
             <h1
-              className="font-halogen text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-beige-light leading-[0.9] tracking-tight mb-6 md:mb-8 font-black uppercase animate-fadeUp"
+              className="font-halogen text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] text-beige-light leading-[0.85] tracking-[0.08em] mb-12 md:mb-20 lg:mb-24 font-black uppercase animate-fadeUp"
               style={{ animationDelay: "0.25s" }}
             >
               Spaces That Feel

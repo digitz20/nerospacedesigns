@@ -44,8 +44,7 @@ export default function ProjectCard({
           {hasVideo ? (
             <video
               src={videos[0]}
-              className="absolute inset-0 w-full h-full"
-              style={{ objectFit: "cover" }}
+              className="w-full h-full object-cover"
               muted
               autoPlay
               playsInline
