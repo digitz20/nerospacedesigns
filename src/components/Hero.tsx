@@ -173,7 +173,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-coffee-deep/40 via-coffee-deep/20 to-coffee-deep/60 z-[3]" />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 text-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 py-20 md:py-28 lg:py-32 text-center">
         {isLoaded && (
           <>
             <p

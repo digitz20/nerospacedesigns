@@ -74,7 +74,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
           const aspectClass =
             totalItems === 1
-              ? "aspect-[16/9]"
+              ? "aspect-[3/4]"
               : totalItems === 2
                 ? "aspect-[4/3]"
                 : totalItems === 3

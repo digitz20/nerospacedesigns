@@ -42,16 +42,33 @@ export default function ProjectCard({
       <Link href={`/projects/${slug}`} className="group block">
         <div className={`relative overflow-hidden ${aspectRatio} mb-4 md:mb-6`}>
           {hasVideo ? (
-            <video
-              src={videos[0]}
-              className="w-full h-full object-cover"
-              muted
-              autoPlay
-              playsInline
-              loop
-              preload="metadata"
-              poster={poster}
-            />
+            <>
+              <video
+                src={videos[0]}
+                className="w-full h-full object-cover"
+                muted
+                autoPlay
+                playsInline
+                loop
+                preload="metadata"
+                poster={poster}
+              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none md:hidden">
+                <div className="w-12 h-12 rounded-full bg-beige-light/80 flex items-center justify-center">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="text-coffee-dark ml-0.5"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </div>
+              </div>
+            </>
           ) : hasImage ? (
             <>
               <img
