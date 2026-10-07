@@ -21,7 +21,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
   if (totalItems === 0) {
     return (
-      <div className="w-full aspect-[3/4] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
+      <div className="w-full bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24 py-20">
         <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">
           No Media
         </span>
@@ -85,7 +85,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     : "aspect-[3/4]";
 
           const isVideo = item.type === "video";
-          const videoAspectClass = isVideo ? "" : aspectClass;
+          const naturalClass = "";
 
           return (
             <motion.div
@@ -94,7 +94,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`${colSpan} ${videoAspectClass} overflow-hidden cursor-pointer`}
+              className={`${colSpan} ${naturalClass} overflow-hidden cursor-pointer`}
               onClick={() => {
                 setLightboxIndex(index);
                 setLightboxOpen(true);
@@ -116,7 +116,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
                   width={1200}
                   height={675}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto"
                   priority={isFirst}
                 />
               )}
