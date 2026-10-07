@@ -122,25 +122,8 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   className="w-full h-full object-cover"
                   priority={isFirst}
                 />
-              )}
-              {isVideo && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-beige-light/80 flex items-center justify-center">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="text-coffee-dark ml-0.5"
-                    >
-                      <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                  </div>
-                </div>
-              )}
-            </motion.div>
+               )}
+             </motion.div>
           );
         })}
       </div>
