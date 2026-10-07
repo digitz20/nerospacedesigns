@@ -40,7 +40,7 @@ export default function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
     >
       <Link href={`/projects/${slug}`} className="group block">
-        <div className={`relative overflow-hidden ${aspectRatio} mb-3 md:mb-4`}>
+        <div className={`relative overflow-hidden ${aspectRatio}`}>
           {hasVideo ? (
             <video
               src={videos[0]}
@@ -78,7 +78,7 @@ export default function ProjectCard({
           )}
           <div className="absolute inset-0 bg-coffee-dark/0 group-hover:bg-coffee-dark/20 transition-colors duration-500" />
         </div>
-        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-2">
+        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-2 mt-3 md:mt-4">
           <div>
             <h3 className="font-heading text-lg md:text-xl text-coffee-dark mb-0.5 group-hover:text-coffee-accent transition-colors duration-300 font-bold uppercase tracking-wide">
               {title}

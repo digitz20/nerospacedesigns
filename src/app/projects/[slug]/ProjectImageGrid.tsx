@@ -87,6 +87,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
           const isVideo = item.type === "video";
           const videoIndex = isVideo ? index - safeImages.length : -1;
+          const poster = safeImages[0] || undefined;
 
           return (
             <motion.div
@@ -113,7 +114,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   playsInline
                   loop
                   preload="auto"
-                  poster={safeImages[0] || undefined}
+                  poster={poster}
                 />
               ) : (
                 <Image
