@@ -193,10 +193,10 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="max-w-3xl">
             <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-coffee-dark leading-[1.1] mb-6 font-bold uppercase">
-              Rooms that feel like you.
+              Room that feels like you.
             </h2>
             <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
-              Nerospacedesigns is an interior design studio in Abuja. We plan, design and build calm, warm spaces for homes and offices.
+              Nerospacedesigns is an interior design studio that shapes spaces with warmth, restraint, and intention. We pair considered layouts with refined materials and quiet detail, creating interiors that feel calm, personal, and effortlessly lived-in.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a

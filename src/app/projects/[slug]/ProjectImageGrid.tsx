@@ -109,9 +109,10 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   src={item.src}
                   className="w-full h-full object-cover"
                   muted
+                  autoPlay
                   playsInline
                   loop
-                  preload="metadata"
+                  preload="auto"
                   poster={safeImages[0] || undefined}
                 />
               ) : (
