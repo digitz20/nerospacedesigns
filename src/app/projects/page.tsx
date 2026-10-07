@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                     year={project.year}
                     image={project.images[0]}
                     videos={project.videos}
-                    aspectRatio={project.aspectRatio}
+                    aspectRatio="aspect-[3/4]"
                     slug={project.slug}
                     index={index}
                     secondaryImage={project.secondaryImage}

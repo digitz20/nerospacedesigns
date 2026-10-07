@@ -76,13 +76,13 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
             totalItems === 1
               ? "aspect-[3/4]"
               : totalItems === 2
-                ? "aspect-[4/3]"
+                ? "aspect-[3/4]"
                 : totalItems === 3
                   ? index === 0
-                    ? "aspect-[16/9]"
-                    : "aspect-[4/3]"
+                    ? "aspect-[3/4]"
+                    : "aspect-[3/4]"
                   : index % 2 === 0
-                    ? "aspect-[16/9]"
+                    ? "aspect-[3/4]"
                     : "aspect-[3/4]";
 
           const isVideo = item.type === "video";
@@ -112,7 +112,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                   autoPlay
                   playsInline
                   loop
-                  preload="metadata"
+                  preload="auto"
                   poster={safeImages[0] || undefined}
                 />
               ) : (

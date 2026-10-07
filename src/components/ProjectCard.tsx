@@ -49,7 +49,7 @@ export default function ProjectCard({
               autoPlay
               playsInline
               loop
-              preload="metadata"
+              preload="auto"
               poster={poster}
             />
           ) : hasImage ? (
