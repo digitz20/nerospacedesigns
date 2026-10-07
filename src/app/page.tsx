@@ -446,7 +446,7 @@ export default function HomePage() {
               center
             />
 
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
@@ -456,7 +456,7 @@ export default function HomePage() {
                   year={project.year}
                   image={project.images[0]}
                   videos={project.videos}
-                  aspectRatio={project.aspectRatio}
+                  aspectRatio="aspect-[3/4]"
                   slug={project.slug}
                   index={index}
                   secondaryImage={project.secondaryImage}

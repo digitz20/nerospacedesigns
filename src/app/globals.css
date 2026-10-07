@@ -11,6 +11,7 @@
   --font-heading: var(--font-cormorant-garamond);
   --font-body: var(--font-cormorant-garamond);
   --font-sweet-sans: "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
+  --font-halogen: "Halogen", "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
 }
 
 @font-face {
