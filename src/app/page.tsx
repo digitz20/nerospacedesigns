@@ -162,11 +162,8 @@ export default function HomePage() {
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-coffee-dark leading-[1.1] mb-6 font-bold uppercase">
               A studio built around how you live.
             </h2>
-            <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-6">
-              We start with a visit to your space and a conversation about your routines, your taste and your budget. Then we design every detail, from the floor plan to the last cushion.
-            </p>
             <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
-              Our work leans on natural timber, stone, soft light and quiet colour. Each piece is chosen to last and to feel right in Nigerian homes and climate.
+              Nerospacedesigns is an interior design studio that shapes spaces with warmth, restraint, and intention. We pair considered layouts with refined materials and quiet detail, creating interiors that feel calm, personal, and effortlessly lived-in.
             </p>
             <a
               href="/contact"
@@ -183,13 +180,29 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
-              { label: "Location", value: "Gwarinpa, Abuja" },
-              { label: "Projects", value: "Homes, offices, shops" },
-              { label: "Service", value: "Concept to handover" },
-              { label: "Workshop", value: "Custom furniture made locally" },
+              {
+                label: "Location",
+                value:
+                  "Abuja. We serve clients across the city and nearby areas, with site visits and consultations available on request.",
+              },
+              {
+                label: "Projects",
+                value:
+                  "Residential and commercial spaces. From homes and bathrooms to offices, cafes, and shops, we design spaces that feel considered, comfortable, and true to the people who use them.",
+              },
+              {
+                label: "Service",
+                value:
+                  "Concept to handover. We guide you through every step: consultation and site assessment, space planning, 3D visualization, technical drawings, sourcing and procurement, project management, and final styling.",
+              },
+              {
+                label: "Workshop",
+                value:
+                  "Custom furniture and curated sourcing. We bring together foreign and locally made products, so you get pieces that suit your taste, budget, and space, whether made to measure or selected from trusted suppliers.",
+              },
             ].map((item, i) => (
               <div key={i}>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-2 font-semibold">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-2 font-bold">
                   {item.label}
                 </p>
                 <p className="text-sm md:text-base text-coffee-dark font-heading font-semibold">
