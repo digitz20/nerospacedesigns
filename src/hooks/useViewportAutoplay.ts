@@ -15,11 +15,26 @@ export function useViewportAutoplay(options: UseViewportAutoplayOptions = {}) {
     const video = videoRef.current;
     if (!video) return;
 
+    let isIntersecting = false;
+
+    const playWhenReady = () => {
+      if (isIntersecting) {
+        video.play().catch(() => {});
+      }
+    };
+
+    video.addEventListener("canplay", playWhenReady, { once: true });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          isIntersecting = entry.isIntersecting;
           if (entry.isIntersecting) {
-            video.play().catch(() => {});
+            if (video.readyState >= 3) {
+              video.play().catch(() => {});
+            } else {
+              video.load();
+            }
           } else {
             video.pause();
           }
@@ -32,6 +47,7 @@ export function useViewportAutoplay(options: UseViewportAutoplayOptions = {}) {
 
     return () => {
       observer.disconnect();
+      video.removeEventListener("canplay", playWhenReady);
     };
   }, [threshold, rootMargin]);
 

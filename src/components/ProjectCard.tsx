@@ -49,10 +49,9 @@ export default function ProjectCard({
               src={videos[0]}
               className="w-full h-full object-cover"
               muted
-              autoPlay
               playsInline
               loop
-              preload="auto"
+              preload="metadata"
               poster={poster}
             />
           ) : hasImage ? (
