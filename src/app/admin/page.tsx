@@ -777,6 +777,7 @@ function TestimonialManager({
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
   const [role, setRole] = useState("");
+  const [editing, setEditing] = useState<string | null>(null);
 
   const loadTestimonials = useCallback(async () => {
     try {
@@ -793,33 +794,53 @@ function TestimonialManager({
     loadTestimonials();
   }, [loadTestimonials]);
 
+  const resetForm = () => {
+    setQuote("");
+    setAuthor("");
+    setRole("");
+    setEditing(null);
+  };
+
+  const handleEdit = (item: Testimonial) => {
+    setQuote(item.quote);
+    setAuthor(item.author);
+    setRole(item.role);
+    setEditing(item.id);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api("/api/testimonials", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quote, author, role }),
-      });
-      onToast("Testimonial added", "success");
+      if (editing) {
+        await api(`/api/testimonials/${editing}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quote, author, role }),
+        });
+        onToast("Testimonial updated", "success");
+        resetForm();
+      } else {
+        await api("/api/testimonials", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quote, author, role }),
+        });
+        onToast("Testimonial added", "success");
+        setQuote("");
+        setAuthor("");
+        setRole("");
+      }
       window.dispatchEvent(new Event("content-updated"));
-      setQuote("");
-      setAuthor("");
-      setRole("");
       loadTestimonials();
     } catch {
-      onToast("Failed to add testimonial", "error");
+      onToast("Failed to save testimonial", "error");
     }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this testimonial?")) return;
     try {
-      await api("/api/testimonials", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      });
+      await api(`/api/testimonials/${id}`, { method: "DELETE" });
       onToast("Testimonial deleted", "success");
       window.dispatchEvent(new Event("content-updated"));
       loadTestimonials();
@@ -886,8 +907,17 @@ function TestimonialManager({
           type="submit"
           className="bg-coffee-accent text-beige-light px-8 py-3 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-beige-warm hover:text-coffee-dark transition-colors"
         >
-          Add Testimonial
+          {editing ? "Update Testimonial" : "Add Testimonial"}
         </button>
+        {editing && (
+          <button
+            type="button"
+            onClick={resetForm}
+            className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light transition-colors"
+          >
+            Cancel
+          </button>
+        )}
       </form>
 
       <div className="space-y-4">
@@ -904,12 +934,20 @@ function TestimonialManager({
                 {item.role}
               </p>
             </div>
-            <button
-              onClick={() => handleDelete(item.id)}
-              className="text-xs tracking-[0.15em] uppercase font-semibold text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 hover:border-red-400 transition-colors flex-shrink-0"
-            >
-              Delete
-            </button>
+            <div className="flex gap-2 flex-shrink-0">
+              <button
+                onClick={() => handleEdit(item)}
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light border border-beige-medium/30 px-4 py-2 hover:border-beige-medium transition-colors"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 hover:border-red-400 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
         {testimonials.length === 0 && (

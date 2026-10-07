@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 interface ProjectCardProps {
   title: string;
@@ -31,6 +32,32 @@ export default function ProjectCard({
   const hasVideo = videos && videos.length > 0;
   const hasImage = image && image.trim() !== "";
   const poster = hasImage ? image : undefined;
+  const [playFailed, setPlayFailed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !hasVideo) return;
+
+    const tryPlay = () => {
+      if (!video || isPlaying) return;
+      video.play().then(() => {
+        setIsPlaying(true);
+        setPlayFailed(false);
+      }).catch(() => {
+        setPlayFailed(true);
+      });
+    };
+
+    video.addEventListener("loadeddata", tryPlay, { once: true });
+    video.addEventListener("canplay", tryPlay, { once: true });
+
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, [hasVideo, isPlaying]);
 
   return (
     <motion.div
@@ -41,36 +68,26 @@ export default function ProjectCard({
     >
       <Link href={`/projects/${slug}`} className="group block">
         <div className={`relative overflow-hidden ${aspectRatio}`}>
-          {hasVideo ? (
+          {hasVideo && !playFailed ? (
             <video
+              ref={videoRef}
               src={videos[0]}
               className="w-full h-full object-cover"
               muted
-              autoPlay
               playsInline
               loop
-              preload="auto"
+              preload="metadata"
               poster={poster}
             >
               Your browser does not support the video tag.
             </video>
-          ) : hasImage ? (
-            <>
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              {secondaryImage && (
-                <img
-                  src={secondaryImage}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  aria-hidden="true"
-                />
-              )}
-            </>
+          ) : hasImage || poster ? (
+            <img
+              src={poster || image}
+              alt={title}
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
           ) : (
             <div className={`${aspectRatio} bg-coffee-dark/10 flex items-center justify-center`}>
               <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">

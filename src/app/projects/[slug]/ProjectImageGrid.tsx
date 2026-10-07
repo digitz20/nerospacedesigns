@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import MediaLightbox from "@/components/MediaLightbox";
 
 interface ProjectImageGridProps {
@@ -14,10 +14,36 @@ interface ProjectImageGridProps {
 export default function ProjectImageGrid({ images, videos, title }: ProjectImageGridProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [playFailed, setPlayFailed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const safeImages = images.filter((src) => src && src.trim() !== "");
   const safeVideos = videos.filter((src) => src && src.trim() !== "");
   const totalItems = safeImages.length + safeVideos.length;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      if (!video || isPlaying) return;
+      video.play().then(() => {
+        setIsPlaying(true);
+        setPlayFailed(false);
+      }).catch(() => {
+        setPlayFailed(true);
+      });
+    };
+
+    video.addEventListener("loadeddata", tryPlay, { once: true });
+    video.addEventListener("canplay", tryPlay, { once: true });
+
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, [isPlaying]);
 
   if (totalItems === 0) {
     return (
@@ -72,6 +98,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     : "md:col-span-4";
 
           const isVideo = item.type === "video";
+          const isCurrentVideo = isVideo && lightboxIndex === index && lightboxOpen;
 
           return (
             <motion.div
@@ -86,15 +113,27 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                 setLightboxOpen(true);
               }}
             >
-              {isVideo ? (
+              {isVideo && lightboxOpen && lightboxIndex === index ? (
                 <video
+                  ref={videoRef}
                   src={item.src}
                   className="w-full h-auto"
                   muted
                   autoPlay
                   playsInline
                   loop
-                  preload="auto"
+                  poster={safeImages[0] || undefined}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : isVideo ? (
+                <video
+                  src={item.src}
+                  className="w-full h-auto"
+                  muted
+                  playsInline
+                  loop
+                  preload="metadata"
                   poster={safeImages[0] || undefined}
                 >
                   Your browser does not support the video tag.

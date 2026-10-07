@@ -1,0 +1,11 @@
+{
+  "blob": {
+    "stores": [
+      {
+        "id": "nerospacedesigns-media",
+        "path": "public/uploads",
+        "provider": "vercel-blob"
+      }
+    ]
+  }
+}
