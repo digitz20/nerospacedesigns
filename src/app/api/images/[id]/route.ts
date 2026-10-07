@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSql, ensureSchema } from "@/lib/database";
+import { readFile } from "fs/promises";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -42,8 +44,6 @@ export async function GET(
 
         requestHeaders.set("Content-Range", `bytes ${start}-${end}/${size}`);
         requestHeaders.set("Content-Length", String(chunkSize));
-        requestHeaders.set("Content-Type", contentType);
-        requestHeaders.set("Accept-Ranges", "bytes");
 
         return new NextResponse(buffer.subarray(start, end + 1), {
           status: 206,
