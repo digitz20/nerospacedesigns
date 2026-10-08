@@ -33,10 +33,31 @@ export default function ProjectCard({
   const hasImage = image && image.trim() !== "";
   const poster = hasImage ? image : undefined;
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !hasVideo) return;
+    const container = containerRef.current;
+    if (!video || !hasVideo || !container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [hasVideo]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !hasVideo || !isInView) return;
 
     const tryPlay = () => {
       video.play().catch(() => {});
@@ -49,7 +70,7 @@ export default function ProjectCard({
       video.removeEventListener("loadeddata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
     };
-  }, [hasVideo]);
+  }, [hasVideo, isInView]);
 
   return (
     <motion.div
@@ -59,17 +80,17 @@ export default function ProjectCard({
       transition={{ duration: 0.7, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
     >
       <Link href={`/projects/${slug}`} className="group block">
-        <div className={`relative overflow-hidden ${aspectRatio}`}>
+        <div ref={containerRef} className={`relative overflow-hidden ${aspectRatio}`}>
           {hasVideo ? (
             <video
               ref={videoRef}
-              src={videos[0]}
+              src={isInView ? videos[0] : undefined}
               className="w-full h-full object-cover"
               muted
-              autoPlay
+              autoPlay={isInView}
               playsInline
               loop
-              preload="auto"
+              preload="none"
               poster={poster}
             >
               Your browser does not support the video tag.

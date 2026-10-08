@@ -4,17 +4,6 @@ import AboutSection from "@/components/AboutSection";
 export default function AboutPage() {
   return (
     <div>
-      <section className="pt-32 md:pt-40 pb-16 md:pb-24 bg-beige-light">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-          <SectionHeading
-            eyebrow="The Studio"
-            title="About Nerospace"
-            subtitle="A boutique interior design studio creating refined spaces where architecture, materiality and everyday life meet."
-            center
-          />
-        </div>
-      </section>
-
       <AboutSection />
 
       <section className="py-24 md:py-32 bg-beige-warm">

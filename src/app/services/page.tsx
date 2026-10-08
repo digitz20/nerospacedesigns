@@ -51,7 +51,7 @@ export default function ServicesPage() {
             </div>
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="blob:https://www.pinterest.com/66ec68f6-e26c-4154-854a-af46975e2fe1"
+                src="https://i.pinimg.com/736x/66/23/8f/66238f8bce49d5b46c7c1b43c3a47059.jpg"
                 alt="Bespoke interior design"
                 className="w-full h-full object-cover"
               />

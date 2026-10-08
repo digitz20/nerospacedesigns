@@ -193,13 +193,13 @@ export default function Hero() {
               Like Home.
             </h1>
 
-            <p
-              className="text-sm md:text-base text-beige-light/80 max-w-xl mx-auto mb-8 md:mb-10 leading-relaxed font-heading animate-fadeUp"
-              style={{ animationDelay: "0.4s" }}
-            >
-              Interior architecture, spatial planning and bespoke design for
-              considered living.
-            </p>
+              <p
+                className="text-sm md:text-base text-beige-light/80 max-w-xl mx-auto mb-8 md:mb-10 leading-relaxed font-heading animate-fadeUp font-semibold"
+                style={{ animationDelay: "0.4s" }}
+              >
+                Interior architecture, spatial planning and bespoke design for
+                considered living.
+              </p>
 
             <div
               className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 animate-fadeUp"

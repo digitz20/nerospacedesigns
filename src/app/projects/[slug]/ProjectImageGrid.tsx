@@ -15,6 +15,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [playFailed, setPlayFailed] = useState(false);
+  const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set());
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const safeImages = images.filter((src) => src && src.trim() !== "");
@@ -42,6 +43,29 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
       video.removeEventListener("canplay", tryPlay);
     };
   }, [lightboxIndex, lightboxOpen]);
+
+  useEffect(() => {
+    const videoContainers = document.querySelectorAll("[data-video-index]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = Number(entry.target.getAttribute("data-video-index"));
+          if (entry.isIntersecting) {
+            setLoadedVideos((prev) => {
+              if (prev.has(index)) return prev;
+              const next = new Set(prev);
+              next.add(index);
+              return next;
+            });
+          }
+        });
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    videoContainers.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [totalItems, safeVideos.length]);
 
   if (totalItems === 0) {
     return (
@@ -97,6 +121,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
           const isVideo = item.type === "video";
           const isActiveVideo = isVideo && lightboxOpen && lightboxIndex === index;
+          const shouldLoadVideo = isVideo && loadedVideos.has(index);
 
           return (
             <motion.div
@@ -112,15 +137,16 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               }}
             >
               {isVideo ? (
-                <div className="aspect-[3/4]">
+                <div className="aspect-[3/4]" data-video-index={index}>
                   <video
                     ref={isActiveVideo ? videoRef : undefined}
-                    src={item.src}
+                    src={shouldLoadVideo ? item.src : undefined}
                     className="w-full h-full object-cover"
                     muted
+                    autoPlay={shouldLoadVideo}
                     playsInline
                     loop
-                    preload="metadata"
+                    preload="none"
                     poster={safeImages[0] || undefined}
                   >
                     Your browser does not support the video tag.
