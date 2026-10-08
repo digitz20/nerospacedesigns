@@ -20,7 +20,7 @@ export default function AboutSection() {
               subtitle=""
             />
             <p className="text-base md:text-lg text-coffee-dark/80 leading-relaxed mb-6 font-heading font-bold uppercase">
-              Nerospace Designs is a boutique interior design studio creating refined spaces where architecture, materiality and everyday life meet.
+              We design spaces that balance restraint with personality, turning ordinary rooms into environments that feel calm, considered, and unmistakably yours.
             </p>
             <p className="text-sm text-coffee-dark/70 leading-relaxed mb-8 font-heading">
               Founded on the belief that great design is born from deep listening and meticulous craft, we approach each project as a unique collaboration. Our work spans residential and commercial spaces, always with a commitment to timeless elegance and thoughtful functionality.

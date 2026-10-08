@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SectionHeading from "./SectionHeading";
 
 interface ProcessTimelineProps {
   steps: { id: string; title: string; description: string }[];
@@ -11,12 +10,6 @@ export default function ProcessTimeline({ steps }: ProcessTimelineProps) {
   return (
     <section className="py-24 md:py-32 bg-beige-light">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-        <SectionHeading
-          eyebrow="How We Work"
-          title="Our Process"
-          subtitle="A structured approach to creating spaces that inspire and endure."
-          center
-        />
 
         <div className="hidden md:grid grid-cols-4 gap-8 lg:gap-12">
           {steps.map((step, i) => (

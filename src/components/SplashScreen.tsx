@@ -7,17 +7,19 @@ const SPLASH_KEY = "nerospacedesigns_splash_shown";
 
 export default function SplashScreen() {
   const [countdown, setCountdown] = useState(SPLASH_DURATION);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const hasShown = sessionStorage.getItem(SPLASH_KEY);
     if (hasShown) {
-      setVisible(false);
+      document.body.style.visibility = "visible";
+      window.location.replace("/");
       return;
     }
 
-    setVisible(true);
     sessionStorage.setItem(SPLASH_KEY, "true");
+    document.body.style.visibility = "visible";
 
     const timer = setInterval(() => {
       setCountdown((prev) => {
@@ -33,15 +35,11 @@ export default function SplashScreen() {
     return () => clearInterval(timer);
   }, []);
 
-  if (!visible) return null;
-
-  const handleExplore = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.location.replace("/");
-  };
-
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-[100]"
+      style={{ visibility: "visible" }}
+    >
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/mainimage.jpeg')" }}
@@ -50,8 +48,11 @@ export default function SplashScreen() {
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
         <div className="mb-10 md:mb-14">
           <button
-            onClick={handleExplore}
-            className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.replace("/");
+            }}
+            className="inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
             <svg

@@ -223,7 +223,7 @@ export default function HomePage() {
               A studio built around how you live.
             </h2>
             <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
-              Nerospacedesigns is an interior design studio that shapes spaces with warmth, restraint, and intention. We pair considered layouts with refined materials and quiet detail, creating interiors that feel calm, personal, and effortlessly lived-in.
+              We don&apos;t impose trends. We study how you move through a room, what light means to you, and how your home should feel after a long day. The result is a space that works as hard as it looks.
             </p>
             <a
               href="/contact"

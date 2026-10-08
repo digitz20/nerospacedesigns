@@ -3,7 +3,7 @@
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import { motion } from "framer-motion";
-import { servicesHeading } from "@/lib/data";
+import { servicesHeading, services } from "@/lib/data";
 
 export default function ServicesPage() {
   return (
@@ -22,33 +22,7 @@ export default function ServicesPage() {
       <section className="pb-24 md:pb-32 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
           <div className="space-y-6 md:space-y-8">
-            {[
-              {
-                id: "01",
-                title: "CONSULTATION & SITE ASSESSMENT",
-                description: "We begin with a thorough understanding of your space, lifestyle, and aspirations. Our initial consultation establishes the foundation for a design that is both functional and deeply personal.",
-              },
-              {
-                id: "02",
-                title: "INTERIOR DESIGN & SPACE PLANNING",
-                description: "Through spatial analysis and thoughtful layouts, we craft environments that flow naturally. Every room is considered as part of a cohesive whole, balancing aesthetics with everyday usability.",
-              },
-              {
-                id: "03",
-                title: "3D DESIGN & VISUALIZATION",
-                description: "Before a single wall is moved, you will see your space come to life. Our photorealistic visualizations ensure complete clarity and confidence in the design direction.",
-              },
-              {
-                id: "04",
-                title: "TECHNICAL DRAWINGS",
-                description: "Precision in execution is non-negotiable. We produce detailed technical documentation that guides contractors and craftspeople to realize the design exactly as intended.",
-              },
-              {
-                id: "05",
-                title: "FURNITURE & CUSTOM DESIGN",
-                description: "From curated pieces to fully bespoke furniture, we source and design elements that are unique to your space. Each item is selected or created to enhance the overall narrative of the home.",
-              },
-            ].map((service, index) => (
+            {services.map((service, index) => (
               <ServiceCard
                 key={service.id}
                 id={service.id}

@@ -2,7 +2,7 @@
 
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
-import { processHeading } from "@/lib/data";
+import { processHeading, processSteps } from "@/lib/data";
 
 export default function ProcessPage() {
   return (
@@ -20,28 +20,7 @@ export default function ProcessPage() {
 
       <section className="pb-24 md:pb-32 bg-beige-light">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-          <ProcessTimeline steps={[
-            {
-              id: "01",
-              title: "DISCOVER",
-              description: "We listen, observe, and ask the right questions. This phase is about understanding your needs, your lifestyle, and the unique character of your space.",
-            },
-            {
-              id: "02",
-              title: "DEFINE",
-              description: "Ideas take shape. We establish the design direction, material palette, and spatial strategy that will guide the project forward.",
-            },
-            {
-              id: "03",
-              title: "DESIGN",
-              description: "Concepts become detailed plans. From floor layouts to furniture specifications, every element is carefully considered and documented.",
-            },
-            {
-              id: "04",
-              title: "DELIVER",
-              description: "The vision becomes reality. We oversee the execution, ensuring every detail is implemented to the highest standard.",
-            },
-          ]} />
+          <ProcessTimeline steps={processSteps} />
         </div>
       </section>
 

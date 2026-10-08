@@ -34,10 +34,10 @@ export default function ContactForm() {
             transition={{ duration: 0.8 }}
           >
             <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-coffee-accent mb-4 font-semibold">
-              Get In Touch
+              Send Enquiry
             </p>
             <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-coffee-dark leading-[1.1] mb-6 md:mb-8 font-bold uppercase">
-              Start A Project
+              Tell Us About Your Project
             </h2>
             <p className="text-sm md:text-base text-coffee-dark/70 leading-relaxed mb-12 font-heading">
               Whether you&apos;re planning a new interior, refreshing an existing space, or developing a completely bespoke environment, we&apos;d love to hear about it.

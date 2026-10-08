@@ -70,7 +70,10 @@ export default function RootLayout({
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Anton&family=Halogen&display=swap" rel="stylesheet" />
-      <body className="min-h-full flex flex-col font-body">
+      <body
+        className="min-h-full flex flex-col font-body"
+        style={{ visibility: "hidden" }}
+      >
         <SplashScreen />
         <SiteShell>{children}</SiteShell>
       </body>
