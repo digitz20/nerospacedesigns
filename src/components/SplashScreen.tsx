@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const SPLASH_DURATION = 60;
 const SPLASH_KEY = "nerospacedesigns_splash_shown";
@@ -9,7 +8,6 @@ const SPLASH_KEY = "nerospacedesigns_splash_shown";
 export default function SplashScreen() {
   const [countdown, setCountdown] = useState(SPLASH_DURATION);
   const [visible, setVisible] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const hasShown = sessionStorage.getItem(SPLASH_KEY);
@@ -25,7 +23,7 @@ export default function SplashScreen() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          router.push("/");
+          window.location.href = "/";
           return 0;
         }
         return prev - 1;
@@ -33,9 +31,13 @@ export default function SplashScreen() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [router]);
+  }, []);
 
   if (!visible) return null;
+
+  const handleExplore = () => {
+    window.location.href = "/";
+  };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
@@ -47,7 +49,7 @@ export default function SplashScreen() {
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-end pb-20 md:pb-28 px-6">
         <div className="w-full max-w-6xl mb-10 md:mb-14">
           <button
-            onClick={() => router.push("/")}
+            onClick={handleExplore}
             className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
