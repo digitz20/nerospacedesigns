@@ -29,7 +29,7 @@ export default function ProcessPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="aspect-[4/5] overflow-hidden">
               <img
-                src="https://i.pinimg.com/736x/28/cb/1f/28cb1ff3a5ef0cc8b462242d2bd41782.jpg"
+                src="https://i.pinimg.com/736x/ed/42/0f/ed420f1d855b985c5c24069d96f6d3ea.jpg"
                 alt="A collaborative journey"
                 className="w-full h-full object-cover"
               />
