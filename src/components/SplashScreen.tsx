@@ -44,11 +44,11 @@ export default function SplashScreen() {
         style={{ backgroundImage: "url('/images/mainimage.jpeg')" }}
       />
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
-        <div className="animate-fadeUp">
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-end pb-20 md:pb-28 px-6">
+        <div className="w-full max-w-6xl mb-10 md:mb-14">
           <button
             onClick={() => router.push("/")}
-            className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold mb-8"
+            className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
             <svg
@@ -65,13 +65,16 @@ export default function SplashScreen() {
           </button>
         </div>
 
-        <div className="w-full max-w-6xl animate-fadeUp">
-          <h1 className="font-halogen text-6xl md:text-8xl lg:text-9xl text-beige-light leading-[0.9] tracking-[0.08em] font-black uppercase w-full text-left">
-            Nerospacedesigns
+        <div className="w-full max-w-6xl">
+          <h1 className="font-halogen text-7xl md:text-9xl lg:text-[10rem] text-beige-light leading-none tracking-[0.06em] font-black uppercase w-full text-left">
+            NEROSPACE
+          </h1>
+          <h1 className="font-halogen text-7xl md:text-9xl lg:text-[10rem] text-beige-light leading-none tracking-[0.06em] font-black uppercase w-full text-left">
+            DESIGNS
           </h1>
         </div>
 
-        <p className="text-xs text-beige-light/60 mt-6 font-heading animate-fadeUp">
+        <p className="text-xs text-beige-light/60 mt-8 font-heading">
           Auto-redirecting in {countdown}s
         </p>
       </div>
