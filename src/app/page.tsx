@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
@@ -199,18 +200,18 @@ export default function HomePage() {
               Nerospacedesigns is an interior design studio that shapes spaces with warmth, restraint, and intention. We pair considered layouts with refined materials and quiet detail, creating interiors that feel calm, personal, and effortlessly lived-in.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a
+              <Link
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
               >
                 Book a consultation
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/projects"
                 className="inline-flex items-center justify-center gap-2 border-2 border-coffee-dark text-coffee-dark px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-coffee-dark hover:text-beige-light font-semibold"
               >
                 See our work
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -225,13 +226,13 @@ export default function HomePage() {
             <p className="text-base md:text-lg text-coffee-dark/70 leading-relaxed font-heading mb-8">
               We don&apos;t impose trends. We study how you move through a room, what light means to you, and how your home should feel after a long day. The result is a space that works as hard as it looks.
             </p>
-            <a
+            <Link
               href="/contact"
               className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-coffee-accent hover:text-coffee-dark transition-colors font-semibold"
             >
               Talk to the studio
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -465,13 +466,13 @@ export default function HomePage() {
             </div>
 
             <div className="text-center mt-12 md:mt-16">
-              <a
+              <Link
                 href="/projects"
                 className="group inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-coffee-accent hover:text-coffee-dark transition-colors font-semibold"
               >
                 View all projects
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>

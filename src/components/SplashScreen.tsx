@@ -12,10 +12,15 @@ export default function SplashScreen() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const pathname = window.location.pathname;
+    if (pathname === "/splash") {
+      document.body.style.visibility = "visible";
+      return;
+    }
+
     const hasShown = sessionStorage.getItem(SPLASH_KEY);
     if (hasShown) {
       document.body.style.visibility = "visible";
-      window.location.replace("/");
       return;
     }
 
@@ -39,6 +44,10 @@ export default function SplashScreen() {
 
   if (!ready) return null;
 
+  const handleExplore = () => {
+    window.location.href = "/";
+  };
+
   return (
     <div className="fixed inset-0 z-[100] bg-black animate-fadeIn">
       <div
@@ -48,8 +57,8 @@ export default function SplashScreen() {
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
         <div className="mb-10 md:mb-14 animate-fadeUp" style={{ animationDelay: "0.1s" }}>
-          <a
-            href="/"
+          <button
+            onClick={handleExplore}
             className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
@@ -64,7 +73,7 @@ export default function SplashScreen() {
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </button>
         </div>
 
         <div className="fixed bottom-16 right-4 md:bottom-16 md:right-16 animate-fadeUp" style={{ animationDelay: "0.3s" }}>

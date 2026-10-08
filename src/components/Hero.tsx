@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 
 interface HeroImage {
   id: string;
@@ -204,7 +205,7 @@ export default function Hero() {
               className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 animate-fadeUp"
               style={{ animationDelay: "0.55s" }}
             >
-              <a
+              <Link
                 href="/projects"
                 className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
               >
@@ -220,13 +221,13 @@ export default function Hero() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="inline-flex items-center gap-3 border-2 border-beige-light text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-light hover:text-coffee-dark font-semibold"
               >
                 Book Consultation
-              </a>
+              </Link>
             </div>
           </>
         )}
