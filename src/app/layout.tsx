@@ -3,6 +3,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/data";
 import SiteShell from "@/components/SiteShell";
+import SplashScreen from "@/components/SplashScreen";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default function RootLayout({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Anton&family=Halogen&display=swap" rel="stylesheet" />
       <body className="min-h-full flex flex-col font-body">
+        <SplashScreen />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

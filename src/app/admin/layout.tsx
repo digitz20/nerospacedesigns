@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond } from "next/font/google";
+import SplashScreen from "@/components/SplashScreen";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function AdminLayout({
 }>) {
   return (
     <div className="min-h-screen bg-coffee-deep">
+      <SplashScreen />
       {children}
     </div>
   );
