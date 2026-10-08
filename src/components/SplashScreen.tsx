@@ -35,6 +35,11 @@ export default function SplashScreen() {
 
   if (!visible) return null;
 
+  const handleExplore = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.replace("/");
+  };
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
       <div
@@ -43,11 +48,9 @@ export default function SplashScreen() {
       />
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
-        <div className="animate-fadeUp">
+        <div className="mb-10 md:mb-14">
           <button
-            onClick={() => {
-              window.location.replace("/");
-            }}
+            onClick={handleExplore}
             className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
@@ -65,13 +68,16 @@ export default function SplashScreen() {
           </button>
         </div>
 
-        <div className="fixed bottom-10 right-10 md:bottom-16 md:right-16 animate-fadeUp">
+        <div className="fixed bottom-10 right-10 md:bottom-16 md:right-16">
           <h1 className="font-halogen text-5xl md:text-7xl lg:text-8xl text-beige-light leading-none tracking-[0.06em] font-black uppercase">
-            nerospace<br />designs
+            nerospace
+          </h1>
+          <h1 className="font-halogen text-5xl md:text-7xl lg:text-8xl text-beige-light leading-none tracking-[0.06em] font-black uppercase">
+            designs
           </h1>
         </div>
 
-        <p className="fixed bottom-6 left-6 md:bottom-10 md:left-10 text-xs text-beige-light/60 font-heading animate-fadeUp">
+        <p className="fixed bottom-6 left-6 md:bottom-10 md:left-10 text-xs text-beige-light/60 font-heading">
           Auto-redirecting in {countdown}s
         </p>
       </div>
