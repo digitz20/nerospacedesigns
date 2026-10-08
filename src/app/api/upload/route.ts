@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -30,19 +36,30 @@ export async function POST(request: Request) {
     }
 
     const isVideo = file.type.startsWith("video/");
-    const folder = isVideo ? "videos" : "images";
-    const filename = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}${file.name}`;
-    const pathname = `${folder}/${filename}`;
+    const folder = isVideo ? "nerospacedesigns/videos" : "nerospacedesigns/images";
+    const bytes = Buffer.from(await file.arrayBuffer());
+    const base64 = bytes.toString("base64");
+    const dataUri = `data:${file.type};base64,${base64}`;
 
-    const blob = await put(pathname, file, {
-      access: "public",
-      addRandomSuffix: false,
+    const result = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader.upload(
+        dataUri,
+        {
+          folder,
+          resource_type: "auto",
+          public_id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
     });
 
     return NextResponse.json({
-      url: blob.url,
+      url: result.secure_url,
       filename: file.name,
-      pathname: blob.pathname,
+      publicId: result.public_id,
     });
   } catch (error) {
     console.error("Upload error:", error);
