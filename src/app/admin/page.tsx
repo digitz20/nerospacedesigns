@@ -740,6 +740,11 @@ function ProjectManager({
             </div>
           </div>
         ))}
+        {projects.length === 0 && !loading && (
+          <div className="border border-beige-medium/20 p-8 text-center">
+            <p className="text-sm text-beige-medium font-heading">No projects yet. Create your first project above.</p>
+          </div>
+        )}
       </div>
 
       {totalPages > 1 && (

@@ -15,7 +15,6 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [playFailed, setPlayFailed] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const safeImages = images.filter((src) => src && src.trim() !== "");
@@ -27,9 +26,8 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
     if (!video) return;
 
     const tryPlay = () => {
-      if (!video || isPlaying) return;
+      if (!video) return;
       video.play().then(() => {
-        setIsPlaying(true);
         setPlayFailed(false);
       }).catch(() => {
         setPlayFailed(true);
@@ -43,11 +41,11 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
       video.removeEventListener("loadeddata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
     };
-  }, [isPlaying]);
+  }, [lightboxIndex, lightboxOpen]);
 
   if (totalItems === 0) {
     return (
-      <div className="w-full bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24 py-20">
+      <div className="w-full aspect-[3/4] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
         <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">
           No Media
         </span>
@@ -98,7 +96,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                     : "md:col-span-4";
 
           const isVideo = item.type === "video";
-          const isCurrentVideo = isVideo && lightboxIndex === index && lightboxOpen;
+          const isActiveVideo = isVideo && lightboxOpen && lightboxIndex === index;
 
           return (
             <motion.div
@@ -113,38 +111,28 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
                 setLightboxOpen(true);
               }}
             >
-              {isVideo && lightboxOpen && lightboxIndex === index ? (
-                <video
-                  ref={videoRef}
-                  src={item.src}
-                  className="w-full h-auto"
-                  muted
-                  autoPlay
-                  playsInline
-                  loop
-                  poster={safeImages[0] || undefined}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              ) : isVideo ? (
-                <video
-                  src={item.src}
-                  className="w-full h-auto"
-                  muted
-                  playsInline
-                  loop
-                  preload="metadata"
-                  poster={safeImages[0] || undefined}
-                >
-                  Your browser does not support the video tag.
-                </video>
+              {isVideo ? (
+                <div className="aspect-[3/4]">
+                  <video
+                    ref={isActiveVideo ? videoRef : undefined}
+                    src={item.src}
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                    loop
+                    preload="metadata"
+                    poster={safeImages[0] || undefined}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               ) : (
                 <Image
                   src={item.src}
                   alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
                   width={1200}
                   height={675}
-                  className="w-full h-auto"
+                  className="w-full h-full object-cover"
                   priority={isFirst}
                 />
               )}
