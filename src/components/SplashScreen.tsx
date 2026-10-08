@@ -23,7 +23,7 @@ export default function SplashScreen() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.location.href = "/";
+          window.location.replace("/");
           return 0;
         }
         return prev - 1;
@@ -35,10 +35,6 @@ export default function SplashScreen() {
 
   if (!visible) return null;
 
-  const handleExplore = () => {
-    window.location.href = "/";
-  };
-
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
       <div
@@ -46,10 +42,12 @@ export default function SplashScreen() {
         style={{ backgroundImage: "url('/images/mainimage.jpeg')" }}
       />
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-end pb-20 md:pb-28 px-6">
-        <div className="w-full max-w-6xl mb-10 md:mb-14">
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+        <div className="animate-fadeUp">
           <button
-            onClick={handleExplore}
+            onClick={() => {
+              window.location.replace("/");
+            }}
             className="group inline-flex items-center gap-3 bg-coffee-accent text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-beige-warm hover:text-coffee-dark font-semibold"
           >
             Explore Our Work
@@ -67,16 +65,13 @@ export default function SplashScreen() {
           </button>
         </div>
 
-        <div className="w-full max-w-6xl">
-          <h1 className="font-halogen text-7xl md:text-9xl lg:text-[10rem] text-beige-light leading-none tracking-[0.06em] font-black uppercase w-full text-left">
-            NEROSPACE
-          </h1>
-          <h1 className="font-halogen text-7xl md:text-9xl lg:text-[10rem] text-beige-light leading-none tracking-[0.06em] font-black uppercase w-full text-left">
-            DESIGNS
+        <div className="fixed bottom-10 right-10 md:bottom-16 md:right-16 animate-fadeUp">
+          <h1 className="font-halogen text-5xl md:text-7xl lg:text-8xl text-beige-light leading-none tracking-[0.06em] font-black uppercase">
+            nerospace<br />designs
           </h1>
         </div>
 
-        <p className="text-xs text-beige-light/60 mt-8 font-heading">
+        <p className="fixed bottom-6 left-6 md:bottom-10 md:left-10 text-xs text-beige-light/60 font-heading animate-fadeUp">
           Auto-redirecting in {countdown}s
         </p>
       </div>
