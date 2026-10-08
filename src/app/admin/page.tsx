@@ -696,9 +696,9 @@ function ProjectManager({
         {projects.map((project) => (
           <div
             key={project.id}
-            className="border border-beige-medium/20 p-5 flex flex-col sm:flex-row gap-4 items-start"
+            className="border border-beige-medium/20 p-5 flex flex-col sm:flex-row gap-4 items-start justify-between"
           >
-            <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 flex-1">
+            <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 flex-1 min-w-0">
               {project.images.slice(0, 3).map((url, i) => (
                 <div
                   key={i}
@@ -724,16 +724,16 @@ function ProjectManager({
                 {project.description}
               </p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
+            <div className="flex gap-2 flex-shrink-0 mt-2 sm:mt-0">
               <button
                 onClick={() => handleEdit(project)}
-                className="text-xs tracking-[0.15em] uppercase font-semibold text-coffee-accent hover:text-beige-light border border-coffee-accent/30 px-4 py-2 hover:border-coffee-accent transition-colors"
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-light bg-coffee-accent hover:bg-coffee-dark border border-coffee-accent px-4 py-2 transition-colors"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(project.id)}
-                className="text-xs tracking-[0.15em] uppercase font-semibold text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 hover:border-red-400 transition-colors"
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-light bg-red-500 hover:bg-red-600 border border-red-500 px-4 py-2 transition-colors"
               >
                 Delete
               </button>
@@ -934,16 +934,16 @@ function TestimonialManager({
                 {item.role}
               </p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
+            <div className="flex gap-2 flex-shrink-0 mt-2 sm:mt-0">
               <button
                 onClick={() => handleEdit(item)}
-                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-medium hover:text-beige-light border border-beige-medium/30 px-4 py-2 hover:border-beige-medium transition-colors"
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-light bg-coffee-accent hover:bg-coffee-dark border border-coffee-accent px-4 py-2 transition-colors"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(item.id)}
-                className="text-xs tracking-[0.15em] uppercase font-semibold text-red-400 hover:text-red-300 border border-red-400/30 px-4 py-2 hover:border-red-400 transition-colors"
+                className="text-xs tracking-[0.15em] uppercase font-semibold text-beige-light bg-red-500 hover:bg-red-600 border border-red-500 px-4 py-2 transition-colors"
               >
                 Delete
               </button>
