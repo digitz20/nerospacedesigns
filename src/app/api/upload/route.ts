@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -37,23 +37,22 @@ export async function POST(request: Request) {
 
     const isVideo = file.type.startsWith("video/");
     const folder = isVideo ? "nerospacedesigns/videos" : "nerospacedesigns/images";
-    const bytes = Buffer.from(await file.arrayBuffer());
-    const base64 = bytes.toString("base64");
-    const dataUri = `data:${file.type};base64,${base64}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    const result = await new Promise<any>((resolve, reject) => {
-      cloudinary.uploader.upload(
-        dataUri,
+    const result = await new Promise<UploadApiResponse>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
         {
+          // Store the original file untouched so images keep full quality.
           folder,
           resource_type: "auto",
           public_id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
         },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
+        (error, uploadResult) => {
+          if (error || !uploadResult) reject(error ?? new Error("Upload failed"));
+          else resolve(uploadResult);
         }
       );
+      stream.end(buffer);
     });
 
     return NextResponse.json({

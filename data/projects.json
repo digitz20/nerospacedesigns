@@ -1,3 +1,38 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "id": "mv3izyafqbzlaoh",
+      "slug": "fgrfuj",
+      "title": "fgrfuj",
+      "location": "feg",
+      "category": "Residential",
+      "year": "2026",
+      "description": "",
+      "images": [],
+      "videos": [
+        "https://res.cloudinary.com/dca6xa9nq/video/upload/v1791705164/nerospacedesigns/videos/1791705160593-lhn9txy.mp4"
+      ],
+      "aspectRatio": "aspect-[4/5]",
+      "status": "Planning",
+      "featured": true
+    },
+    {
+      "id": "mv3icc3pre9db0g",
+      "slug": "frgfdgtr",
+      "title": "frgfdgtr",
+      "location": "ijk",
+      "category": "Residential",
+      "year": "2026",
+      "description": "",
+      "images": [
+        "https://res.cloudinary.com/dca6xa9nq/image/upload/v1791704066/nerospacedesigns/images/1791704061173-0eo1x8x.jpg",
+        "https://res.cloudinary.com/dca6xa9nq/image/upload/v1791704066/nerospacedesigns/images/1791704061192-k082lqp.jpg"
+      ],
+      "videos": [],
+      "aspectRatio": "aspect-[4/5]",
+      "clientName": "jkk",
+      "status": "Planning",
+      "featured": false
+    }
+  ]
 }

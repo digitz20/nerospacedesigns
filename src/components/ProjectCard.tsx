@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { cloudinaryImg } from "@/lib/media";
 
 interface ProjectCardProps {
   title: string;
@@ -31,7 +32,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const hasVideo = videos && videos.length > 0;
   const hasImage = image && image.trim() !== "";
-  const poster = hasImage ? image : undefined;
+  const poster = hasImage ? cloudinaryImg(image, 800) : undefined;
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isInView, setIsInView] = useState(false);
@@ -98,14 +99,14 @@ export default function ProjectCard({
           ) : hasImage ? (
             <>
               <img
-                src={image}
+                src={cloudinaryImg(image, 800)}
                 alt={title}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               {secondaryImage && (
                 <img
-                  src={secondaryImage}
+                  src={cloudinaryImg(secondaryImage, 800)}
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   aria-hidden="true"

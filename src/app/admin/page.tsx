@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { cloudinaryImg } from "@/lib/media";
 
 type Tab = "projects" | "email" | "settings" | "testimonials";
 
@@ -599,7 +600,7 @@ function ProjectManager({
                   {form.images.map((url, i) => (
                     <div key={i} className="relative w-20 h-20 border border-beige-medium/30">
                       <img
-                        src={url}
+                        src={cloudinaryImg(url, 200)}
                         alt=""
                         className="w-full h-full object-cover"
                       />
@@ -652,6 +653,7 @@ function ProjectManager({
                         src={url}
                         className="w-full h-full object-cover"
                         muted
+                        preload="metadata"
                       />
                       <button
                         type="button"
@@ -705,7 +707,7 @@ function ProjectManager({
                   className="w-24 h-24 flex-shrink-0 border border-beige-medium/20"
                 >
                   <img
-                    src={url}
+                    src={cloudinaryImg(url, 240)}
                     alt=""
                     className="w-full h-full object-cover"
                   />

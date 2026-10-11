@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import MediaLightbox from "@/components/MediaLightbox";
+import { cloudinaryImg } from "@/lib/media";
 
 interface ProjectImageGridProps {
   images: string[];
@@ -14,7 +15,6 @@ interface ProjectImageGridProps {
 export default function ProjectImageGrid({ images, videos, title }: ProjectImageGridProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [playFailed, setPlayFailed] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set());
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -28,11 +28,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
     const tryPlay = () => {
       if (!video) return;
-      video.play().then(() => {
-        setPlayFailed(false);
-      }).catch(() => {
-        setPlayFailed(true);
-      });
+      video.play().catch(() => {});
     };
 
     video.addEventListener("loadeddata", tryPlay, { once: true });
@@ -69,7 +65,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
 
   if (totalItems === 0) {
     return (
-      <div className="w-full aspect-[3/4] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
+      <div className="w-full aspect-[3/4] sm:aspect-[16/9] bg-coffee-dark/10 flex items-center justify-center mb-16 md:mb-24">
         <span className="text-coffee-muted text-xs tracking-widest uppercase font-semibold">
           No Media
         </span>
@@ -77,22 +73,10 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
     );
   }
 
-  const getItemSrc = (index: number) => {
-    if (index < safeImages.length) {
-      return { type: "image" as const, src: safeImages[index] };
-    }
-    const videoIndex = index - safeImages.length;
-    return { type: "video" as const, src: safeVideos[videoIndex] };
-  };
-
-  const gridClass =
-    totalItems === 1
-      ? "grid-cols-1"
-      : totalItems === 2
-        ? "grid-cols-1 md:grid-cols-2"
-        : totalItems === 3
-          ? "grid-cols-1 md:grid-cols-12"
-          : "grid-cols-1 md:grid-cols-12";
+  // Every tile uses the same aspect-[3/4] frame and the same grid as the
+  // project cards on the home and projects pages, so media sizing is
+  // identical across all pages and breakpoints (mobile included).
+  const gridClass = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
 
   const mediaItems = [
     ...safeImages.map((src) => ({ type: "image" as const, src })),
@@ -102,23 +86,7 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
   return (
     <>
       <div className={`grid ${gridClass} gap-4 md:gap-6 mb-16 md:mb-24`}>
-        {Array.from({ length: totalItems }).map((_, index) => {
-          const item = getItemSrc(index);
-          const isFirst = index === 0;
-          const isLast = index === totalItems - 1;
-          const colSpan =
-            totalItems === 1
-              ? "md:col-span-12"
-              : totalItems === 2
-                ? "md:col-span-6"
-                : totalItems === 3
-                  ? index === 0
-                    ? "md:col-span-12"
-                    : "md:col-span-6"
-                  : index % 2 === 0
-                    ? "md:col-span-8"
-                    : "md:col-span-4";
-
+        {mediaItems.map((item, index) => {
           const isVideo = item.type === "video";
           const isActiveVideo = isVideo && lightboxOpen && lightboxIndex === index;
           const shouldLoadVideo = isVideo && loadedVideos.has(index);
@@ -129,38 +97,40 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`${colSpan} overflow-hidden cursor-pointer`}
+              transition={{ duration: 0.6, delay: Math.min(index * 0.1, 0.5) }}
+              className="overflow-hidden cursor-pointer"
               onClick={() => {
                 setLightboxIndex(index);
                 setLightboxOpen(true);
               }}
             >
               {isVideo ? (
-                <div className="aspect-[3/4]" data-video-index={index}>
+                <div className="relative aspect-[3/4] bg-coffee-deep/80" data-video-index={index}>
                   <video
                     ref={isActiveVideo ? videoRef : undefined}
                     src={shouldLoadVideo ? item.src : undefined}
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-contain"
                     muted
                     autoPlay={shouldLoadVideo}
                     playsInline
                     loop
                     preload="none"
-                    poster={safeImages[0] || undefined}
                   >
                     Your browser does not support the video tag.
                   </video>
                 </div>
               ) : (
-                <Image
-                  src={item.src}
-                  alt={isFirst ? title : isLast ? `${title} detail` : `${title} view ${index + 1}`}
-                  width={1200}
-                  height={675}
-                  className="w-full h-full object-cover"
-                  priority={isFirst}
-                />
+                <div className="aspect-[3/4]">
+                  <Image
+                    src={cloudinaryImg(item.src, 1200)}
+                    alt={index === 0 ? title : `${title} view ${index + 1}`}
+                    width={1200}
+                    height={1600}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="w-full h-full object-cover"
+                    priority={index === 0}
+                  />
+                </div>
               )}
             </motion.div>
           );
