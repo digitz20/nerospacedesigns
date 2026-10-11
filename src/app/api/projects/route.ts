@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { generateId, generateSlug } from "@/lib/server";
-import { getSql, ensureSchema } from "@/lib/database";
+import { generateId, generateSlug, readDataFile, writeDataFile } from "@/lib/server";
+import { getSql, ensureSchema, hasDatabase } from "@/lib/database";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -30,6 +30,22 @@ export async function GET(request: Request) {
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
     const limit = 20;
     const offset = (page - 1) * limit;
+
+    // No DATABASE_URL (local dev) → serve the file store instead of 500ing
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ projects: Project[] }>("projects.json", {
+        projects: [],
+      }).projects;
+      const total = stored.length;
+      const projects = stored.slice(offset, offset + limit);
+      return NextResponse.json({
+        projects,
+        page,
+        limit,
+        total,
+        totalPages: Math.max(1, Math.ceil(total / limit)),
+      });
+    }
 
     await ensureSchema();
 
@@ -102,6 +118,42 @@ export async function POST(request: Request) {
 
     if (!project || !project.title) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    }
+
+    // No DATABASE_URL (local dev) → persist to the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ projects: Project[] }>("projects.json", {
+        projects: [],
+      }).projects;
+      const id = generateId();
+      const takenSlugs = new Set(stored.map((p) => p.slug));
+      const baseSlug = generateSlug(project.title || id);
+      let slug = baseSlug;
+      let counter = 1;
+      while (takenSlugs.has(slug)) {
+        slug = `${baseSlug}-${counter++}`;
+      }
+      const newProject: Project = {
+        id,
+        slug,
+        title: project.title,
+        location: project.location || "",
+        category: project.category || "Residential",
+        year: project.year || "",
+        description: project.description || "",
+        images: Array.isArray(project.images) ? project.images : [],
+        videos: Array.isArray(project.videos) ? project.videos : [],
+        aspectRatio: project.aspectRatio || "aspect-[4/5]",
+        clientName: project.clientName || undefined,
+        projectSize: project.projectSize || undefined,
+        budgetRange: project.budgetRange || undefined,
+        timeline: project.timeline || undefined,
+        status: project.status || "Planning",
+        featured: Boolean(project.featured),
+      };
+      stored.unshift(newProject);
+      writeDataFile("projects.json", { projects: stored });
+      return NextResponse.json({ success: true, project: newProject });
     }
 
     await ensureSchema();

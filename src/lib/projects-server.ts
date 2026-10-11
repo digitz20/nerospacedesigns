@@ -1,7 +1,14 @@
-import { getSql, ensureSchema } from "@/lib/database";
+import { getSql, ensureSchema, hasDatabase } from "@/lib/database";
+import { readDataFile } from "@/lib/server";
 
 export async function getProjects(): Promise<any[]> {
   try {
+    // No DATABASE_URL (local dev) → read the file store
+    if (!hasDatabase()) {
+      return readDataFile<{ projects: any[] }>("projects.json", {
+        projects: [],
+      }).projects;
+    }
     await ensureSchema();
     const db = getSql();
     const rows = (await db`

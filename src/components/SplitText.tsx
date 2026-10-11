@@ -46,20 +46,20 @@ export default function SplitText({
       {items.map((item, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
           animate={
             animateOnView
               ? isInView
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: 20 }
-              : { opacity: 1, y: 0 }
+                ? { opacity: 1, y: 0, filter: "blur(0px)" }
+                : { opacity: 0, y: 16, filter: "blur(4px)" }
+              : { opacity: 1, y: 0, filter: "blur(0px)" }
           }
           transition={{
-            duration: 0.5,
-            delay: delay + i * 0.03,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            duration: 0.7,
+            delay: delay + i * 0.025,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          style={{ display: "inline-block" }}
+          style={{ display: "inline-block", willChange: "opacity, transform, filter" }}
         >
           {item}
           {splitBy === "words" && i < items.length - 1 && " "}

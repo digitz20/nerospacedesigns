@@ -65,15 +65,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} h-full antialiased`}
+      className={`${cormorant.variable} h-full antialiased scroll-smooth`}
     >
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Anton&family=Halogen&display=swap" rel="stylesheet" />
-      <body
-        className="min-h-full flex flex-col font-body"
-        style={{ visibility: "hidden" }}
-      >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-body bg-beige-light text-coffee-dark overflow-x-hidden">
         <SplashScreen />
         <SiteShell>{children}</SiteShell>
       </body>

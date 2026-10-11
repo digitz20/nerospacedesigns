@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getSql, ensureSchema } from "@/lib/database";
+import { getSql, ensureSchema, hasDatabase } from "@/lib/database";
+import { readDataFile, writeDataFile } from "@/lib/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -65,8 +66,21 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await ensureSchema();
     const { id } = await params;
+
+    // No DATABASE_URL (local dev) → read from the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ projects: Project[] }>("projects.json", {
+        projects: [],
+      }).projects;
+      const project = stored.find((p) => p.id === id);
+      if (!project) {
+        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      }
+      return NextResponse.json({ project });
+    }
+
+    await ensureSchema();
 
     const db = getSql();
     const rows = (await db`
@@ -110,6 +124,36 @@ export async function PUT(
 
     if (!project) {
       return NextResponse.json({ error: "Project data required" }, { status: 400 });
+    }
+
+    // No DATABASE_URL (local dev) → update the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ projects: Project[] }>("projects.json", {
+        projects: [],
+      }).projects;
+      const idx = stored.findIndex((p) => p.id === id);
+      if (idx === -1) {
+        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      }
+      stored[idx] = {
+        ...stored[idx],
+        title: project.title ?? stored[idx].title,
+        location: project.location ?? stored[idx].location,
+        category: project.category ?? stored[idx].category,
+        year: project.year ?? stored[idx].year,
+        description: project.description ?? stored[idx].description,
+        images: Array.isArray(project.images) ? project.images : stored[idx].images,
+        videos: Array.isArray(project.videos) ? project.videos : stored[idx].videos,
+        aspectRatio: project.aspectRatio ?? stored[idx].aspectRatio,
+        clientName: project.clientName ?? stored[idx].clientName,
+        projectSize: project.projectSize ?? stored[idx].projectSize,
+        budgetRange: project.budgetRange ?? stored[idx].budgetRange,
+        timeline: project.timeline ?? stored[idx].timeline,
+        status: project.status ?? stored[idx].status,
+        featured: project.featured !== undefined ? Boolean(project.featured) : stored[idx].featured,
+      };
+      writeDataFile("projects.json", { projects: stored });
+      return NextResponse.json({ success: true, project: stored[idx] });
     }
 
     await ensureSchema();
@@ -158,8 +202,22 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await ensureSchema();
     const { id } = await params;
+
+    // No DATABASE_URL (local dev) → delete from the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ projects: Project[] }>("projects.json", {
+        projects: [],
+      }).projects;
+      const filtered = stored.filter((p) => p.id !== id);
+      if (filtered.length === stored.length) {
+        return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      }
+      writeDataFile("projects.json", { projects: filtered });
+      return NextResponse.json({ success: true });
+    }
+
+    await ensureSchema();
 
     const db = getSql();
     const rows = (await db`

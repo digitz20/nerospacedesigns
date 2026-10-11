@@ -1,13 +1,4 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond } from "next/font/google";
-import SplashScreen from "@/components/SplashScreen";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant-garamond",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Admin | Nerospace Designs",
@@ -24,8 +15,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen bg-coffee-deep">
-      <SplashScreen />
+    <div className="min-h-screen bg-coffee-deep text-beige-light antialiased">
       {children}
     </div>
   );

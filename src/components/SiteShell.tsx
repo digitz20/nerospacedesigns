@@ -8,16 +8,22 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith("/admin");
+  const isAdmin = pathname?.startsWith("/admin");
+  const isSplash = pathname === "/splash";
+
+  // Admin gets ZERO main-site chrome — no navbar/footer/chat/transitions/preloader
+  if (isAdmin || isSplash) {
+    return <main className="flex-1">{children}</main>;
+  }
 
   return (
     <>
-      {!isAdmin && <Navbar />}
+      <Navbar />
       <Providers>
         <main className="flex-1">{children}</main>
       </Providers>
-      {!isAdmin && <Footer />}
-      {!isAdmin && <WhatsAppFloat />}
+      <Footer />
+      <WhatsAppFloat />
     </>
   );
 }

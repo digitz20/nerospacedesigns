@@ -1,11 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSql, ensureSchema } from "@/lib/database";
+import { getSql, ensureSchema, hasDatabase } from "@/lib/database";
+import { readDataFile, writeDataFile } from "@/lib/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+}
+
 export async function GET() {
   try {
+    // No DATABASE_URL (local dev) → serve the file store instead of 500ing
+    if (!hasDatabase()) {
+      const testimonials = readDataFile<{ testimonials: Testimonial[] }>(
+        "testimonials.json",
+        { testimonials: [] }
+      ).testimonials;
+      return NextResponse.json({ testimonials });
+    }
     await ensureSchema();
     const db = getSql();
     const rows = (await db`
@@ -28,6 +44,23 @@ export async function POST(request: NextRequest) {
 
     if (!quote || !quote.trim()) {
       return NextResponse.json({ error: "Quote is required" }, { status: 400 });
+    }
+
+    // No DATABASE_URL (local dev) → persist to the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ testimonials: Testimonial[] }>(
+        "testimonials.json",
+        { testimonials: [] }
+      ).testimonials;
+      const testimonial: Testimonial = {
+        id: Date.now().toString(),
+        quote: quote.trim(),
+        author: (author || "").trim(),
+        role: (role || "").trim(),
+      };
+      stored.unshift(testimonial);
+      writeDataFile("testimonials.json", { testimonials: stored });
+      return NextResponse.json({ success: true, testimonial });
     }
 
     await ensureSchema();
@@ -55,6 +88,18 @@ export async function DELETE(request: NextRequest) {
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    // No DATABASE_URL (local dev) → delete from the file store
+    if (!hasDatabase()) {
+      const stored = readDataFile<{ testimonials: Testimonial[] }>(
+        "testimonials.json",
+        { testimonials: [] }
+      ).testimonials;
+      writeDataFile("testimonials.json", {
+        testimonials: stored.filter((t) => t.id !== id),
+      });
+      return NextResponse.json({ success: true });
     }
 
     await ensureSchema();

@@ -4,6 +4,10 @@ const DATABASE_URL = process.env.DATABASE_URL;
 
 let sqlInstance: NeonQueryFunction<boolean, boolean> | null = null;
 
+export function hasDatabase(): boolean {
+  return Boolean(DATABASE_URL);
+}
+
 function getSql() {
   if (!DATABASE_URL) {
     throw new Error("DATABASE_URL is not set");
@@ -17,6 +21,7 @@ function getSql() {
 export { getSql };
 
 export async function ensureSchema() {
+  if (!DATABASE_URL) return;
   const db = getSql();
   await db`
     CREATE TABLE IF NOT EXISTS projects (

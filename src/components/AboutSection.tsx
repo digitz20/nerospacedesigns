@@ -9,10 +9,10 @@ export default function AboutSection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, x: -32, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <SectionHeading
               eyebrow="The Studio"
@@ -31,15 +31,15 @@ export default function AboutSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, x: 32, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full"
           >
             <div className="w-full overflow-hidden">
               <img
-                src="https://i.pinimg.com/736x/1a/55/d0/1a55d05b0496e891b8119744bdc7c41e.jpg"
+                src="https://i.pinimg.com/736x/7f/37/6a/7f376a1ddf1c739fa8621d3f33f7e580.jpg"
                 alt="Nerospace Designs studio"
                 className="w-full h-auto object-cover"
                 loading="lazy"

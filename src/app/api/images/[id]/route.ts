@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSql, ensureSchema } from "@/lib/database";
+import { getSql, ensureSchema, hasDatabase } from "@/lib/database";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -11,6 +11,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // No DATABASE_URL → no DB-backed images exist locally; 404 cleanly
+    if (!hasDatabase()) {
+      return NextResponse.json({ error: "Media not found" }, { status: 404 });
+    }
     await ensureSchema();
     const { id } = await params;
 

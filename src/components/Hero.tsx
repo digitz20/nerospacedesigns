@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
 interface HeroImage {
@@ -9,6 +9,8 @@ interface HeroImage {
   visible: boolean;
 }
 
+// FIXED order for SSR — server and client render IDENTICALLY (no hydration error).
+// Shuffle + random start happen ONLY after mount, inside useEffect.
 const HERO_IMAGES: HeroImage[] = Array.from({ length: 12 }, (_, i) => ({
   id: `bg-${String(i + 1).padStart(2, "0")}`,
   url: `/images/backgrounds/bg-${String(i + 1).padStart(2, "0")}.jpeg`,
@@ -17,6 +19,15 @@ const HERO_IMAGES: HeroImage[] = Array.from({ length: 12 }, (_, i) => ({
 
 const DISPLAY_DURATION = 60000;
 const TRANSITION_DURATION = 1500;
+
+function shuffled<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 interface Waypoint {
   x: number;
@@ -56,7 +67,9 @@ function easeInOutSine(t: number): number {
 }
 
 export default function Hero() {
-  const [images] = useState<HeroImage[]>(HERO_IMAGES);
+  // Deterministic first render — identical on server and client (no hydration error).
+  // Shuffle + random start run only after mount, inside useEffect.
+  const [images, setImages] = useState<HeroImage[]>(HERO_IMAGES);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [position, setPosition] = useState({ x: 50, y: 50 });
@@ -68,45 +81,81 @@ export default function Hero() {
 
   const visibleImages = images.filter((img) => img.visible);
 
+  // Mount only: reveal text, then shuffle order + jump to a random slide (client-only).
   useEffect(() => {
     setIsLoaded(true);
+    const t = setTimeout(() => {
+      setImages(shuffled(HERO_IMAGES));
+      setCurrentIndex(Math.floor(Math.random() * HERO_IMAGES.length));
+    }, 60);
+    return () => clearTimeout(t);
   }, []);
 
+  // Autoplay — a random DIFFERENT slide each cycle, never orderly.
+  // Restarted on every slide change so each image gets its full duration
+  // and manual dot picks keep the flow alive.
   useEffect(() => {
     const count = visibleImages.length;
-    if (count === 0) return;
+    if (count <= 1) return;
 
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % count);
+      setCurrentIndex((prev) => {
+        let next = prev;
+        let guard = 0;
+        while (next === prev && guard++ < 25) {
+          next = Math.floor(Math.random() * count);
+        }
+        return next === prev ? (prev + 1) % count : next;
+      });
     }, DISPLAY_DURATION);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [visibleImages.length]);
+  }, [visibleImages.length, currentIndex]);
 
+  // Original cinematic drift — fresh flight path per slide, guarded so it can never crash.
   useEffect(() => {
     flightPathRef.current = generateRandomFlightPath(DISPLAY_DURATION);
     startTimeRef.current = performance.now();
 
     const animate = (currentTime: number) => {
+      const path = flightPathRef.current;
+      if (!Array.isArray(path) || path.length < 2) return;
+
       const elapsed = currentTime - startTimeRef.current;
+      if (!Number.isFinite(elapsed) || elapsed < 0) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
       const progress = Math.min(elapsed / DISPLAY_DURATION, 1);
 
-      const path = flightPathRef.current;
       const totalSegments = path.length - 1;
       const segmentProgress = progress * totalSegments;
-      const segmentIndex = Math.min(Math.floor(segmentProgress), totalSegments - 1);
-      const localProgress = segmentProgress - segmentIndex;
+      const segmentIndex = Math.min(
+        Math.max(Math.floor(segmentProgress), 0),
+        totalSegments - 1
+      );
+      const localProgress = Math.min(
+        Math.max(segmentProgress - segmentIndex, 0),
+        1
+      );
 
       const easedProgress = easeInOutSine(localProgress);
 
       const from = path[segmentIndex];
       const to = path[segmentIndex + 1];
+      if (!from || !to) return;
 
       const x = lerp(from.x, to.x, easedProgress);
       const y = lerp(from.y, to.y, easedProgress);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        if (progress < 1) {
+          animationRef.current = requestAnimationFrame(animate);
+        }
+        return;
+      }
 
       setPosition({ x: 50 + x, y: 50 + y });
 
