@@ -38,7 +38,7 @@ export default function SplashPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: leaving ? 0 : 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
+      className="fixed inset-0 h-dvh z-[100] flex items-center justify-center overflow-hidden bg-black"
     >
       <motion.div
         initial={{ scale: 1.12 }}

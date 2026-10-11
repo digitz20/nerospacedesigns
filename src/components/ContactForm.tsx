@@ -109,7 +109,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -128,7 +128,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -146,7 +146,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -164,7 +164,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, projectType: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -182,7 +182,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, location: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -200,7 +200,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, budget: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -218,7 +218,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, timeline: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors font-heading"
                 />
               </div>
 
@@ -237,7 +237,7 @@ export default function ContactForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-sm text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors resize-none font-heading"
+                  className="w-full bg-transparent border-b border-coffee-accent/30 py-3 text-base text-coffee-dark focus:outline-none focus:border-coffee-accent transition-colors resize-none font-heading"
                 />
               </div>
 

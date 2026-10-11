@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { lockBodyScroll } from "@/lib/useLockBodyScroll";
 
 const SPLASH_DURATION = 60;
 
@@ -77,13 +78,11 @@ export default function SplashScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, isExcluded]);
 
-  // lock scroll while splash is up, restore smoothly after
+  // lock scroll while splash is up, restore smoothly after (iOS-safe:
+  // overflow:hidden alone does not stop touch scrolling on iPhone)
   useEffect(() => {
     if (!show || leaving) return;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return lockBodyScroll();
   }, [show, leaving]);
 
   const handleExit = (href: string) => {
@@ -113,7 +112,7 @@ export default function SplashScreen() {
           animate={{ opacity: leaving ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] bg-black overflow-hidden"
+          className="fixed inset-0 h-dvh z-[100] bg-black overflow-hidden"
         >
           {/* slow cinematic zoom — same image, but free / seamless */}
           <motion.div

@@ -6,31 +6,34 @@ import { useEffect } from "react";
 
 const SEAMLESS = [0.22, 1, 0.36, 1] as const;
 
+// Runs when a page's content mounts (inside the keyed wrapper), so the scroll
+// resets exactly as the new page fades in — never yanking the old page.
+function ScrollReset() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, []);
+  return null;
+}
+
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
 
-  useEffect(() => {
-    if (isAdmin) return;
-    // buttery scroll reset — instant jump feels stiff, smooth glide feels free
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }, [pathname, isAdmin]);
-
   if (isAdmin) return <>{children}</>;
 
+  // mode="wait": the old page finishes fading out before the new one enters —
+  // no stacked pages, no layout jump. Only opacity/transform are animated
+  // (blur on a full page drops frames on mobile GPUs).
   return (
-    <AnimatePresence mode="sync" initial={false}>
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 22, filter: "blur(6px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
-        transition={{ duration: 0.65, ease: SEAMLESS }}
-        className="will-change-[opacity,transform,filter]"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10, transition: { duration: 0.28, ease: SEAMLESS } }}
+        transition={{ duration: 0.45, ease: SEAMLESS }}
       >
+        <ScrollReset />
         {children}
       </motion.div>
     </AnimatePresence>

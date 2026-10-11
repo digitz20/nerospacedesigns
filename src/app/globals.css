@@ -58,6 +58,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* Stop iOS Safari from inflating text when rotating to landscape */
+  -webkit-text-size-adjust: 100%;
+  /* No grey flash on tap (Android Chrome / iOS Safari) */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html:focus-within {

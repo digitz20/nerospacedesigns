@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cloudinaryImg } from "@/lib/media";
+import { useLockBodyScroll } from "@/lib/useLockBodyScroll";
 
 interface MediaItem {
   type: "image" | "video";
@@ -49,14 +50,9 @@ export default function MediaLightbox({
     }
   }, [currentIndex]);
 
-  // Prevent the page behind the lightbox from scrolling (important on mobile).
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, []);
+  // iOS/Android-safe scroll lock — overflow:hidden does not stop touch
+  // scrolling on iPhone; the lockBodyScroll technique does.
+  useLockBodyScroll();
 
   // Show a spinner whenever a new (not yet loaded) image is displayed.
   const currentItem = items[currentIndex];
@@ -78,7 +74,7 @@ export default function MediaLightbox({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed inset-0 z-[10001] bg-coffee-deep/95 backdrop-blur-sm flex items-center justify-center"
+        className="fixed inset-0 h-dvh z-[10001] bg-coffee-deep/95 backdrop-blur-sm flex items-center justify-center"
         onClick={onClose}
       >
         {/* X button — pinned at the top to un-view (close) the media */}
@@ -130,7 +126,7 @@ export default function MediaLightbox({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.97 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-[min(82vw,360px)] sm:w-[min(44vw,380px)] lg:w-[min(24vw,360px)] aspect-[3/4] max-h-[70vh]"
+          className="relative w-[min(82vw,360px)] sm:w-[min(44vw,380px)] lg:w-[min(24vw,360px)] aspect-[3/4] max-h-[70dvh]"
           onClick={(e) => e.stopPropagation()}
         >
           {isVideo ? (
@@ -166,7 +162,7 @@ export default function MediaLightbox({
         </motion.div>
 
         {/* Cancel button + counter */}
-        <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
           <button
             type="button"
             onClick={(e) => {
