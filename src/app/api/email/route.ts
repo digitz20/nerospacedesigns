@@ -12,15 +12,23 @@ export async function POST(request: Request) {
 
     const recipients = Array.isArray(to) ? to : [to];
 
+    const port = parseInt(process.env.EMAIL_SERVER_PORT || "587", 10);
+
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_SERVER_HOST || "smtp.gmail.com",
-      port: parseInt(process.env.EMAIL_SERVER_PORT || "587"),
-      secure: false,
+      port,
+      secure: port === 465,
       auth: {
         user: process.env.EMAIL_SERVER_USER,
         pass: process.env.EMAIL_SERVER_PASSWORD,
       },
     });
+
+    // Keep literal text safe inside the HTML body.
+    const escapedMessage = message
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
 
     const emailPromises = recipients.map((recipient: string) =>
       transporter.sendMail({
@@ -34,7 +42,7 @@ export async function POST(request: Request) {
               <div style="width: 60px; height: 2px; background-color: #6D4C41; margin: 20px auto;"></div>
             </div>
             <div style="background-color: #FFFFFF; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-              <p style="color: #3C2415; font-size: 16px; line-height: 1.8; white-space: pre-wrap;">${message.replace(/\n/g, "<br>")}</p>
+              <p style="color: #3C2415; font-size: 16px; line-height: 1.8; white-space: pre-wrap;">${escapedMessage.replace(/\n/g, "<br>")}</p>
             </div>
             <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E0D5C5;">
               <p style="color: #6D4C41; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin: 0;">Interior Design Studio</p>
