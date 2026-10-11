@@ -125,7 +125,7 @@ export default function SplashScreen() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/70" />
 
-          <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+          <div className="relative z-10 w-full max-w-full h-full flex flex-col items-center justify-center px-4 sm:px-6">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -150,12 +150,12 @@ export default function SplashScreen() {
               </button>
             </motion.div>
 
-            {/* SINGLE LINE — same font-family / weight / tracking language as Explore Our Work button */}
+            {/* SINGLE LINE — same font language as Explore Our Work button, fluid size so it always fits on mobile */}
             <motion.h1
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 text-center font-heading font-semibold uppercase text-beige-light leading-none tracking-[0.18em] text-[9vw] sm:text-5xl md:text-6xl lg:text-7xl whitespace-nowrap"
+              className="mt-8 sm:mt-10 w-full max-w-full text-center font-heading font-semibold uppercase text-beige-light leading-none tracking-[0.08em] sm:tracking-[0.18em] text-[7.5vw] sm:text-5xl md:text-6xl lg:text-7xl whitespace-nowrap"
             >
               nerospacedesigns
             </motion.h1>

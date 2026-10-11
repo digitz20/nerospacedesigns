@@ -49,7 +49,7 @@ export default function SplashPage() {
       />
       <div className="absolute inset-0 bg-coffee-deep/70" />
 
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
+      <div className="relative z-10 text-center px-4 sm:px-6 w-full max-w-full sm:max-w-5xl mx-auto flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,12 +74,12 @@ export default function SplashPage() {
           </button>
         </motion.div>
 
-        {/* SINGLE LINE — same font language as Explore Our Work button */}
+        {/* SINGLE LINE — same font language as Explore Our Work button, fluid size so it always fits on mobile */}
         <motion.h1
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 font-heading font-semibold uppercase text-beige-light leading-none tracking-[0.18em] text-[9vw] sm:text-5xl md:text-6xl lg:text-7xl whitespace-nowrap"
+          className="mt-8 sm:mt-10 w-full max-w-full font-heading font-semibold uppercase text-beige-light leading-none tracking-[0.08em] sm:tracking-[0.18em] text-[7.5vw] sm:text-5xl md:text-6xl lg:text-7xl whitespace-nowrap"
         >
           nerospacedesigns
         </motion.h1>

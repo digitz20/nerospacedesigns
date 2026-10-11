@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Cinzel } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/data";
 import SiteShell from "@/components/SiteShell";
@@ -8,7 +8,17 @@ import SplashScreen from "@/components/SplashScreen";
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-cormorant-garamond",
+  display: "swap",
+});
+
+// Sharp luxury Roman serif for the all-caps hero headline — chiseled,
+// high-fashion strokes built for capitals, perfect for a design studio.
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cinzel",
   display: "swap",
 });
 
@@ -65,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} h-full antialiased scroll-smooth`}
+      className={`${cormorant.variable} ${cinzel.variable} h-full antialiased scroll-smooth`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -10,6 +10,7 @@
   --color-coffee-muted: #3A291C;
   --font-heading: var(--font-cormorant-garamond);
   --font-body: var(--font-cormorant-garamond);
+  --font-display: var(--font-cinzel);
   --font-sweet-sans: "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
   --font-halogen: "Halogen", "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
   --ease-seamless: cubic-bezier(0.22, 1, 0.36, 1);
@@ -88,6 +89,10 @@ main {
 
 .font-heading {
   font-family: var(--font-heading), "Cormorant Garamond", Georgia, serif;
+}
+
+.font-display {
+  font-family: var(--font-display), "Cinzel", "Cormorant Garamond", Georgia, serif;
 }
 
 ::selection {
