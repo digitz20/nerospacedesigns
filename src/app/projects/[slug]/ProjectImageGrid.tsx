@@ -105,11 +105,11 @@ export default function ProjectImageGrid({ images, videos, title }: ProjectImage
               }}
             >
               {isVideo ? (
-                <div className="relative aspect-[3/4] bg-coffee-deep/80" data-video-index={index}>
+                <div className="relative aspect-[3/4] bg-coffee-dark/10" data-video-index={index}>
                   <video
                     ref={isActiveVideo ? videoRef : undefined}
                     src={shouldLoadVideo ? item.src : undefined}
-                    className="absolute inset-0 w-full h-full object-contain"
+                    className="absolute inset-0 w-full h-full object-cover"
                     muted
                     autoPlay={shouldLoadVideo}
                     playsInline
