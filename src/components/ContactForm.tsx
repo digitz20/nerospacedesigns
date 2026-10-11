@@ -16,11 +16,35 @@ export default function ContactForm() {
     timeline: "",
     message: "",
   });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for your inquiry. We will get back to you shortly.");
-    setFormData({ name: "", email: "", phone: "", projectType: "", location: "", budget: "", timeline: "", message: "" });
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to send message");
+      }
+      setStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        projectType: "",
+        location: "",
+        budget: "",
+        timeline: "",
+        message: "",
+      });
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -243,11 +267,23 @@ export default function ContactForm() {
 
               <button
                 type="submit"
-                className="group inline-flex items-center gap-3 bg-coffee-dark text-beige-light px-10 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-coffee-accent font-semibold"
+                disabled={status === "sending"}
+                className="group inline-flex items-center gap-3 bg-coffee-dark text-beige-light px-10 py-4 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-coffee-accent font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Project Enquiry
+                {status === "sending" ? "Sending..." : "Send Project Enquiry"}
                 <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
               </button>
+
+              {status === "success" && (
+                <p className="text-sm text-coffee-dark font-heading border-l-2 border-coffee-accent pl-4 py-1">
+                  Thank you — your enquiry has been sent. We will get back to you shortly.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-sm text-coffee-dark font-heading border-l-2 border-coffee-accent pl-4 py-1">
+                  Sorry, your message could not be sent. Please try again, or email us directly at {siteConfig.email}.
+                </p>
+              )}
             </form>
           </motion.div>
         </div>
