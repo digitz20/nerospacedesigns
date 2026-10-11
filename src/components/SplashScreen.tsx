@@ -156,7 +156,7 @@ export default function SplashScreen() {
               transition={{ duration: 0.9, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 sm:mt-10 w-full max-w-full text-center font-heading font-semibold uppercase text-beige-light leading-none tracking-[0.08em] sm:tracking-[0.18em] text-[7.5vw] sm:text-5xl md:text-6xl lg:text-7xl whitespace-nowrap"
             >
-              nerospacedesigns
+              nerospace designs
             </motion.h1>
 
             <motion.p
