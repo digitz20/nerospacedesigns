@@ -10,6 +10,24 @@ import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/lib/data";
 import { Mail, Phone, MapPin, Ruler, Sofa, Box, Hammer, Paintbrush, ShoppingCart, ClipboardList, PenTool, Home, ExternalLink, FolderOpen, Wrench } from "lucide-react";
 
+function TikTokIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 12a4 4 0 1 0 4 4V2" />
+      <path d="M15 12a4 4 0 0 1-4 4V8" />
+    </svg>
+  );
+}
+
 interface Project {
   id: string;
   slug: string;
@@ -418,6 +436,25 @@ export default function HomePage() {
                   <div>
                     <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
                       Instagram
+                    </p>
+                    <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
+                      @nerospacedesigns
+                    </p>
+                  </div>
+                </a>
+
+                <a
+                  href={siteConfig.social.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-coffee-dark text-beige-light flex items-center justify-center flex-shrink-0 group-hover:bg-coffee-accent transition-colors">
+                    <TikTokIcon size={18} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-coffee-muted mb-1 font-semibold">
+                      TikTok
                     </p>
                     <p className="text-sm text-coffee-dark font-heading font-semibold group-hover:text-coffee-accent transition-colors">
                       @nerospacedesigns
