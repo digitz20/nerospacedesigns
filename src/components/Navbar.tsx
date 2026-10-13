@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect, type MouseEvent } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { siteConfig, navLinks } from "@/lib/data";
 import { Menu, X } from "lucide-react";
@@ -10,10 +10,33 @@ import { lockBodyScroll } from "@/lib/useLockBodyScroll";
 
 const SEAMLESS = [0.22, 1, 0.36, 1] as const;
 
+// ── Mobile menu motion ─────────────────────────────────────────────────────
+// Deliberately unhurried: the panel drops down like a curtain and retracts
+// back up with the same weight, while the links settle in a soft cascade.
+// Nothing snaps — both opening and closing are slow, eased landings.
+const PANEL_IN = 0.7; // curtain coming down
+const PANEL_OUT = 0.6; // curtain going back up
+const PANEL_EASE = [0.65, 0, 0.35, 1] as const; // gentle ease-in-out, no snap
+const ITEM_IN = 0.55;
+const ITEM_OUT = 0.3;
+const ITEM_DELAY = 0.15; // links wait for the curtain to start settling
+const ITEM_STAGGER = 0.06;
+const ITEM_EASE = [0.22, 1, 0.36, 1] as const; // soft deceleration
+const ICON_SWAP = 0.4; // hamburger ⇄ cross fades + rotates instead of snapping
+
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  // The menu remembers WHICH route it was opened on. If the route changes
+  // (logo tap, browser back/forward, redirect), it collapses during render —
+  // derived state, so it can never be left open over a different page, and it
+  // can never reopen when you come back to that route later.
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  if (openPath !== null && openPath !== pathname) {
+    setOpenPath(null);
+  }
+  const isOpen = openPath !== null;
 
   // Inner pages have light sections directly under the navbar — a transparent
   // header there leaves the light logo/hamburger invisible and lets page
@@ -44,6 +67,16 @@ export default function Navbar() {
     return lockBodyScroll();
   }, [isOpen]);
 
+  // One navigation, guaranteed: cancel the anchor's default navigation and
+  // push the route ourselves, so the panel closing/animating can never swallow
+  // the route change — the tap always lands on the page that was chosen,
+  // never stays on the page it came from.
+  const handleNavClick = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setOpenPath(null);
+    if (href !== pathname) router.push(href);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -62,6 +95,7 @@ export default function Navbar() {
           <Link
             href="/"
             className="flex items-center"
+            onClick={() => setOpenPath(null)}
           >
             <span className={`text-xl md:text-2xl font-bold uppercase tracking-wide transition-colors duration-500 ${
               headerSolid ? "text-coffee-dark" : "text-beige-light"
@@ -99,16 +133,32 @@ export default function Navbar() {
           </div>
 
           <button
-            className="md:hidden p-2 -mr-2"
-            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 -mr-2 touch-manipulation"
+            onClick={() => setOpenPath(isOpen ? null : pathname)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-menu-panel"
           >
-            {isOpen ? (
-              <X size={24} className={headerSolid ? "text-coffee-dark" : "text-beige-light"} />
-            ) : (
-              <Menu size={24} className={headerSolid ? "text-coffee-dark" : "text-beige-light"} />
-            )}
+            {/* Both glyphs share one box and cross-fade with a slow rotate,
+                so hamburger → X (and back) glides instead of snapping. */}
+            <span className="relative block h-6 w-6">
+              <motion.span
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
+                transition={{ duration: ICON_SWAP, ease: SEAMLESS }}
+                aria-hidden="true"
+              >
+                <Menu size={24} className={headerSolid ? "text-coffee-dark" : "text-beige-light"} />
+              </motion.span>
+              <motion.span
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
+                transition={{ duration: ICON_SWAP, ease: SEAMLESS }}
+                aria-hidden="true"
+              >
+                <X size={24} className={headerSolid ? "text-coffee-dark" : "text-beige-light"} />
+              </motion.span>
+            </span>
           </button>
         </nav>
       </div>
@@ -116,44 +166,55 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10, transition: { duration: 0.22, ease: SEAMLESS } }}
-            transition={{ duration: 0.4, ease: SEAMLESS }}
-            className="md:hidden fixed inset-0 top-20 bg-beige-light z-40 overflow-y-auto"
+            id="mobile-menu-panel"
+            // Full-height curtain: starts entirely above its slot (behind the
+            // header), glides down to cover the viewport, and retracts back up
+            // the exact same way when the X is pressed.
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%", transition: { duration: PANEL_OUT, ease: PANEL_EASE } }}
+            transition={{ duration: PANEL_IN, ease: PANEL_EASE }}
+            className="md:hidden fixed inset-0 top-20 bg-beige-light z-40 overflow-y-auto overscroll-contain"
           >
-            <nav className="flex flex-col items-center justify-center h-full gap-8">
+            <nav
+              className="flex flex-col items-center justify-center min-h-full gap-8 py-10"
+              aria-label="Mobile navigation"
+            >
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, y: 14 }}
+                  initial={{ opacity: 0, y: 28 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                  transition={{ duration: 0.45, delay: 0.05 + index * 0.05, ease: SEAMLESS }}
+                  exit={{ opacity: 0, y: -12, transition: { duration: ITEM_OUT, ease: ITEM_EASE } }}
+                  transition={{
+                    duration: ITEM_IN,
+                    delay: ITEM_DELAY + index * ITEM_STAGGER,
+                    ease: ITEM_EASE,
+                  }}
                 >
                   <Link
                     href={link.href}
-                    className="text-2xl tracking-[0.15em] uppercase text-coffee-dark hover:text-coffee-accent transition-colors font-heading font-bold"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleNavClick(link.href)}
+                    className="text-2xl tracking-[0.15em] uppercase text-coffee-dark hover:text-coffee-accent transition-colors font-heading font-bold touch-manipulation"
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
               <motion.div
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, transition: { duration: 0.15 } }}
+                exit={{ opacity: 0, y: -12, transition: { duration: ITEM_OUT, ease: ITEM_EASE } }}
                 transition={{
-                  duration: 0.45,
-                  delay: 0.05 + navLinks.length * 0.05,
-                  ease: SEAMLESS,
+                  duration: ITEM_IN,
+                  delay: ITEM_DELAY + navLinks.length * ITEM_STAGGER,
+                  ease: ITEM_EASE,
                 }}
               >
                 <Link
                   href="/contact"
-                  className="mt-4 inline-flex items-center gap-2 bg-coffee-dark text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-semibold"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleNavClick("/contact")}
+                  className="mt-4 inline-flex items-center gap-2 bg-coffee-dark text-beige-light px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-semibold touch-manipulation"
                 >
                   Book Consultation
                 </Link>

@@ -29,7 +29,11 @@ export function lockBodyScroll(): () => void {
     body.style.top = prev.top;
     body.style.width = prev.width;
     body.style.overflow = prev.overflow;
-    window.scrollTo(0, scrollY);
+    // Restore in one jump: <html> has `scroll-behavior: smooth`, so a plain
+    // scrollTo() here would ANIMATE the page back to the old offset — that
+    // lingering animation can keep scrolling after a route change has already
+    // reset the new page to the top, making it look like nothing navigated.
+    window.scrollTo({ top: scrollY, left: 0, behavior: "instant" as ScrollBehavior });
   };
 }
 
