@@ -289,7 +289,7 @@ export default function HomePage() {
                   <item.icon size={16} />
                 </div>
                 <div>
-                  <p className="text-[11px] tracking-[0.2em] uppercase text-coffee-dark mb-2 font-extrabold">
+                  <p className="text-xs md:text-[13px] tracking-[0.2em] uppercase text-coffee-dark mb-4 font-extrabold">
                     {item.label}
                   </p>
                   <p className="text-sm md:text-base text-coffee-dark/80 font-heading font-semibold leading-relaxed">
